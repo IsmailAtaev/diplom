@@ -1,13 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "./components/NavBar";
 import {Route, Router, Routes} from "react-router-dom";
 import Footer from "./components/Footer";
-import Tours from "./components/Tours";
+import Tours from "./components/tour/Tours";
 import Home from "./components/Home";
 import About from "./components/About";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
 
-export default function App() {
+const url = 'http://localhost:5000/auth/users';
+
+let c = 0
+
+function App() {
+    console.log("isma")
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+
+        const ee = axios.get(url).then((resolve) => console.log(resolve.data));
+        setUsers(ee.data);
+    }, [])
+
+    /* const onJ = () => {
+         c += 1;
+         console.log("click ", c)
+
+         axios.get(url).then((response) => {
+             console.log(response)
+         })
+     }*/
+
     return (<>
         <NavBar/>
         <Routes>
@@ -16,9 +39,12 @@ export default function App() {
             <Route path='/about' element={<About/>}/>
         </Routes>
         <Footer/>
-
     </>)
 };
+
+
+export default App;
+//export default React.memo(App);
 
 /*
 *    <Router>

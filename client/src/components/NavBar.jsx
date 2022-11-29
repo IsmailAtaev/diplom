@@ -4,36 +4,33 @@ import {Button, Container, Form, Modal, ModalTitle, Nav, Navbar} from "react-boo
 import logo from "../assets/logo.jpg";
 import {Link} from "react-router-dom";
 
-
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav .nav-link {
     color: #adb1b8;
-
     &:hover {
       color: white;
     }
   }
 `
+
 const NavBar = () => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
     return (<>
         <Styles>
-            <Navbar collapseOnSelect expand="lg" bg="light" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Link to='/'>
-                        <Navbar.Brand className='text-decoration-none'>
-                            <img
-                                src={logo}
-                                width="30"
-                                height="30"
-                                className="d-inline-block align-top me-2 text-decoration-none"
-                                alt="React Bootstrap logo"
-                            />Travel</Navbar.Brand>
+                    <Link className='text-decoration-none' to='/'>
+                        <Navbar.Brand>
+                            <img src={logo}
+                                 width="30"
+                                 height="30"
+                                 className="d-inline-block align-top me-2 text-decoration-none"
+                                 alt="logo"/>
+                            Travel</Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -43,14 +40,13 @@ const NavBar = () => {
                             <Nav.Link><Link to='/about' className='text-decoration-none'>About</Link></Nav.Link>
                         </Nav>
                         <Nav>
-                            <Button variant="outline-primary" className="me-2" onClick={handleShow}>Log In</Button>
+                            <Button variant="primary" className="me-2" onClick={handleShow}>Log In</Button>
                             <Button variant="primary" onClick={handleShow}>Sign out</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
         </Styles>
-
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
