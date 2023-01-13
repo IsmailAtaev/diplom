@@ -22,6 +22,15 @@ const tours = [
         duration: 3,
         price: 380,
     },
+    {
+        country: 'Italia',
+        city: 'Moscow',
+        type: 'Cruises',
+        date: '9.5.2021',
+        duration: 3,
+        price: 380,
+    },
+
 ]
 
 
