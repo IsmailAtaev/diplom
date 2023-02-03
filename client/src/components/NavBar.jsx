@@ -11,8 +11,7 @@ const Styles = styled.div`
     &:hover {
       color: white;
     }
-  }
-`
+  }`
 
 const NavBar = () => {
 
@@ -35,14 +34,10 @@ const NavBar = () => {
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav variant="dark" className="me-auto">
+                        <Nav variant="dark" className="me-auto gap-1">
                             <Link id="RouterNavLink" to='/' className='text-decoration-none'>Home</Link>
                             <Link id="RouterNavLink" to='/tours' className='text-decoration-none'>Tours</Link>
                             <Link id="RouterNavLink" to='/about' className='text-decoration-none'>About</Link>
-
-                            {/*<Nav.Link><Link to='/' className='text-decoration-none'>Home</Link></Nav.Link>*/}
-                            {/*<Nav.Link><Link to='/tours' className='text-decoration-none'>Tours</Link></Nav.Link>*/}
-                            {/*<Nav.Link><Link to='/about' className='text-decoration-none'>About</Link></Nav.Link>*/}
                         </Nav>
                         <Nav>
                             <Button variant="primary" className="me-2" onClick={handleShow}>Log In</Button>

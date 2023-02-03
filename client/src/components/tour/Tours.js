@@ -1,30 +1,40 @@
 import React, {useEffect, useState} from 'react';
-import axios from "axios";
-import {Table} from "react-bootstrap";
+import {useDispatch, useSelector} from "react-redux";
+import {getTours} from "../../store/tourStore/tourSlice";
 import TourItem from "./tourItem";
+import {Button} from "react-bootstrap";
+import Admin from "../admin/Admin";
 
-const TOUR_URL = 'http://localhost:5000/tour';
 const styleT = {
     display: 'flex',
     justifyContent: 'center'
 }
 
-const Tours = () => {
+const styleAddTour = {
+    width: '400px',
 
+    borderRadius: '15px',
+    marginRight: '10px',
+}
+
+const Tours = () => {
+    const dispatch = useDispatch();
+    const tours = useSelector(state => state.tour.tours);
     const [tour, setTour] = useState([]);
 
     useEffect(() => {
-        axios.get(TOUR_URL).then((resolve) => setTour(resolve.data));
-    }, [])
+        dispatch(getTours())
+    }, [tour])
 
-    console.log(tour);
+    return (
+        <div className="d-flex justify-content-center row gy-1 m-lg-2 gap-2 m-4">
 
-    return (<div style={styleT}>
-        {tour.map((elem) => <TourItem tour={elem}/>)}
-
-        {/*<Table striped bordered hover size="sm">*/}
-        {/*</Table>*/}
-    </div>);
+           
+            <Admin/>
+            {
+                tours.map((elem) => <TourItem key={elem.id} tour={elem}/>)
+            }
+        </div>);
 };
 
 export default Tours;
