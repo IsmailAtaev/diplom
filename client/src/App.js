@@ -8,7 +8,7 @@ import About from "./components/About";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 
-const url = 'http://localhost:5000/auth/users';
+const url = 'http://localhost:5010/auth/users';
 
 let c = 0
 

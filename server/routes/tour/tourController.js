@@ -63,6 +63,8 @@ const tours = [
   },
 ];
 
+const tourService = require("../../service/tour/tourService");
+
 class TourController {
   async getTours(req, res) {
     try {
@@ -74,14 +76,14 @@ class TourController {
 
   async createTour(req, res, next) {
     try {
-
-
-        let {name, type} = req.body;
-        console.log("name: " + name);
-        console.log("type: " + type);
-    } catch (e) {
-
-    }
+      let { name, tourType } = req.body;
+      const ss = await tourService.createTour(name, tourType);
+      console.log(" ss = ", ss);
+      res.json({elem: "add db "});
+      //res.json(ss);
+      // console.log("name: " + name);
+      // console.log("type: " + type);
+    } catch (e) {}
   }
 }
 

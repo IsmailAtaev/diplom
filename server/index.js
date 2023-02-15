@@ -16,6 +16,13 @@ app.use(json());
 app.use("/auth", authRouter);
 app.use("/", tourRouter);
 
+
+
+
+
+
+
+
 const start = async () => {
     try {
         await mongoose.connect('mongodb://localhost:27017/travel');
