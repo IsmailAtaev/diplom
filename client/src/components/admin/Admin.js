@@ -8,6 +8,7 @@ const Admin = () => {
 
 
     return (
+        <div>
         <Container className="d-flex align-items-center">
             <Button variant={"outline-dark"} className="mt-2" onClick={() => setTourVisible(true)}>Добвить тур</Button>
             <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
@@ -18,6 +19,7 @@ const Admin = () => {
             <Button variant={"outline-primary"} className="mt-2" onClick={() => setTourVisible(true)}>Удалить тур</Button>
             <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
         </Container>
+        </div>
     );
 };
 

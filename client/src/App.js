@@ -8,10 +8,14 @@ import About from "./components/About";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import  SideBarMenu from "./components/sidebar/SideBarMenu"
-
+import Admin from "./components/admin/Admin"
 const url = 'http://localhost:5010/auth/users';
 
-const isAuth = "ADMIN";
+const ADMIN = "ADMIN";
+const USER= "USER";
+
+
+const isAuth = ADMIN;
 
 let c = 0
 
@@ -38,10 +42,10 @@ function App() {
         <NavBar/>
         <Routes>
             <Route exact path='/' element={<Home/>}/>
-            <Route path='/tours' element={isAuth === "ADMIN" ?
-                                            <SideBarMenu /> :
-                                            <Tours/> }/>
+            <Route path='/tours' element={isAuth === "ADMIN" ? <SideBarMenu /> : <Tours/> }/>
             <Route path='/about' element={<About/>}/>
+            <Route path='/tour-work' element={<Admin />}/>
+            
         </Routes>
         <Footer/>
     </>)
@@ -50,7 +54,6 @@ function App() {
 
 export default App;
 //export default React.memo(App);
-
 /*
 *    <Router>
             <NavBar/>
