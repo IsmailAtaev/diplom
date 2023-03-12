@@ -77,6 +77,7 @@ class TourController {
   async createTour(req, res, next) {
     try {
       let { name, tourType } = req.body;
+      console.log(" ss = ", ss);
       const ss = await tourService.createTour(name, tourType);
       console.log(" ss = ", ss);
       res.json({elem: "add db "});

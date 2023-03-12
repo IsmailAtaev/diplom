@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import {createTour} from "../../http/index.js";
 
+
 const device = [
   {
     id: 1,
@@ -26,6 +27,7 @@ const setSelectedType = (t) => console.log(t);
 const CreateTour = ({ show, onHide }) => {
   const [value, setValue] = useState("");
   const [type, setType] = useState("");
+  const [dateFrom, setDateFrom] = useState(new Date);
 
   const addBrand = () => {
     // createBrand({name: value}).then(data => {
@@ -33,7 +35,7 @@ const CreateTour = ({ show, onHide }) => {
     //     onHide()
     // })
 
-    createTour({ name: value, type: type });
+    createTour({ name: value, type: type, date: dateFrom });
     setValue("");
     onHide();
   };
@@ -58,11 +60,24 @@ const CreateTour = ({ show, onHide }) => {
             </Dropdown.Menu>
           </Dropdown>
 
-          <Form.Control
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder={"Введите название типа"}
-          />
+          <Form.Control value={value} onChange={(e) => setValue(e.target.value)} placeholder={"Введите название типа"} />
+          <br/>
+          
+            <div>
+              <div className="row">
+                  <div className="col-md-3">
+                      <Form.Group controlId="duedate">
+                          <Form.Control 
+                            type="date"
+                            name="duedate"
+                            placeholder="Due date"
+                            onChange={(e) => setDateFrom(e.target.value)}
+                            />
+                      </Form.Group>
+                  </div>
+              </div>
+            </div> 
+        
         </Form>
       </Modal.Body>
       <Modal.Footer>

@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import {Button, Container, Form, Modal, ModalTitle, Nav, Navbar} from "react-bootstrap";
+import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar} from "react-bootstrap";
 import logo from "../assets/logo.jpg";
 import {Link} from "react-router-dom";
+import registration from "../store/user/userStore";
+import {registrationApi} from "../http/index";
 
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav .nav-link {
@@ -14,6 +17,11 @@ const Styles = styled.div`
   }`
 
 const NavBar = () => {
+
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -34,14 +42,14 @@ const NavBar = () => {
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav variant="dark" className="me-auto gap-1">
+                        <Nav variant="dark" className="me-auto gap-2">
                             <Link id="RouterNavLink" to='/' className='text-decoration-none'>Home</Link>
                             <Link id="RouterNavLink" to='/tours' className='text-decoration-none'>Tours</Link>
                             <Link id="RouterNavLink" to='/about' className='text-decoration-none'>About</Link>
                         </Nav>
                         <Nav>
                             <Button variant="primary" className="me-2" onClick={handleShow}>Log In</Button>
-                            <Button variant="primary" onClick={handleShow}>Sign out</Button>
+                            <Button variant="primary" onClick={handleShow}>Log out</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -57,13 +65,23 @@ const NavBar = () => {
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.Label>Email Adress</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email"/>
+                        <Form.Control type="email" 
+                                      value={email} 
+                                      onChange={e => setEmail(e.target.value)}
+                                      placeholder="Enter email"/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Email Password</Form.Label>
-                        <Form.Control type="password" placeholder="Enter password"/>
+                        <Form.Control type="password"
+                                      value={password} 
+                                      onChange={e => setPassword(e.target.value)}
+                                      placeholder="Enter password"/>
                     </Form.Group>
+                    <Button className="me-2" 
+                            variant="primary"
+                            onClick={() => registrationApi(email, password)}
+                            >Sent</Button>
                 </Form>
 
             </Modal.Body>

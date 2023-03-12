@@ -1,7 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {$host} from "../../http";
-//{id: 1, country: 'USA', city: 'NYC', type: 'excursion', duration: 12, price: 170,},
-
 
 export const getTours = createAsyncThunk('tours/getTours',
     async (_, {rejectWithValue, dispatch}) => {
@@ -13,7 +11,7 @@ export const getTours = createAsyncThunk('tours/getTours',
 const tourSlice = createSlice({
     name: 'tours', initialState: {tours: []},
     reducers: {
-
+            
         setTours: (state, action) => {
             state.tours = action.payload
         },

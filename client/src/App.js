@@ -7,20 +7,23 @@ import Home from "./components/Home";
 import About from "./components/About";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
+import  SideBarMenu from "./components/sidebar/SideBarMenu"
 
 const url = 'http://localhost:5010/auth/users';
+
+const isAuth = "ADMIN";
 
 let c = 0
 
 function App() {
-    console.log("isma")
-    const [users, setUsers] = useState([]);
+   // console.log("isma")
+   // const [users, setUsers] = useState([]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const ee = axios.get(url).then((resolve) => console.log(resolve.data));
-        setUsers(ee.data);
-    }, [])
+    //     const ee = axios.get(url).then((resolve) => console.log(resolve.data));
+    //     setUsers(ee.data);
+    // }, [])
 
     /* const onJ = () => {
          c += 1;
@@ -35,7 +38,9 @@ function App() {
         <NavBar/>
         <Routes>
             <Route exact path='/' element={<Home/>}/>
-            <Route path='/tours' element={<Tours/>}/>
+            <Route path='/tours' element={isAuth === "ADMIN" ?
+                                            <SideBarMenu /> :
+                                            <Tours/> }/>
             <Route path='/about' element={<About/>}/>
         </Routes>
         <Footer/>
