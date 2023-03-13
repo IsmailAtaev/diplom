@@ -87,19 +87,11 @@ const SideBarMenu = () => {
 
 export default SideBarMenu;
 
-/**
- *                 {/* <div class="dropdown open">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <i className="bi bi-circle"></i> Isma
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="triggerId">
-                        <button class="dropdown-item" href="#">Action</button>
-                        <button class="dropdown-item disabled" href="#">Disabled action</button>
-                    </div>
-                </div> */
-
-
 /* <a className="text-decoration-none text-white d-none d-sm-inline d-flex align-itemcenter ms-3 mt-2">
                             {/* <i className="fs-4 bi bi-speedometer"></i>
                             <span className="ms-1 fs-4">Brand</span>
                         </a> */
+
+
+/**          <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+<Navbar.Collapse id="responsive-navbar-nav"> */
