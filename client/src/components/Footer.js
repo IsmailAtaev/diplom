@@ -2,14 +2,19 @@ import React from 'react';
 
 const l = {
     backgroundColor: '#00000033',
+    borderRadius: "0px 0px 25px 25px"
 }
+
 const footer = {
     backgroundColor: '#f1f1f1',
+    borderRadius: "25px",
+    boxShadow: '10px 10px 40px #E2E0EE',
 }
-
+ 
 
 const Footer = () => {
-    return (<div className="container my-5 rounded">
+    return (
+    <div className="container my-5 rounded">
         <footer className="text-center text-white" style={footer}>
             <div className="container pt-4">
                 <section className="mb-4">
