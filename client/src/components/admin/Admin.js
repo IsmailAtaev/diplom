@@ -20,7 +20,6 @@ const Admin = () => {
             <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
         </Container>
         </div>
-    );
-};
+)};
 
 export default Admin;
