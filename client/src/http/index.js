@@ -5,8 +5,7 @@ export const $host = axios.create({
 });
 
 export const createTour = async (tour) => {
-  console.log(tour, " :post send tour");
-  const { data } = await $host.post("/create", JSON.stringify(tour));
+  const { data } = await $host.post("/create", tour); //JSON.stringify(tour));
   return data;
 };
 

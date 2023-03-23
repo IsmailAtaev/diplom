@@ -1,9 +1,8 @@
 const TourModel = require("../../models/tour/tourModel");
 
 class TourService {
-  async createTour(name, tourType) {
-    const tour = await TourModel.create({ name, tourType });
-    console.log("qwerty ", tour);
+  async createTour(name, type, date, country, city, price, duration) {
+    const tour = await TourModel.create({ name, type, date, country, city, price, duration});
     return tour;
   }
 }

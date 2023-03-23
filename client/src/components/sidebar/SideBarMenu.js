@@ -12,7 +12,7 @@ const SideBarMenu = () => {
   return (
         <div className="container-fluid"> 
             <div className="row">
-                <div className="bg-dark col-auto col-md-2 min-vh-100 d-flex justify-content-between flex-column">
+                <div className="bg-dark col-auto col-md-1.5 min-vh-100 d-flex justify-content-between flex-column">
                     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                         <Container>
                             <Nav variant="dark" className="me-auto gap-2">
@@ -23,7 +23,7 @@ const SideBarMenu = () => {
                                         <Link id="RouterNavLink" to='/tour-work' className='text-decoration-none'>
                                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">                    
                                                 <a href="#" className="nav-link text-white fs-5" aria-current="page">
-                                                    <i className="bi bi-airplane-engines"></i>
+                                                    <i className="bi bi-airplane-fill"></i>
                                                     <span className="ms-3 d-none d-sm-inline">Tours</span>
                                                 </a>
                                             </li>
@@ -34,8 +34,8 @@ const SideBarMenu = () => {
                                         <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
                                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                 <a href="#" className="nav-link text-white fs-5" aria-current="page">
-                                                    <i className="bi bi-clipboard2-data"></i>
-                                                    <span className="ms-3 d-none d-sm-inline">Orders</span>
+                                                    <i className="bi bi-clipboard2-data-fill"></i>
+                                                    <span className="ms-3 d-none d-sm-inline">Booked</span>
                                                 </a>
                                             </li>
                                         </Link>
@@ -44,7 +44,7 @@ const SideBarMenu = () => {
                                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                 <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                     <i className="bi bi-ticket-detailed-fill"></i>
-                                                    <span className="ms-3 d-none d-sm-inline">Products</span>
+                                                    <span className="ms-3 d-none d-sm-inline">Ticket</span>
                                                 </a>
                                             </li>
                                         </Link>
@@ -52,8 +52,8 @@ const SideBarMenu = () => {
                                         <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
                                             <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                 <a href="#" className="nav-link text-white fs-5" aria-current="page">
-                                                    <i className="bi bi-people"></i>
-                                                    <span className="ms-3 d-none d-sm-inline">Custem</span>
+                                                    <i className="bi bi-people-fill"></i>
+                                                    <span className="ms-3 d-none d-sm-inline">Customers</span>
                                                 </a>
                                             </li>
                                         </Link>
@@ -93,15 +93,4 @@ export default SideBarMenu;
 
 /*<Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 <Navbar.Collapse id="responsive-navbar-nav"> 
-*/
-
-
-/*  <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                            <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
-                                                <a href="#" className="nav-link text-white fs-5" aria-current="page">
-                                                    <i className="bi bi-house"></i>
-                                                    <span className="ms-3 d-none d-sm-inline">Dashboard</span>
-                                                </a>
-                                            </li>
-                                        </Link>
 */

@@ -20,7 +20,7 @@ const isAuth = ADMIN;
 let c = 0
 
 function App() {
-   // console.log("isma")
+   /* console.log("isma")
    // const [users, setUsers] = useState([]);
 
     // useEffect(() => {
@@ -29,7 +29,7 @@ function App() {
     //     setUsers(ee.data);
     // }, [])
 
-    /* const onJ = () => {
+    const onJ = () => {
          c += 1;
          console.log("click ", c)
 
@@ -38,17 +38,19 @@ function App() {
          })
      }*/
 
-    return (<>
+     
+    return (<div>
         <NavBar/>
         <Routes>
             <Route exact path='/' element={<Home/>}/>
             <Route path='/tours' element={isAuth === "ADMIN" ? <SideBarMenu /> : <Tours/> }/>
             <Route path='/about' element={<About/>}/>
             <Route path='/tour-work' element={<Admin />}/>
+            <Route path="/dashboard" element={<About/>}/>
             
         </Routes>
         <Footer/>
-    </>)
+    </div>)
 };
 
 

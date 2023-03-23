@@ -2,7 +2,13 @@ const { Schema, model } = require("mongoose");
 
 const TourSchema = new Schema({
   name: { type: String, required: true },
-  tourType : { type: String, required: true },
+  type : { type: String, required: true },
+  date : { type: String, required: true },
+  country : { type: String, required: true },
+  city : { type: String, required: true },
+  price : { type: Number, required: true },
+  duration: { type: Number, required: true },
+
 });
 
 module.exports = model("Tour", TourSchema);

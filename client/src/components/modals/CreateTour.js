@@ -25,31 +25,71 @@ const device = [
 const setSelectedType = (t) => console.log(t);
 
 const CreateTour = ({ show, onHide }) => {
-  const [value, setValue] = useState("");
+
+
+  const [name, setName] = useState("");
   const [type, setType] = useState("");
-  const [dateFrom, setDateFrom] = useState(new Date);
+  const [date, setDate] = useState(new Date);
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [price, setPrice] = useState();
+  const [duration, setDuration] = useState();
 
   const addBrand = () => {
     // createBrand({name: value}).then(data => {
     //     setValue('')
     //     onHide()
     // })
-
-    createTour({ name: value, type: type, date: dateFrom });
-    setValue("");
+ 
+    createTour({ name, type, date, country, city, price, duration});
+    //createTour({ name, type});
+    setName("");
+    setType("");
+    setDate("");
+    setCountry("");
+    setCity("");
+    setPrice("");
+    setDuration("");
     onHide();
   };
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Добавить тур
-        </Modal.Title>
+        <Modal.Title style={{textAlign: "center"}} id="contained-modal-title-center">Добавить тур</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Dropdown className="mt-2 mb-2">
+    
+
+          <Form.Control className="mb-2" value={name} onChange={(e) => setName(e.target.value)} placeholder={"Название тура"} />
+          <Form.Control className="mb-2" value={country} onChange={(e) => setCountry(e.target.value)} placeholder={"Страны"} />
+          <Form.Control className="mb-2" value={city} onChange={(e) => setCity(e.target.value)} placeholder={"Города"} />
+          <Form.Control className="mb-2" value={price} onChange={(e) => setPrice(e.target.value)} placeholder={"Цена"} />
+          <Form.Control className="mb-2" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder={"Длительность"} />
+          
+
+
+            <div style={{textAlign: "center"}}>
+              <div className="row">
+                  <div className="col-md-3">
+                      <Form.Group controlId="duedate">
+                          <Form.Control 
+                            type="date"
+                            name="duedate"
+                            placeholder="Due date"
+                            onChange={(e) => setDate(e.target.value)}
+                            />
+                      </Form.Group>
+                  </div>
+              </div>
+            </div> 
+        
+
+
+
+
+            <Dropdown style={{textAlign: "center"}} className="mt-2 mb-2">
             <Dropdown.Toggle>{type || "Выберите тип"}</Dropdown.Toggle>
             <Dropdown.Menu>
               {device.map((type) => (
@@ -60,24 +100,7 @@ const CreateTour = ({ show, onHide }) => {
             </Dropdown.Menu>
           </Dropdown>
 
-          <Form.Control value={value} onChange={(e) => setValue(e.target.value)} placeholder={"Введите название типа"} />
-          <br/>
-          
-            <div>
-              <div className="row">
-                  <div className="col-md-3">
-                      <Form.Group controlId="duedate">
-                          <Form.Control 
-                            type="date"
-                            name="duedate"
-                            placeholder="Due date"
-                            onChange={(e) => setDateFrom(e.target.value)}
-                            />
-                      </Form.Group>
-                  </div>
-              </div>
-            </div> 
-        
+
         </Form>
       </Modal.Body>
       <Modal.Footer>
