@@ -68,7 +68,8 @@ const tourService = require("../../service/tour/tourService");
 class TourController {
   async getTours(req, res) {
     try {
-      res.json(tours);
+      const arrTours = await tourService.getAllTours();
+      res.json(arrTours);
     } catch (e) {
       console.log(e);
     }
@@ -77,15 +78,21 @@ class TourController {
   async createTour(req, res, next) {
     try {
       const { name, type, date, country, city, price, duration } = req.body;
-      console.log(" server req = ", name, type, req.body);
-
       const ss = await tourService.createTour(name, type, date, country, city, price, duration);
-      //console.log(" ss = ", ss);
       res.json({ elem: "add db " });
-      //res.json(ss);
-      // console.log("name: " + name);
-      // console.log("type: " + type);
     } catch (e) {}
+  }
+
+  async removeTour(req, res, next) {
+    try {
+      
+      //const {tourId} = req.body;
+      const removedTour = await tourService.delete(req.params.id);
+      console.log("tur delete = ", removedTour);
+      res.json({removedTour});
+    } catch (e) {
+      res.json({removedTour: "tour do not deleted"});
+    }
   }
 }
 

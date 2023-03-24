@@ -18,22 +18,19 @@ const styleAddTour = {
 };
 
 const Tours = () => {
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const tours = useSelector((state) => state.tour.tours);
-  const [tour, setTour] = useState([]);
-
+  //console.log(tours)
+  /*const [tour, setTour] = useState([]);
+  
   useEffect(() => {
     dispatch(getTours());
-  }, [tour]);
+  }, [tour]);*/
 
   return (
     <>
       <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
-        <Admin />
-
-        {tours.map((elem) => (
-          <TourItem key={elem.id} tour={elem} />
-        ))}
+          {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
       </div>
     </>
   );

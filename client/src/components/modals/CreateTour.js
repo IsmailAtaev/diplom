@@ -104,12 +104,8 @@ const CreateTour = ({ show, onHide }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-danger" onClick={onHide}>
-          Закрыть
-        </Button>
-        <Button variant="outline-success" onClick={addBrand}>
-          Добавить
-        </Button>
+        <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
+        <Button variant="outline-success" onClick={addBrand}>Добавить</Button>
       </Modal.Footer>
     </Modal>
   );

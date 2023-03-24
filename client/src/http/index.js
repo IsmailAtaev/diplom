@@ -5,13 +5,21 @@ export const $host = axios.create({
 });
 
 export const createTour = async (tour) => {
-  const { data } = await $host.post("/create", tour); //JSON.stringify(tour));
+  const { data } = await $host.post("/create", tour);
   return data;
 };
 
-// export const createTour = (tour) => {
-//   console.log(tour, " :post send tour");
-// };
+// export const removeTour = async (tourId) => {
+//   console.log(tourId);
+//   const {obj} = await $host.post("/remove", tourId);
+//   return obj;
+// }
+
+export const removeTour = async (tourId) => {
+  console.log(tourId);
+  const {obj} = await $host.delete(`/remove/${tourId}`);
+  return obj;
+}
 
 const $authHost = axios.create({
   withCredentials: true,

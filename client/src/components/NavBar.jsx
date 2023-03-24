@@ -33,12 +33,9 @@ const NavBar = () => {
                 <Container>
                     <Link className='text-decoration-none' to='/'>
                         <Navbar.Brand>
-                            <img src={logo}
-                                 width="30"
-                                 height="30"
-                                 className="d-inline-block align-top me-2 text-decoration-none"
-                                 alt="logo"/>
-                            Travel</Navbar.Brand>
+                            <img src={logo} width="30" height="30" className="d-inline-block align-top me-2 text-decoration-none" alt="logo"/>
+                            Travel
+                        </Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">

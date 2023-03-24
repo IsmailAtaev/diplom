@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import {Route, Router, Routes} from "react-router-dom";
 import Footer from "./components/Footer";
@@ -9,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from "axios";
 import  SideBarMenu from "./components/sidebar/SideBarMenu"
 import Admin from "./components/admin/Admin"
+import { getTours } from "../src/store/tourStore/tourSlice";
 const url = 'http://localhost:5010/auth/users';
 
 const ADMIN = "ADMIN";
@@ -20,25 +22,18 @@ const isAuth = ADMIN;
 let c = 0
 
 function App() {
-   /* console.log("isma")
-   // const [users, setUsers] = useState([]);
 
-    // useEffect(() => {
+    const dispatch = useDispatch();
+    //const tours = useSelector((state) => state.tour.tours);
+    const [tour, setTour] = useState([]);
+  
+    useEffect(() => {
+        dispatch(getTours());
+      }, [tour]);
 
-    //     const ee = axios.get(url).then((resolve) => console.log(resolve.data));
-    //     setUsers(ee.data);
-    // }, [])
+    //  console.log(tours)
+    
 
-    const onJ = () => {
-         c += 1;
-         console.log("click ", c)
-
-         axios.get(url).then((response) => {
-             console.log(response)
-         })
-     }*/
-
-     
     return (<div>
         <NavBar/>
         <Routes>
@@ -55,9 +50,10 @@ function App() {
 
 
 export default App;
-//export default React.memo(App);
-/*
-*    <Router>
+
+/*export default React.memo(App);
+
+    <Router>
             <NavBar/>
             <Routes>
                 <Route exact path='/' element={<Home/>}/>
