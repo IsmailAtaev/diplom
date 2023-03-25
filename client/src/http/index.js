@@ -9,12 +9,6 @@ export const createTour = async (tour) => {
   return data;
 };
 
-// export const removeTour = async (tourId) => {
-//   console.log(tourId);
-//   const {obj} = await $host.post("/remove", tourId);
-//   return obj;
-// }
-
 export const removeTour = async (tourId) => {
   console.log(tourId);
   const {obj} = await $host.delete(`/remove/${tourId}`);
@@ -53,3 +47,7 @@ export const registrationApi = async (email, password) => {
 }
 
 
+export const loginApi =  async (email, password, nickName) => {
+  console.log("loginApi: ", email, password, nickName);
+  return $authHost.post('/api/login', {email, password, nickName})
+}

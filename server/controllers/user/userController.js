@@ -25,7 +25,12 @@ class UserController {
 
   async login(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const {nickName, email, password } = req.body;
+      console.log(nickName, email, password);
+      // console.log(typeof email)
+      // console.log(typeof password);
+      // console.log(JSON.stringify({email, password}));
+
       const userData = await userService.login(email, password);
       res.cookie("refreshToken", userData.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,

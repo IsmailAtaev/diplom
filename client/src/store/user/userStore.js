@@ -1,12 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {registrationApi} from "../../http/index";
+import { registrationApi, loginApi } from "../../http/index";
 
 export const registration = createAsyncThunk(
   "user/registration",
   async (_, { rejectWithValue, dispatch }) => {
-   console.log("qqq","wwww");
+    console.log("qqq", "wwww");
     //const { data } = await registrationApi("aaaa", "ddddd");
     dispatch(setUser("qwerty"));
+  }
+);
+
+export const login = createAsyncThunk("user/login", 
+  async (userData, { rejectWithValue, dispatch }) => {
+    const {email, password, nickName} = userData;
+    console.log(userData)
+    const {data} = await loginApi(email, password, nickName);
+    console.log(data)
+    dispatch(setUser(data));
   }
 );
 

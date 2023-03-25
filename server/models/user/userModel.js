@@ -26,6 +26,6 @@ const UserSchema = new Schema({
   isActivated: { type: Boolean, default: false },
   activationLink: { type: String },
   role: { type: String, default: "USER" },
-  fio: { type: String, required: true },
+  nickName: { type: String, required: true },
 });
  */

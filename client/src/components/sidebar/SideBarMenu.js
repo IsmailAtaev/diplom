@@ -93,21 +93,12 @@ const SideBarMenu = () => {
                             </Container>
                         </Navbar>   
                     </div> 
-                </div>
-                
-            
+                </div>            
             </div>
-
-          
-
-                <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
-                    {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
-                </div>
+            <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
+                 {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
+            </div>
         </div>
-
-
-
-
 
     </>)
 };
