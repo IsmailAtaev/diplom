@@ -1,18 +1,3 @@
-// const UserModel = require("../../models/user/userModel");
-
-// class UserService {
-
-//     async registration(email, password, role, fio) {
-//         const user = await UserModel.create({
-//             email, password, role, fio
-//         })
-//         return user;
-//     }
-
-// }
-
-// module.exports = new UserService();
-
 const UserModel = require("../../models/user/userModel");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
@@ -22,7 +7,7 @@ const UserDto = require("../../dtos/userDto/userDto");
 const ApiError = require("../../exceptions/apiError");
 
 class UserService {
-  async registration(email, password) {
+  async registration(email, password, role, nickName) {
     const candidate = await UserModel.findOne({ email });
     if (candidate) {
       throw ApiError.BadRequest(`User with mail ${email} already have`);
@@ -35,6 +20,8 @@ class UserService {
       email,
       password: hashPassword,
       activationLink,
+      role, 
+      nickName,
     });
 
     await mailService.sendActivationMail(

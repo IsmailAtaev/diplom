@@ -38,7 +38,7 @@ const SideBarMenu = () => {
                                                 <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">                    
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-airplane-fill"></i>
-                                                        <span className="ms-3 d-none d-sm-inline">Tours</span>
+                                                        <span className="ms-3 d-none d-sm-inline">Туры</span>
                                                     </a>
                                                 </li>
                                             </Link>
@@ -47,7 +47,7 @@ const SideBarMenu = () => {
                                                 <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-clipboard2-data-fill"></i>
-                                                        <span className="ms-3 d-none d-sm-inline">Booked</span>
+                                                        <span className="ms-3 d-none d-sm-inline">Брони</span>
                                                     </a>
                                                 </li>
                                             </Link>
@@ -56,7 +56,7 @@ const SideBarMenu = () => {
                                                 <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-ticket-detailed-fill"></i>
-                                                        <span className="ms-3 d-none d-sm-inline">Ticket</span>
+                                                        <span className="ms-3 d-none d-sm-inline">Билеты</span>
                                                     </a>
                                                 </li>
                                             </Link>
@@ -65,7 +65,7 @@ const SideBarMenu = () => {
                                                 <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-people-fill"></i>
-                                                        <span className="ms-3 d-none d-sm-inline">Customers</span>
+                                                        <span className="ms-3 d-none d-sm-inline">Пользователи</span>
                                                     </a>
                                                 </li>
                                             </Link>

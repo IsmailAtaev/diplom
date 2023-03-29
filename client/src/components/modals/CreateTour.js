@@ -1,16 +1,17 @@
 import React, { useState } from "react";
+import {useDispatch} from "react-redux";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import {createTour} from "../../http/index.js";
-
+import {sentCreateTour, getTours} from "../../store/tourStore/tourSlice";
 
 const device = [
   {
     id: 1,
-    name: "tourse",
+    name: "Туризм",
   },
   {
     id: 2,
-    name: "qwer",
+    name: "Круиз",
   },
   {
     id: 3,
@@ -22,10 +23,11 @@ const device = [
   },
 ];
 
-const setSelectedType = (t) => console.log(t);
 
 const CreateTour = ({ show, onHide }) => {
 
+
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -36,13 +38,9 @@ const CreateTour = ({ show, onHide }) => {
   const [duration, setDuration] = useState();
 
   const addBrand = () => {
-    // createBrand({name: value}).then(data => {
-    //     setValue('')
-    //     onHide()
-    // })
- 
-    createTour({ name, type, date, country, city, price, duration});
-    //createTour({ name, type});
+    onHide();
+    //createTour({ name, type, date, country, city, price, duration});
+    dispatch(sentCreateTour({ name, type, date, country, city, price, duration}));
     setName("");
     setType("");
     setDate("");
@@ -50,7 +48,7 @@ const CreateTour = ({ show, onHide }) => {
     setCity("");
     setPrice("");
     setDuration("");
-    onHide();
+    dispatch(getTours());
   };
 
   return (

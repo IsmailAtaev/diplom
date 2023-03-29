@@ -5,6 +5,6 @@ import userReducer from "./user/userStore";
 export default configureStore({
   reducer: {
     tour: tourReducer,
-    userReducer,
+    user: userReducer,
   },
 });

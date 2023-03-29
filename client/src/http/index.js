@@ -12,8 +12,17 @@ export const createTour = async (tour) => {
 export const removeTour = async (tourId) => {
   console.log(tourId);
   const {obj} = await $host.delete(`/remove/${tourId}`);
+  console.log("obj: ", obj);
   return obj;
 }
+
+
+
+
+
+
+
+
 
 const $authHost = axios.create({
   withCredentials: true,
@@ -42,12 +51,11 @@ $authHost.interceptors.response.use((config) => { return config;}, async (error)
 })
 
 
-export const registrationApi = async (email, password) => {
-  return $authHost.post('/api/registration', {email, password})
+export const registrationApi = async (email, password, role, nickName) => {
+  return $authHost.post('/api/registration', {email, password, role, nickName});
 }
 
 
 export const loginApi =  async (email, password, nickName) => {
-  console.log("loginApi: ", email, password, nickName);
   return $authHost.post('/api/login', {email, password, nickName})
 }

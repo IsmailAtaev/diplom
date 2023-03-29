@@ -3,35 +3,32 @@ import { registrationApi, loginApi } from "../../http/index";
 
 export const registration = createAsyncThunk(
   "user/registration",
-  async (_, { rejectWithValue, dispatch }) => {
-    console.log("qqq", "wwww");
-    //const { data } = await registrationApi("aaaa", "ddddd");
-    dispatch(setUser("qwerty"));
+  async (userData, { rejectWithValue, dispatch }) => {
+    console.log("qqq: ", userData);
+    const { email, password, role, nickName } = userData;
+    const { data } = await registrationApi(email, password, role, nickName);
+    console.log("data: ", data);
+    dispatch(setUser(data));
   }
 );
 
-export const login = createAsyncThunk("user/login", 
+export const login = createAsyncThunk("user/login",
   async (userData, { rejectWithValue, dispatch }) => {
-    const {email, password, nickName} = userData;
-    console.log(userData)
-    const {data} = await loginApi(email, password, nickName);
-    console.log(data)
+    const { email, password, nickName } = userData;
+    const { data } = await loginApi(email, password, nickName);
     dispatch(setUser(data));
   }
 );
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { user: {}, isAuth: false },
+  initialState: { user: {} },
 
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
     },
-
-    setAuth: (state, action) => {
-      state.isAuth = action.payload.isAuth;
-    },
+    
   },
 
   extraReducers: {
@@ -41,14 +38,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setAuth } = userSlice.actions;
+export const { setUser} = userSlice.actions;
 
 export default userSlice.reducer;
-
-// registration: (state, action) => {
-//     const response = await registrationApi(action.payload.email, action.payload.password );
-//     console.log(response);
-//     localStorage.setItem('token', response.data.accessToken);
-//     setAuth(true);
-//     setUser(response.data.user);
-// },

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import NavBar from "./components/NavBar";
 import {Route, Router, Routes} from "react-router-dom";
 import Footer from "./components/Footer";
@@ -7,35 +7,55 @@ import Tours from "./components/tour/Tours";
 import Home from "./components/Home";
 import About from "./components/About";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
 import  SideBarMenu from "./components/sidebar/SideBarMenu"
 import Admin from "./components/admin/Admin"
 import { getTours } from "../src/store/tourStore/tourSlice";
-const url = 'http://localhost:5010/auth/users';
+
 
 const ADMIN = "ADMIN";
 const USER= "USER";
-
-
-const isAuth = ADMIN;
-
-let c = 0
+const isAuth = USER;
 
 function App() {
 
     const dispatch = useDispatch();
+    const store = useStore();
+    
     //const tours = useSelector((state) => state.tour.tours);
+    const userStore = useSelector((state) => state);
     const [tour, setTour] = useState([]);
+    const [user, setUser] = useState({});
   
     useEffect(() => {
-        dispatch(getTours());
-      }, [tour]);
+        async function getToursAPI () {
+            dispatch(getTours());
+        }
+        getToursAPI();
+    }, [tour]);
 
-    //  console.log(tours)
+
+    useEffect(() => {
+        const ll = userStore.user.user.user;
+        console.log("useEffect user: ", ll);
+        // console.log(user);
+    }, [])
+
+    const getUser = () => {
+        const obj = store.getState();
+       
+
+        //setUser({...obj.user.user.user});
+        //console.log("user app: ", user.user.role);
+        // console.log("user app: ", user);
+        // islamhan394@gmail.com
+
+      console.log("obj : ", obj);
+     
+    }
     
 
     return (<div>
-        <NavBar/>
+        <NavBar getUser={getUser}/>
         <Routes>
             <Route exact path='/' element={<Home/>}/>
             <Route path='/tours' element={isAuth === "ADMIN" ? <SideBarMenu /> : <Tours/> }/>

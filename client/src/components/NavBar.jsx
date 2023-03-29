@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useStore} from "react-redux";
 import styled from "styled-components";
 import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar} from "react-bootstrap";
 import logo from "../assets/logo.jpg";
 import {Link} from "react-router-dom";
-import registration from "../store/user/userStore";
-import {registrationApi, loginApi} from "../http/index";
-import {login} from "../store/user/userStore";
+import {login, registration} from "../store/user/userStore";
 
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav .nav-link {
@@ -20,27 +18,36 @@ const Styles = styled.div`
 
 
 
-const NavBar = () => {
+const NavBar = ({getUser}) => {
 
     const dispatch = useDispatch();
-    
+    const store = useStore();
+
     const [nickName, setNickName] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [flag, setFlag] = useState(true);
     const [show, setShow] = useState(false);
+    const [role, setRole] = useState("USER");
+    const [user, setUser] = useState({});
+
+
 
     const loginRegistration = () => {
+        setShow(false);
         if(!flag) {
-            registrationApi(email, password);
+           dispatch(registration({email, password, role, nickName}));
         } else {
            dispatch(login({email, password, nickName}));
         }
         setNickName("");
         setEmail("");
         setPassword("");
+        const obj = store.getState();
+        console.log("obj store: ", obj);
+        getUser();
     }
-      
+
 
     return (<>
         <Styles>
@@ -80,7 +87,7 @@ const NavBar = () => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Group controlId="formBasicPassword">
+                    <Form.Group controlId="formBasicNickName">
                             <Form.Label>Имя</Form.Label>
                             <Form.Control type="text"
                                           value={nickName} 
@@ -102,10 +109,17 @@ const NavBar = () => {
                                           placeholder="Введите пароль"/>
                         </Form.Group>
                         <Button className="mt-2 ml-5" variant="primary" onClick={loginRegistration}>Отправить</Button>
+                        
                 </Form>
 
             </Modal.Body>
         </Modal>
+        <Button className="mt-2 ml-5" variant="primary" onClick={() => {
+                console.log(store.getState());
+
+        }}>Отправить</Button>
+
+       
     </>);
 };
 
