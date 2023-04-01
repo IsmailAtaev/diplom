@@ -6,10 +6,12 @@ import Footer from "./components/Footer";
 import Tours from "./components/tour/Tours";
 import Home from "./components/Home";
 import About from "./components/About";
+import DetailsTour from "./components/details/DetailsTour";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  SideBarMenu from "./components/sidebar/SideBarMenu"
 import Admin from "./components/admin/Admin"
 import { getTours } from "../src/store/tourStore/tourSlice";
+import ClientInfo from "./components/clientInfo/ClientInfo";
 
 
 const ADMIN = "ADMIN";
@@ -62,7 +64,8 @@ function App() {
             <Route path='/about' element={<About/>}/>
             <Route path='/tour-work' element={<Admin />}/>
             <Route path="/dashboard" element={<About/>}/>
-            
+            <Route path="/tour/details" element={<DetailsTour/>}/>
+            <Route path="/tour/details/buy" element={<ClientInfo/>}/>
         </Routes>
         <Footer/>
     </div>)

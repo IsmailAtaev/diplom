@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Card } from "react-bootstrap";
+import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar, Card} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import {removeTour} from "../../http/index"
 import {useDispatch} from "react-redux";
 import egyp from "../../assets/Egypt3.jpg";
@@ -34,7 +35,17 @@ const TourItem = ({ tour }) => {
          
              {isAuth === ADMIN ? 
              (<Button variant="primary" className="m-1"  >Редоктировать</Button>) :
-             (<Button variant="primary" className="m-1">Подробнее</Button>)}
+             (<Navbar>
+                <Container>
+                  <Navbar.Collapse id="responsive-navbar-nav">
+                  <Nav variant="dark" className="me-auto gap-2">
+                      <Link id="RouterNavLink" to='/tour/details' className='text-decoration-none' state={{tour}}>
+                        <Button variant="primary" className="m-1">Подробнее</Button>
+                      </Link>
+                  </Nav>
+                  </Navbar.Collapse>
+                </Container>  
+              </Navbar>)}
 
           {isAuth === ADMIN ? 
             <Button variant="primary" className="m-2" onClick={() => { 

@@ -114,10 +114,10 @@ const NavBar = ({getUser}) => {
 
             </Modal.Body>
         </Modal>
-        <Button className="mt-2 ml-5" variant="primary" onClick={() => {
+        {/* <Button className="mt-2 ml-5" variant="primary" onClick={() => {
                 console.log(store.getState());
 
-        }}>Отправить</Button>
+        }}>Отправить</Button> */}
 
        
     </>);

@@ -12,6 +12,8 @@ export const registration = createAsyncThunk(
   }
 );
 
+
+
 export const login = createAsyncThunk("user/login",
   async (userData, { rejectWithValue, dispatch }) => {
     const { email, password, nickName } = userData;
