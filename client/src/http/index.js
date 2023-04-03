@@ -10,10 +10,13 @@ export const createTour = async (tour) => {
 };
 
 export const removeTour = async (tourId) => {
-  console.log(tourId);
   const {obj} = await $host.delete(`/remove/${tourId}`);
-  console.log("obj: ", obj);
   return obj;
+}
+
+export const bookingTour = async (obj) => {
+  console.log(obj);
+
 }
 
 

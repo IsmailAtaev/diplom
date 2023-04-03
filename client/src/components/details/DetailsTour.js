@@ -59,7 +59,7 @@ const DetailsTour = () => {
               </Link>
               
               <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none'>
-                <Button variant="danger" className="m-1">Бронировать</Button>
+                <Button variant="success" className="m-1">Бронировать</Button>
               </Link>
             </Nav>
           </Navbar.Collapse>

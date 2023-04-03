@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addCustomer } from "../../../store/customerStore/customerSlice";
 import { Row, Button, Col, Form, Container } from "react-bootstrap";
 import { arrCountries } from "../../../utils/countries";
 
@@ -31,11 +33,25 @@ const Customer = () => {
       ...prevState,
       sex: e.target.value,
     }));
+    console.log("vfvf" + gender.sex);
   };
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+    dispatch(
+      addCustomer({
+        firstName,
+        lastName,
+        gender,
+        birthDate,
+        citizenship,
+        passportSeriesAndNumber,
+        dateOfPassport,
+        validityPeriod,
+      })
+    );
     console.log("firstName: ", firstName);
     console.log("lastName: ", lastName);
     console.log("gender: ", gender);
@@ -44,7 +60,6 @@ const Customer = () => {
     console.log("passportSeriesAndNumber: ", passportSeriesAndNumber);
     console.log("dateOfPassport: ", dateOfPassport);
     console.log("validityPeriod: ", validityPeriod);
-
   };
 
   return (
@@ -159,18 +174,31 @@ const Customer = () => {
                   type="date"
                   name="duedate"
                   placeholder="Due date"
-                  onChange={(e) => setValidityPeriod(e.target.value)}
+                  onChange={(e) => {
+                    setValidityPeriod(e.target.value);
+                    dispatch(addCustomer({
+                          firstName,
+                          lastName,
+                          gender,
+                          birthDate,
+                          citizenship,
+                          passportSeriesAndNumber,
+                          dateOfPassport,
+                          validityPeriod,
+                        })); 
+                        console.log("vfvf" + gender.sex)}}
                 />
               </Form.Group>
             </div>
           </Row>
         </Form>
       </Col>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button>
     </Row>
   );
 };
 
 export default Customer;
+
+/* <Button variant="primary" type="submit" onClick={handleSubmit}>
+        Submit
+      </Button> */
