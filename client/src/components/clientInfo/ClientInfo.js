@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Button, Col, Form, Container } from "react-bootstrap";
 import { arrCountries } from "../../utils/countries";
 import Customer from "./сustomer/Customer";
+//import encrypt from "../../cryptoInfo/encrypt";
 
 /**
     last name - фамилия 
@@ -18,7 +19,13 @@ import Customer from "./сustomer/Customer";
  */
 
 const ClientInfo = () => {
-  const countCustomer = [1, 2, 3];
+
+
+  const [trigger, setTrigger] = useState(0);
+
+
+
+  const countCustomer = [1, 2];
   const [date, setDate] = useState(new Date());
   const [gender, setGender] = useState({ sex: "" });
   const customers = useSelector((state) => state.customer.customers);
@@ -28,6 +35,7 @@ const ClientInfo = () => {
 
   const handleChange = (e) => {
     e.persist();
+  
     console.log(e.target.value);
 
     setGender((prevState) => ({
@@ -38,16 +46,15 @@ const ClientInfo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("info: ", customers);
-
-    alert(`${sex}`);
+    setTrigger((trigger) => trigger + 1);
+    console.log("info: ", typeof customers);
   };
 
   return (
     <div>
       <Container>
         <div>
-          {countCustomer.map((elem) => (<Customer key={elem.id}/>
+          {countCustomer.map((elem) => (<Customer key={elem.id} trigger={trigger}/>
           ))}
         </div>
 
@@ -95,8 +102,7 @@ const ClientInfo = () => {
                       <option
                         className="p-3 mb-2 bg-secondary text-white"
                         key={country._id}
-                      >
-                        {country}
+                      >{country}
                       </option>
                     ))}
                   </Form.Select>

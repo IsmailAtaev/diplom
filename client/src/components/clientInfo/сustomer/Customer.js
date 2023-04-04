@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addCustomer } from "../../../store/customerStore/customerSlice";
-import { Row, Button, Col, Form, Container } from "react-bootstrap";
+import { Row, Col, Form, Container } from "react-bootstrap";
 import { arrCountries } from "../../../utils/countries";
 
 /**
@@ -12,9 +12,13 @@ import { arrCountries } from "../../../utils/countries";
     Passport series and number - Серия и Номер паспорта
     Date of passport - Дата выдачи паспорта
     Validity period - Срок действия
+
+    https://timmousk.com/blog/react-call-function-in-child-component/
  */
 
-const Customer = () => {
+const Customer = ({ trigger }) => {
+  const dispatch = useDispatch();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState({ sex: "" });
@@ -24,42 +28,30 @@ const Customer = () => {
   const [dateOfPassport, setDateOfPassport] = useState(new Date());
   const [validityPeriod, setValidityPeriod] = useState(new Date());
 
+  useEffect(() => {
+    if (trigger) {
+      dispatch(
+        addCustomer({
+          firstName,
+          lastName,
+          gender: gender.sex,
+          birthDate,
+          citizenship,
+          passportSeriesAndNumber,
+          dateOfPassport,
+          validityPeriod,
+        })
+      );
+    }
+  }, [trigger]);
+
   const { sex } = gender;
   const handleChange = (e) => {
     e.persist();
-    console.log(e.target.value);
-
     setGender((prevState) => ({
       ...prevState,
       sex: e.target.value,
     }));
-    console.log("vfvf" + gender.sex);
-  };
-
-  const dispatch = useDispatch();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      addCustomer({
-        firstName,
-        lastName,
-        gender,
-        birthDate,
-        citizenship,
-        passportSeriesAndNumber,
-        dateOfPassport,
-        validityPeriod,
-      })
-    );
-    console.log("firstName: ", firstName);
-    console.log("lastName: ", lastName);
-    console.log("gender: ", gender);
-    console.log("birthDate: ", birthDate);
-    console.log("citizenship: ", citizenship);
-    console.log("passportSeriesAndNumber: ", passportSeriesAndNumber);
-    console.log("dateOfPassport: ", dateOfPassport);
-    console.log("validityPeriod: ", validityPeriod);
   };
 
   return (
@@ -174,19 +166,7 @@ const Customer = () => {
                   type="date"
                   name="duedate"
                   placeholder="Due date"
-                  onChange={(e) => {
-                    setValidityPeriod(e.target.value);
-                    dispatch(addCustomer({
-                          firstName,
-                          lastName,
-                          gender,
-                          birthDate,
-                          citizenship,
-                          passportSeriesAndNumber,
-                          dateOfPassport,
-                          validityPeriod,
-                        })); 
-                        console.log("vfvf" + gender.sex)}}
+                  onChange={(e) => setValidityPeriod(e.target.value)}
                 />
               </Form.Group>
             </div>
@@ -198,7 +178,3 @@ const Customer = () => {
 };
 
 export default Customer;
-
-/* <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button> */

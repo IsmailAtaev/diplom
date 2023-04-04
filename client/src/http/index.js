@@ -16,6 +16,7 @@ export const removeTour = async (tourId) => {
 
 export const bookingTour = async (obj) => {
   console.log(obj);
+  
 
 }
 

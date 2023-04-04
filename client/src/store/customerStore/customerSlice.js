@@ -11,7 +11,7 @@ const customerSlice = createSlice({
       state.customers.push({
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        gender: action.payload.gender.sex,
+        gender: action.payload.gender,
         birthDate: action.payload.birthDate,
         citizenship: action.payload.citizenship,
         passportSeriesAndNumber: action.payload.passportSeriesAndNumber,
