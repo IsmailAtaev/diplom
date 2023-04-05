@@ -42,6 +42,14 @@ const Customer = ({ trigger }) => {
           validityPeriod,
         })
       );
+      // setFirstName("");
+      // setLastName("");
+      // setGender("");
+      // setBirthDate(new Date());
+      // setCitizenship("");
+      // setPassportSeriesAndNumber("");
+      // setDateOfPassport(new Date());
+      // setValidityPeriod(new Date());
     }
   }, [trigger]);
 
@@ -58,7 +66,7 @@ const Customer = ({ trigger }) => {
     <Row className="border rounded justify-content-md-center mt-5 ml-5 p-3 mb-2 bg-light text-dark ">
       <Col xs={12} md={7}>
         <Form>
-          <h4>Клиент 1</h4>
+          <h4>Клиент</h4>
           <hr className="text-secondary d-none d-sm-block" />
           <Row className="mb-3 mt-3">
             <Form.Group
