@@ -8,9 +8,9 @@ router.post('/create', controller.createTour);
 router.get("/tour", controller.getTours);
 //router.post("/remove", controller.removeTour);
 router.delete("/remove/:id", controller.removeTour);
+router.post("/api/buy/tour", controller.bookingTour)
 
 
-
-
+    
 
 module.exports = router;

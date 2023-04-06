@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useStore, useDispatch } from "react-redux";
 import { Row, Button, Col, Form, Container } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import { arrCountries } from "../../utils/countries";
 import Customer from "./сustomer/Customer";
-import { addMainClient } from "../../store/customerStore/customerSlice";
+import {
+  addMainClient,
+  addTour,
+  buyTour,
+} from "../../store/customerStore/customerSlice";
 import { decrypted, encrypted } from "../../cryptoInfo/encrypt";
 
 /**
@@ -18,11 +23,13 @@ import { decrypted, encrypted } from "../../cryptoInfo/encrypt";
  */
 
 const ClientInfo = () => {
-  const store = useStore();
+  const location = useLocation();
+  const { tour } = location.state;
+  // console.log("tourClient: ", tour);
 
+  const store = useStore();
   const [trigger, setTrigger] = useState(0);
   const countCustomer = [1, 2];
-  const [date, setDate] = useState(new Date());
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState("");
@@ -34,7 +41,6 @@ const ClientInfo = () => {
   const [passportIssuedBy, setPassportIssuedBy] = useState("");
   const [dateOfPassport, setDateOfPassport] = useState(new Date());
   const [validityPeriod, setValidityPeriod] = useState(new Date());
-
   const [country, setCountry] = useState("");
   const [regionAndDistrict, setRegionAndDistrict] = useState("");
   const [city, setCity] = useState("");
@@ -46,6 +52,7 @@ const ClientInfo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(
       addMainClient({
         mainClient: {
@@ -69,41 +76,32 @@ const ClientInfo = () => {
         },
       })
     );
+    console.log("qqqq: ", tour);
+    dispatch(addTour({ tour: tour }));
     setTrigger((trigger) => trigger + 1);
-    console.log("firstName ", firstName);
-    console.log("lastName ", lastName);
-    console.log("patronymic ", patronymic);
-    console.log("birthDate ", birthDate);
-    console.log("citizenship ", citizenship);
-    console.log("passportSeriesAndNumber ", passportSeriesAndNumber);
-    console.log("passportIssuedBy ", passportIssuedBy);
-    console.log("dateOfPassport ", dateOfPassport);
-    console.log("validityPeriod ", validityPeriod);
-
-    console.log("country ", country);
-    console.log("regionAndDistrict ", regionAndDistrict);
-    console.log("city ", city);
-    console.log("street ", street);
-    console.log("home ", home);
-    console.log("apartment ", apartment);
-    console.log("email ", email);
-    console.log("phoneNumber ", phoneNumber);
   };
 
   useEffect(() => {
-    const obj = store.getState();
-    const d = obj.customer;
-    console.log("obj : ", d);
+    if (trigger) {
+      const obj = store.getState();
+      dispatch(buyTour(encrypted(JSON.stringify(obj.customer))));
+    }
+    // const obj = store.getState();
+    // const d = obj.customer;
+
+    // console.log("obj : ", d);
+
     //console.log("info: ", customers);
-    let jj = JSON.stringify(d);
-    console.log("json: ", jj);
-    console.log("json: ", typeof jj);
+    // let jj = JSON.stringify(d);
+    // console.log("json: ", jj);
+    // console.log("json: ", typeof jj);
 
-    let ff = JSON.parse(decrypted(encrypted(jj)));
-    console.log("parse: ");
+    // let ff = JSON.parse(decrypted(encrypted(jj)));
+    // console.log("parse: ");
 
-    console.log("parse: ", ff);
-    console.log("parse: ", typeof ff);
+    // console.log("parse: ", ff);
+    // console.log("parse: ", typeof ff);
+    console.log("parse: not trigger ");
   }, [trigger]);
 
   return (
@@ -336,3 +334,25 @@ const ClientInfo = () => {
 };
 
 export default ClientInfo;
+
+/*
+
+    console.log("firstName ", firstName);
+    console.log("lastName ", lastName);
+    console.log("patronymic ", patronymic);
+    console.log("birthDate ", birthDate);
+    console.log("citizenship ", citizenship);
+    console.log("passportSeriesAndNumber ", passportSeriesAndNumber);
+    console.log("passportIssuedBy ", passportIssuedBy);
+    console.log("dateOfPassport ", dateOfPassport);
+    console.log("validityPeriod ", validityPeriod);
+    console.log("country ", country);
+    console.log("regionAndDistrict ", regionAndDistrict);
+    console.log("city ", city);
+    console.log("street ", street);
+    console.log("home ", home);
+    console.log("apartment ", apartment);
+    console.log("email ", email);
+    console.log("phoneNumber ", phoneNumber);
+
+*/

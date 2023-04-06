@@ -12,6 +12,7 @@ import  SideBarMenu from "./components/sidebar/SideBarMenu"
 import Admin from "./components/admin/Admin"
 import { getTours } from "../src/store/tourStore/tourSlice";
 import ClientInfo from "./components/clientInfo/ClientInfo";
+import { useLocation } from "react-router-dom";
 
 
 const ADMIN = "ADMIN";
@@ -54,6 +55,10 @@ function App() {
       console.log("obj : ", obj);
      
     }
+
+
+
+    
     
 
     return (<div>

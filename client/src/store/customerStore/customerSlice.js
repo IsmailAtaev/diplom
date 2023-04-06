@@ -1,16 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { $host } from "../../http";
+import { bookingTour } from "../../http";
 
 export const buyTour = createAsyncThunk(
   "customers/buyTour",
   async (customerInfo, { rejectWithValue, dispatch }) => {
-    //const {data} = await buyTour(customerInfo);
+    const {data} = await bookingTour({clientInfoBooking: customerInfo});
   }
 );
 
 const customerSlice = createSlice({
   name: "customers",
-  initialState: { customers: [], mainClient: {} },
+  initialState: { customers: [], mainClient: {}, tour: {} },
   reducers: {
     addCustomer(state, action) {
       state.customers.push({
@@ -25,11 +25,12 @@ const customerSlice = createSlice({
       });
     },
 
-    addMainClient(state, action) {  
-      console.log(action.payload);
-      // const elem = action.payload;
-      // console.log(elem);
-      state.mainClient = action.payload.mainClient;//Object.assign({}, elem);
+    addMainClient(state, action) {
+      state.mainClient = action.payload.mainClient;
+    },
+
+    addTour(state, action) {
+      state.tour = action.payload.tour;
     },
   },
   extraReducers: {
@@ -39,6 +40,6 @@ const customerSlice = createSlice({
   },
 });
 
-export const { addCustomer, addMainClient } = customerSlice.actions;
+export const { addCustomer, addMainClient,addTour } = customerSlice.actions;
 
 export default customerSlice.reducer;

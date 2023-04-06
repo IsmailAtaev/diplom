@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 const DetailsTour = () => {
   const location = useLocation();
   const { tour } = location.state;
-  const { name, type, date, country, city, price, duration } = tour;
+  const { name, type, date, country, city, price, duration } = Object.assign({}, tour);
   console.log("tour det: ", tour);
 
   return (<>
@@ -58,7 +58,7 @@ const DetailsTour = () => {
                 <Button variant="primary" className="m-1">Купить</Button>
               </Link>
               
-              <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none'>
+              <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
                 <Button variant="success" className="m-1">Бронировать</Button>
               </Link>
             </Nav>
