@@ -1,5 +1,6 @@
 const tourService = require("../../service/tour/tourService");
 const decrypted = require("../../crypto/cryptography");
+const mailService = require("../../service/mail/mailService");
 
 class TourController {
   async getTours(req, res) {
@@ -38,14 +39,17 @@ class TourController {
     }
   }
 
-  async bookingTour(req, res, next) {
+  async buyTour(req, res, next) {
     try {
       const { clientInfoBooking } = req.body;
 
-      console.log(clientInfoBooking);
-      console.log("---------------------------------------------");
-      let qq = decrypted(clientInfoBooking);
-      console.log("parse: ", JSON.parse(qq));
+      //console.log(clientInfoBooking);
+      const buyTourData = await tourService.buyTour(JSON.parse(decrypted(clientInfoBooking)));
+      // const email = "";
+      // const fileName = "vfvf";
+      // const dirName =
+      //   "C:/Users/admin/Desktop/diplom/server/pdf/" + fileNme + ".pdf";
+      //mailService.sendTicket(dirName, fileName, email);
       res.json({ elem: "booking tour " });
     } catch (e) {
       next();

@@ -23,6 +23,7 @@
     "mongoose": "^6.7.3",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.20",
+    "pdfkit": "^0.13.0",
     "uuid": "^9.0.0"
   }
 }

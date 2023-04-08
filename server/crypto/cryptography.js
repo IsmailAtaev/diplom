@@ -2,6 +2,7 @@ const CryptoJS = require("crypto-js");
 
 const key = CryptoJS.enc.Utf8.parse("1234567887654321");
 const iv = CryptoJS.enc.Utf8.parse("1234567887654321");
+
 const encrypted = (data) => {
   let encryptData = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), key, {
     keySize: 128 / 8,
@@ -11,6 +12,7 @@ const encrypted = (data) => {
   });
   return encryptData.toString();
 };
+
 module.exports = decrypted = (data) => {
   let decryptData = CryptoJS.AES.decrypt(data, key, {
     keySize: 128 / 8,
@@ -20,6 +22,7 @@ module.exports = decrypted = (data) => {
   });
   return CryptoJS.enc.Utf8.stringify(decryptData);
 };
+
 // let qq = decrypted(ff);
 // console.log(JSON.parse(qq));
 

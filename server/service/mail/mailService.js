@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const path = require("path");
 
 class MailService {
   constructor() {
@@ -27,6 +28,35 @@ class MailService {
             <h1>Для активации перейдите по ссылке</h1>
             <a href="${link}">${link}</a>
           </div>`,
+    });
+  }
+
+  async sendTicket(dirName, fileNme, to) {
+    console.log("dirName", dirName);
+    await this.transporter.sendMail({
+      from: "node.react@mail.ru",
+      to,
+      // to: "arsi20010808@gmail.com", //"ataewisma@gmail.com",
+      subject: "An Attached File",
+      text: "Check out this attached pdf file",
+      attachments: [
+        {
+          filename: filename + ".pdf",
+          path: dirName,
+          //"C:/Users/admin/Desktop/diplom/server/pdf/" + "file.pdf",
+          //path: "C:/Users/admin/Desktop/diplom/server/pdf/file.pdf",
+          //path: "C:/Users/Username/Desktop/somefile.pdf",
+          //path: path.join(__dirname, '../output/file-name.pdf'),
+          contentType: "application/pdf",
+        },
+      ],
+      function(err, info) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(info);
+        }
+      },
     });
   }
 }
