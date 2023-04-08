@@ -1,6 +1,7 @@
 const { ObjectId } = require("mongodb");
 const TourModel = require("../../models/tour/tourModel");
-const { createInvoice } = require("../pdf/pdfTicket");
+const { onlineTicket } = require("../pdf/pdfTicket");
+const mailService = require("../mail/mailService");
 // const fs = require("fs");
 // const PDFDocument = require("pdfkit");
 
@@ -62,7 +63,8 @@ class TourService {
     //rrr(pathName);
     console.log("pathName: ", pathName);
     //const tourDB = await TourModel.findOne({ _id: tour._id });
-    createInvoice(invoice, pathName);
+    onlineTicket(invoice, pathName);
+    mailService.sendTicket(pathName, mainClient.firstName, mainClient.email);
 
     console.log("tourDB");
   }

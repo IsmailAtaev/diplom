@@ -190,7 +190,7 @@ module.exports = { createInvoice };
 
 */
 
-const createInvoice = async (invoice, path) => {
+const onlineTicket = async (invoice, path) => {
   let doc = new PDFDocument({ size: "A4", margin: 50 });
 
   console.log("invoice: ", invoice);
@@ -206,9 +206,7 @@ const createInvoice = async (invoice, path) => {
 
 const generateHeader = async (doc) => {
   doc
-    .image("C:/Users/admin/Desktop/diplom/server/assets/logo.jpg", 50, 45, {
-      width: 50,
-    })
+    .image("C:/Users/admin/Desktop/diplom/server/assets/logo.jpg", 50, 45, { width: 50 })
     .fillColor("#444444")
     .fontSize(20)
     .text("TRAVEL COMPONY", 110, 57)
@@ -373,4 +371,4 @@ const formatDate = async (date) => {
   return year + "/" + month + "/" + day;
 };
 
-module.exports = { createInvoice };
+module.exports = { onlineTicket };

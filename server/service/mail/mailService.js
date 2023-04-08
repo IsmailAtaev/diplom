@@ -31,22 +31,17 @@ class MailService {
     });
   }
 
-  async sendTicket(dirName, fileNme, to) {
+  async sendTicket(dirName, fileName, to) {
     console.log("dirName", dirName);
     await this.transporter.sendMail({
       from: "node.react@mail.ru",
       to,
-      // to: "arsi20010808@gmail.com", //"ataewisma@gmail.com",
       subject: "An Attached File",
       text: "Check out this attached pdf file",
       attachments: [
         {
-          filename: filename + ".pdf",
+          filename: fileName + ".pdf",
           path: dirName,
-          //"C:/Users/admin/Desktop/diplom/server/pdf/" + "file.pdf",
-          //path: "C:/Users/admin/Desktop/diplom/server/pdf/file.pdf",
-          //path: "C:/Users/Username/Desktop/somefile.pdf",
-          //path: path.join(__dirname, '../output/file-name.pdf'),
           contentType: "application/pdf",
         },
       ],
