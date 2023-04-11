@@ -1,10 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { bookingTour } from "../../http";
+import { bookingTour, getValidateCardId } from "../../http";
 
 export const buyTour = createAsyncThunk(
   "customers/buyTour",
   async (customerInfo, { rejectWithValue, dispatch }) => {
-    const {data} = await bookingTour({clientInfoBooking: customerInfo});
+    const { data } = await bookingTour({ clientInfoBooking: customerInfo });
+  }
+);
+
+export const getValidateCard = createAsyncThunk(
+  "customers/getValidateCard",
+  async (email, { rejectWithValue, dispatch }) => {
+    const { data } = await getValidateCardId({ email: email });
   }
 );
 
@@ -40,6 +47,6 @@ const customerSlice = createSlice({
   },
 });
 
-export const { addCustomer, addMainClient,addTour } = customerSlice.actions;
+export const { addCustomer, addMainClient, addTour } = customerSlice.actions;
 
 export default customerSlice.reducer;

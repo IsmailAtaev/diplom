@@ -1,6 +1,17 @@
 const fs = require("fs");
 const PDFDocument = require("pdfkit");
 
+/**
+ * https://pspdfkit.com/blog/2019/generate-pdf-invoices-pdfkit-nodejs/
+ * 
+ * https://pdfkit.org/docs/getting_started.html
+ * https://pdfkit.org/demo/out.pdf
+ * https://github.com/PSPDFKit-labs/pdfkit-invoice/blob/master/index.js
+ * 
+ * https://www.google.com/search?q=%D0%B0%D0%B2%D0%B8%D0%B0+%D0%B1%D0%B8%D0%BB%D0%B5%D1%82&sxsrf=APwXEdezXFi2Xe1YhFCXiQNlMm4XVZaCaQ:1680871997278&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjn3L2S6Jf-AhVhQkEAHTTCCcMQ_AUoAnoECAEQBA&biw=1536&bih=763&dpr=1.25#imgrc=adDqoXOurzpe5M
+ */
+
+
 /*
 function createInvoice(invoice, path) {
   let doc = new PDFDocument({ size: "A4", margin: 50 });

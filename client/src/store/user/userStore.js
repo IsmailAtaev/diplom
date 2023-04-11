@@ -12,9 +12,8 @@ export const registration = createAsyncThunk(
   }
 );
 
-
-
-export const login = createAsyncThunk("user/login",
+export const login = createAsyncThunk(
+  "user/login",
   async (userData, { rejectWithValue, dispatch }) => {
     const { email, password, nickName } = userData;
     const { data } = await loginApi(email, password, nickName);
@@ -24,13 +23,20 @@ export const login = createAsyncThunk("user/login",
 
 const userSlice = createSlice({
   name: "user",
-  initialState: { user: {} },
+  initialState: {
+    user: {
+      email: "",
+      id: "",
+      isActivated: "",
+      role: "",
+      nickName: "",
+    },
+  },
 
   reducers: {
     setUser: (state, action) => {
       state.user = action.payload;
     },
-    
   },
 
   extraReducers: {
@@ -40,6 +46,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser} = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;

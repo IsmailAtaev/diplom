@@ -32,7 +32,6 @@ class MailService {
   }
 
   async sendTicket(dirName, fileName, to) {
-    console.log("dirName", dirName);
     await this.transporter.sendMail({
       from: "node.react@mail.ru",
       to,
@@ -52,6 +51,20 @@ class MailService {
           console.log(info);
         }
       },
+    });
+  }
+
+  async sendValidateCard(to, Id) {
+    await this.transporter.sendMail({
+      from: "node.react@mail.ru",
+      to,
+      subject: "Activation account on " + process.env.API_URL,
+      text: "",
+      html: ` 
+          <div>
+            <h1>Введите Код для потверждения</h1>
+            <h2>${Id}</h2>
+          </div>`,
     });
   }
 }

@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useStore, useDispatch } from "react-redux";
-import { Row, Button, Col, Form, Container } from "react-bootstrap";
+import {
+  Row,
+  Button,
+  Col,
+  Form,
+  Container,
+  ModalTitle,
+  Modal,
+  Nav,
+  Navbar,
+  Card,
+} from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import { arrCountries } from "../../utils/countries";
 import Customer from "./сustomer/Customer";
@@ -8,6 +20,7 @@ import {
   addMainClient,
   addTour,
   buyTour,
+  getValidateCard,
 } from "../../store/customerStore/customerSlice";
 import { decrypted, encrypted } from "../../cryptoInfo/encrypt";
 
@@ -25,84 +38,75 @@ import { decrypted, encrypted } from "../../cryptoInfo/encrypt";
 const ClientInfo = () => {
   const location = useLocation();
   const { tour } = location.state;
-  // console.log("tourClient: ", tour);
 
   const store = useStore();
   const [trigger, setTrigger] = useState(0);
-  const countCustomer = [1, 2];
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
+  const countCustomer = [1, 2];
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [patronymic, setPatronymic] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
-  const [citizenship, setCitizenship] = useState("");
-  const [passportSeriesAndNumber, setPassportSeriesAndNumber] = useState("");
-  const [passportIssuedBy, setPassportIssuedBy] = useState("");
-  const [dateOfPassport, setDateOfPassport] = useState(new Date());
-  const [validityPeriod, setValidityPeriod] = useState(new Date());
-  const [country, setCountry] = useState("");
-  const [regionAndDistrict, setRegionAndDistrict] = useState("");
-  const [city, setCity] = useState("");
-  const [street, setStreet] = useState("");
-  const [home, setHome] = useState("");
-  const [apartment, setApartment] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardHolder, setCardHolder] = useState("");
+  const [mm, setMm] = useState("");
+  const [gg, setGg] = useState("");
+  const [cvvCvc, setCvvCvc] = useState("");
+  const [codeId, setCodeId] = useState("");
 
+  const handleSubmit = (e) => {
+    dispatch(getValidateCard({ email }));
     dispatch(
       addMainClient({
         mainClient: {
           firstName,
           lastName,
-          patronymic,
-          birthDate,
-          citizenship,
-          passportSeriesAndNumber,
-          passportIssuedBy,
-          dateOfPassport,
-          validityPeriod,
-          country,
-          regionAndDistrict,
-          city,
-          street,
-          home,
-          apartment,
           email,
           phoneNumber,
         },
       })
     );
-    console.log("qqqq: ", tour);
     dispatch(addTour({ tour: tour }));
     setTrigger((trigger) => trigger + 1);
+    setShow(true);
   };
 
-  useEffect(() => {
-    if (trigger) {
-      const obj = store.getState();
-      dispatch(buyTour(encrypted(JSON.stringify(obj.customer))));
-    }
-    // const obj = store.getState();
-    // const d = obj.customer;
+  const handleSubmitCard = (e) => {
+    const card = { cardNumber, cardHolder, mm, gg, cvvCvc, codeId };
+    const obj = store.getState();
+    let objectClient = { ...obj.customer };
+    objectClient.mainClient = {
+      ...objectClient.mainClient,
+      ...card,
+    };
+      dispatch(buyTour(encrypted(JSON.stringify(objectClient))));
+  };
 
-    // console.log("obj : ", d);
+  // useEffect(() => {
+  //   if (trigger) {
+  //     const obj = store.getState();
+  //        dispatch(buyTour(encrypted(JSON.stringify(obj.customer))));
+  //   }
+  //   // const obj = store.getState();
+  //   // const d = obj.customer;
 
-    //console.log("info: ", customers);
-    // let jj = JSON.stringify(d);
-    // console.log("json: ", jj);
-    // console.log("json: ", typeof jj);
+  //   // console.log("obj : ", d);
 
-    // let ff = JSON.parse(decrypted(encrypted(jj)));
-    // console.log("parse: ");
+  //   //console.log("info: ", customers);
+  //   // let jj = JSON.stringify(d);
+  //   // console.log("json: ", jj);
+  //   // console.log("json: ", typeof jj);
 
-    // console.log("parse: ", ff);
-    // console.log("parse: ", typeof ff);
-    console.log("parse: not trigger ");
-  }, [trigger]);
+  //   // let ff = JSON.parse(decrypted(encrypted(jj)));
+  //   // console.log("parse: ");
+
+  //   // console.log("parse: ", ff);
+  //   // console.log("parse: ", typeof ff);
+  //   console.log("parse: not trigger ");
+  // }, [trigger]);
 
   return (
     <div>
@@ -116,7 +120,192 @@ const ClientInfo = () => {
         <Row className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark">
           <Col xs={12} md={7}>
             <Form>
+              <h4>Контактные данные</h4>
+              <hr className="text-secondary d-none d-sm-block" />
               <Row className="mb-3 mt-3">
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Электронная почта</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ведите email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridPhoneNumber">
+                  <Form.Label>Номер телефона</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ведите номер телефона"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </Form.Group>
+              </Row>
+
+              <Row className="mb-3 mt-3">
+                <Form.Group as={Col} controlId="formGridFirstName">
+                  <Form>Фамилия</Form>
+                  <Form.Control
+                    type="text"
+                    placeholder="Введите фамилию"
+                    controlId="formFirstName"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form>Имя</Form>
+                  <Form.Control
+                    type="text"
+                    placeholder="Ведите имя"
+                    controlId="formGridLastNameClient"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                  />
+                </Form.Group>
+              </Row>
+            </Form>
+          </Col>
+        </Row>
+        <Button
+          className="m-1"
+          variant="primary"
+          type="submit"
+          onClick={handleSubmit}
+        >
+          Далее
+        </Button>
+      </Container>
+
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <ModalTitle>Оплата тура</ModalTitle>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicCardNumber">
+              <Form.Control
+                type="text"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value)}
+                placeholder="Номер карты"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardHolder">
+              <Form.Control
+                type="text"
+                value={cardHolder}
+                onChange={(e) => setCardHolder(e.target.value)}
+                placeholder="Держатель карты"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicMM">
+              <Form.Control
+                type="text"
+                value={mm}
+                onChange={(e) => setMm(e.target.value)}
+                placeholder="mm"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardGG">
+              <Form.Control
+                type="text"
+                value={gg}
+                onChange={(e) => setGg(e.target.value)}
+                placeholder="gg"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardCVV">
+              <Form.Control
+                type="text"
+                value={cvvCvc}
+                onChange={(e) => setCvvCvc(e.target.value)}
+                placeholder="CVV/CVC2"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicCardCVV">
+              <Form.Label>Код потверждения отправлен на почту</Form.Label>
+              <Form.Control
+                type="text"
+                value={codeId}
+                onChange={(e) => setCodeId(e.target.value)}
+                placeholder="4 символа"
+              />
+            </Form.Group>
+
+            <Button
+              className="mt-2 ml-5"
+              variant="primary"
+              onClick={handleSubmitCard}
+            >
+              Оплатить
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
+
+export default ClientInfo;
+
+/*
+  const [patronymic, setPatronymic] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [citizenship, setCitizenship] = useState("");
+  const [passportSeriesAndNumber, setPassportSeriesAndNumber] = useState("");
+  const [passportIssuedBy, setPassportIssuedBy] = useState("");
+  const [dateOfPassport, setDateOfPassport] = useState(new Date());
+  const [validityPeriod, setValidityPeriod] = useState(new Date());
+  const [country, setCountry] = useState("");
+  const [regionAndDistrict, setRegionAndDistrict] = useState("");
+  const [city, setCity] = useState("");
+  const [street, setStreet] = useState("");
+  const [home, setHome] = useState("");
+  const [apartment, setApartment] = useState("");
+  patronymic,
+          birthDate,
+          citizenship,
+          passportSeriesAndNumber,
+          passportIssuedBy,
+          dateOfPassport,
+          validityPeriod,
+          country,
+          regionAndDistrict,
+          city,
+          street,
+          home,
+          apartment,
+
+    console.log("firstName ", firstName);
+    console.log("lastName ", lastName);
+    console.log("patronymic ", patronymic);
+    console.log("birthDate ", birthDate);
+    console.log("citizenship ", citizenship);
+    console.log("passportSeriesAndNumber ", passportSeriesAndNumber);
+    console.log("passportIssuedBy ", passportIssuedBy);
+    console.log("dateOfPassport ", dateOfPassport);
+    console.log("validityPeriod ", validityPeriod);
+    console.log("country ", country);
+    console.log("regionAndDistrict ", regionAndDistrict);
+    console.log("city ", city);
+    console.log("street ", street);
+    console.log("home ", home);
+    console.log("apartment ", apartment);
+    console.log("email ", email);
+    console.log("phoneNumber ", phoneNumber);
+
+*/
+
+/*
+ {/* <Row className="mb-3 mt-3">
                 <h2>Заказчик</h2>
                 <hr className="text-secondary d-none d-sm-block" />
                 <br />
@@ -150,8 +339,8 @@ const ClientInfo = () => {
                     onChange={(e) => setPatronymic(e.target.value)}
                   />
                 </Form.Group>
-              </Row>
-
+              </Row> */
+/* 
               <Row className="mb-3 mt-3">
                 <div className="col-md-3 row">
                   <Form.Group className="mb-3" controlId="duedate">
@@ -178,9 +367,9 @@ const ClientInfo = () => {
                     ))}
                   </Form.Select>
                 </Form.Group>
-              </Row>
+              </Row> */
 
-              <Row className="mb-3">
+/* <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridPasportNumber">
                   <Form.Label>Серия и Номер паспорта</Form.Label>
                   <Form.Control
@@ -203,9 +392,9 @@ const ClientInfo = () => {
                     onChange={(e) => setPassportIssuedBy(e.target.value)}
                   />
                 </Form.Group>
-              </Row>
+              </Row> */
 
-              <Row className="mb-3">
+/* <Row className="mb-3">
                 <div className="col-md-3 row">
                   <Form.Group className="mb-3" controlId="duedate">
                     <Form.Label>Дата выдачи</Form.Label>
@@ -228,9 +417,9 @@ const ClientInfo = () => {
                     />
                   </Form.Group>
                 </div>
-              </Row>
+              </Row> */
 
-              <br />
+/* <br />
               <hr className="text-secondary d-none d-sm-block" />
               <h4>Адрес регистрации</h4>
               <Row className="mb-3 mt-3">
@@ -257,8 +446,8 @@ const ClientInfo = () => {
                     onChange={(e) => setRegionAndDistrict(e.target.value)}
                   />
                 </Form.Group>
-              </Row>
-
+              </Row> */
+/* 
               <Row className="mb-3 mt-3">
                 <Form.Group as={Col} controlId="formGridCity">
                   <Form.Label>Город</Form.Label>
@@ -296,63 +485,4 @@ const ClientInfo = () => {
                     onChange={(e) => setApartment(e.target.value)}
                   />
                 </Form.Group>
-              </Row>
-
-              <br />
-              <hr className="text-secondary d-none d-sm-block" />
-              <h4>Контактные данные</h4>
-              <Row className="mb-3 mt-3">
-                <Form.Group as={Col} controlId="formGridEmail">
-                  <Form.Label>Электронная почта</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ведите email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridPhoneNumber">
-                  <Form.Label>Номер телефона</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Ведите номер телефона"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                  />
-                </Form.Group>
-              </Row>
-            </Form>
-          </Col>
-        </Row>
-
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </Container>
-    </div>
-  );
-};
-
-export default ClientInfo;
-
-/*
-
-    console.log("firstName ", firstName);
-    console.log("lastName ", lastName);
-    console.log("patronymic ", patronymic);
-    console.log("birthDate ", birthDate);
-    console.log("citizenship ", citizenship);
-    console.log("passportSeriesAndNumber ", passportSeriesAndNumber);
-    console.log("passportIssuedBy ", passportIssuedBy);
-    console.log("dateOfPassport ", dateOfPassport);
-    console.log("validityPeriod ", validityPeriod);
-    console.log("country ", country);
-    console.log("regionAndDistrict ", regionAndDistrict);
-    console.log("city ", city);
-    console.log("street ", street);
-    console.log("home ", home);
-    console.log("apartment ", apartment);
-    console.log("email ", email);
-    console.log("phoneNumber ", phoneNumber);
-
-*/
+              </Row> */

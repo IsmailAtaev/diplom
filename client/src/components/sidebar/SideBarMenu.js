@@ -70,24 +70,6 @@ const SideBarMenu = () => {
                                                 </li>
                                             </Link>
                                         </ul>
-
-                                        <div className="dropdown open">
-                                            <a className="bg-dark text-decoration-none text-white dropdown-toggle p-3" 
-                                               type="button"
-                                               id="triggerId" 
-                                               data-bs-toggle="dropdown"
-                                               aria-haspopup="true" 
-                                               aria-expanded="false">
-                                                <i className="bi bi-person-circle"></i> <span className="ms-2 d-none d-sm-inline">Isma</span></a>
-                                            <div className="dropdown-menu" aria-labelledby="triggerId">
-                                                <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                                    <a className="dropdown-item" href="#">Profile</a>
-                                                </Link>
-                                                <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                                <a className="dropdown-item" href="#">Setting</a>
-                                                </Link>
-                                            </div>
-                                        </div>
                                     </div>
                                 </Nav>
                             </Container>

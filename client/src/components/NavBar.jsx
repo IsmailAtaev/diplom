@@ -18,7 +18,7 @@ const Styles = styled.div`
 
 
 
-const NavBar = ({getUser}) => {
+const NavBar = ({ setTrigger, isAuth }) => {
 
     const dispatch = useDispatch();
     const store = useStore();
@@ -31,6 +31,7 @@ const NavBar = ({getUser}) => {
     const [role, setRole] = useState("USER");
     const [user, setUser] = useState({});
 
+ 
 
 
     const loginRegistration = () => {
@@ -43,9 +44,7 @@ const NavBar = ({getUser}) => {
         setNickName("");
         setEmail("");
         setPassword("");
-        const obj = store.getState();
-        console.log("obj store: ", obj);
-        getUser();
+        setTrigger((trigger) => trigger + 1);
     }
 
 
@@ -67,14 +66,27 @@ const NavBar = ({getUser}) => {
                             <Link id="RouterNavLink" to='/about' className='text-decoration-none'>О нас</Link>
                         </Nav>
                         <Nav>
-                            <Button variant="primary"
+                            {   isAuth === true ?
+                            (<div className="dropdown open">
+                                <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                    <a className="bg-dark text-decoration-none text-white p-1" 
+                                        type="button"
+                                        id="triggerId">
+                                        <i className="bi bi-person-circle"></i> 
+                                            <span className="ms-2 d-none d-sm-inline">
+                                                Isma
+                                            </span>
+                                    </a>
+                                </Link>
+                            </div>) :
+                            (<> <Button variant="primary"
                                     className="me-2"
                                     onClick={ () => {setShow(true); setFlag(true); }}
                             >Войти</Button>
 
                             <Button variant="primary"
                                     onClick={ () => {setShow(true); setFlag(false); }}
-                            >Регистрация</Button>
+                            >Регистрация</Button></>)}
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -114,12 +126,6 @@ const NavBar = ({getUser}) => {
 
             </Modal.Body>
         </Modal>
-        {/* <Button className="mt-2 ml-5" variant="primary" onClick={() => {
-                console.log(store.getState());
-
-        }}>Отправить</Button> */}
-
-       
     </>);
 };
 

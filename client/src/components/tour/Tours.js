@@ -28,11 +28,13 @@ const Tours = () => {
   }, [tour]);*/
 
   return (
-    <>
-      <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
-          {tours.map((elem) => (<TourItem key={elem._id} tour={elem} />))}
+    <div style={{ marginLeft: "8%", marginRight: "8%" }}>
+      <div className="d-flex justify-content-center row gy-3 m-lg-3 gap-3 m-4">
+        {tours.map((elem) => (
+          <TourItem key={elem._id} tour={elem} />
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

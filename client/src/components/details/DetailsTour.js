@@ -10,24 +10,6 @@ const DetailsTour = () => {
   console.log("tour det: ", tour);
 
   return (<>
-
-
-      {/* <h1>
-        detailsTour{" "}
-        {`${name} ${type} ${date} ${country} ${city} ${price} ${duration}`}
-      </h1> */}
-      {/* <Card style={{ width: '18rem' }}>
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-      </Card.Body>
-    </Card> */}
-
-
     <Container>
 
       <Row className="justify-content-md-center mt-3" style={{textAlign: "center"}}>
@@ -55,11 +37,11 @@ const DetailsTour = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav variant="dark" className="me-auto gap-2">
               <Link id="RouterNavLink" to='/tour/details' className='text-decoration-none'>
-                <Button variant="primary" className="m-1">Купить</Button>
+                <Button variant="primary" className="m-1">Бронировать</Button>
               </Link>
               
               <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
-                <Button variant="success" className="m-1">Бронировать</Button>
+                <Button variant="success" className="m-1">Купить</Button>
               </Link>
             </Nav>
           </Navbar.Collapse>

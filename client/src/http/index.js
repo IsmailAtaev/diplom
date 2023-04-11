@@ -19,11 +19,10 @@ export const bookingTour = async (customerInfo) => {
   const { data } = await $host.post("/api/buy/tour", customerInfo);
 };
 
-
-
-
-
-
+export const getValidateCardId = async (email) => {
+  const { data } = await $host.post("/api/buy/validate", email);
+  return data;
+};
 
 /**
  * Aythorization user

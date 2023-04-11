@@ -3,6 +3,7 @@ import {CardImg, Carousel, CarouselItem} from "react-bootstrap";
 import Egypt from '../assets/Egypt.jpg'
 import istanbul from '../assets/Istanbul4.jpg'
 import maldives from '../assets/Switzerland.png'
+import dubay from "../assets/dubaiPool1.png";
 
 const Slider = () => {
     return (<>
@@ -14,7 +15,7 @@ const Slider = () => {
                     </Carousel.Caption>
                 </CarouselItem>
                 <CarouselItem style={{'height': '600px'}}>
-                    <CardImg className="d-block" src={istanbul} alt="First slider"/>
+                    <CardImg className="d-block" src={dubay} alt="First slider"/>
                     <Carousel.Caption>
                         <h3>Turkish</h3>
                         <p>A Thousand and One Nights</p>
