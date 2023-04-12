@@ -18,19 +18,16 @@ const Styles = styled.div`
 
 
 
-const NavBar = ({ setTrigger, isAuth, trigger }) => {
+const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
 
     const dispatch = useDispatch();
     const store = useStore();
-
     const [nickName, setNickName] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [flag, setFlag] = useState(true);
     const [show, setShow] = useState(false);
     const [role, setRole] = useState("USER");
-    const [user, setUser] = useState({});
-
     const userStore = useSelector((state) => state);
 
 
@@ -45,10 +42,8 @@ const NavBar = ({ setTrigger, isAuth, trigger }) => {
         setEmail("");
         setPassword("");
         setTrigger((trigger) => trigger + 1);
+        
     }
-
-
-
 
     return (<>
         <Styles>
@@ -79,23 +74,24 @@ const NavBar = ({ setTrigger, isAuth, trigger }) => {
                                         id="triggerId">
                                         <i className="bi bi-person-circle"></i> 
                                             <span className="ms-2 d-none d-sm-inline">
-                                                Isma
+                                              {user.nickName}
                                             </span>
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="triggerId">
-                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none' state={{user}}>
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-person"></i>
                                             <span className="ms-2 d-none d-sm-inline">Профиль</span></a>
                                         </Link>
-                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                        {user.role !== "ADMIN" ?(<><Link id="RouterNavLink" to='/booking/user' className='text-decoration-none'>
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-clipboard2-data-fill"></i>
                                             <span className="ms-2 d-none d-sm-inline">Бронь</span></a>
                                         </Link>
-                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                        <Link id="RouterNavLink" to='/ticket/user' className='text-decoration-none'>
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-ticket-detailed-fill"></i>
                                             <span className="ms-2">Билеты</span></a>
-                                        </Link>
-                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                        </Link></>
+                                        ) : ("")}
+                                        <Link id="RouterNavLink" to='/' className='text-decoration-none'>
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-box-arrow-right"></i>
                                             <span className="ms-2 d-none d-sm-inline">Выйти</span></a>
                                         </Link>

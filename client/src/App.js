@@ -15,6 +15,8 @@ import ClientInfo from "./components/clientInfo/ClientInfo";
 import CardInfo from "./components/clientInfo/cardInfo/CardInfo";
 import Account from "./components/account/Account";
 import SearchBar from "./components/search/SearchBar";
+import BookingUser from "./components/booking/BookingUser";
+import TicketUser from "./components/ticket/TicketUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,7 +27,7 @@ function App() {
   const [trigger, setTrigger] = useState(0);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
-  const [role, setRole] = useState("-");
+  const [eee, setEee] = useState(0);
 
   useEffect(() => {
     async function getToursAPI() {
@@ -37,15 +39,19 @@ function App() {
       setUser(userStore.user.user.user);
       if (user !== null && user !== undefined) {
         setIsAuth(true);
-        setRole(user.role);
-        console.log(user.role);
+        setEee((eee) => eee + 1);
+        //setRole(user.role);
+        //console.log(user.role);
       }
     }
   }, [tour, userStore.user.user]);
 
+
+  
+
   return (
     <div>
-      <NavBar setTrigger={setTrigger} isAuth={isAuth} trigger={trigger} />
+      <NavBar setTrigger={setTrigger} isAuth={isAuth} trigger={trigger} eee={eee} user={user}/>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route
@@ -59,6 +65,8 @@ function App() {
         <Route path="/tour/details" element={<DetailsTour />} />
         <Route path="/tour/details/buy" element={<ClientInfo />} />
         <Route path="/buy/tour/validation" element={<CardInfo />} />
+        <Route path="/booking/user" element={<BookingUser />} />
+        <Route path="/ticket/user" element={<TicketUser />} />
       </Routes>
       <Footer />
     </div>
