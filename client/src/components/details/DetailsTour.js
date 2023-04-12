@@ -1,14 +1,13 @@
 import React from "react";
 import {Button, Container, Card, Col, Row, Nav, Navbar} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useSelector} from "react-redux";
+import { useLocation, Link } from "react-router-dom";
 
-const DetailsTour = () => {
+const DetailsTour = ({isAuth, user}) => {
   const location = useLocation();
   const { tour } = location.state;
   const { name, type, date, country, city, price, duration } = Object.assign({}, tour);
-  console.log("tour det: ", tour);
-
+  
   return (<>
     <Container>
 
@@ -36,13 +35,21 @@ const DetailsTour = () => {
         <Container>
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav variant="dark" className="me-auto gap-2">
-              <Link id="RouterNavLink" to='/tour/details' className='text-decoration-none'>
-                <Button variant="primary" className="m-1">Бронировать</Button>
-              </Link>
-              
-              <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
-                <Button variant="success" className="m-1">Купить</Button>
-              </Link>
+              {(user.role === "USER" ) ?
+                  (<>
+                      <Link id="RouterNavLink" to='/tour/details' className='text-decoration-none'>
+                        <Button variant="primary" className="m-1">Бронировать</Button>
+                      </Link>
+                  
+                      <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
+                        <Button variant="success" className="m-1">Купить</Button>
+                      </Link>
+                    </>
+                  ) : ("")}
+                {user === undefined ? 
+                  <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
+                    <Button variant="success" className="m-1">Купить</Button>
+                  </Link> : ""}
             </Nav>
           </Navbar.Collapse>
         </Container>  

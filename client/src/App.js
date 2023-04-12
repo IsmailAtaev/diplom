@@ -18,6 +18,7 @@ import SearchBar from "./components/search/SearchBar";
 import BookingUser from "./components/booking/BookingUser";
 import TicketUser from "./components/ticket/TicketUser";
 
+
 function App() {
   const dispatch = useDispatch();
   const store = useStore();
@@ -59,10 +60,10 @@ function App() {
           element={user.role === "ADMIN" ? <SideBarMenu /> : <Tours />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/tour-work" element={<Admin />} />
+        {/* <Route path="/tour-work" element={<Admin />} /> */}
         <Route path="/dashboard" element={<About />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/tour/details" element={<DetailsTour />} />
+        <Route path="/tour/details" element={<DetailsTour isAuth={isAuth} user={user}/>} />
         <Route path="/tour/details/buy" element={<ClientInfo />} />
         <Route path="/buy/tour/validation" element={<CardInfo />} />
         <Route path="/booking/user" element={<BookingUser />} />

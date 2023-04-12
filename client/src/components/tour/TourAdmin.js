@@ -74,13 +74,13 @@ const TourAdmin = ({ tour, index }) => {
         <td style={{ alignItems: "center" }}>{tour.duration}</td>
         <td>{tour.price}</td>
         <td>
-          <Button variant="primary" className="m-1">
+          <Button variant="success" className="m-1">
             Редоктировать
           </Button>
         </td>
         <td>
           <Button
-            variant="primary"
+            variant="danger"
             className="m-2"
             onClick={() => {
               dispatch(deleteTourItem({ id: tour._id }));

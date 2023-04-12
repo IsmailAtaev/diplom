@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap/js/dist/dropdown"
@@ -7,7 +7,10 @@ import {useSelector } from "react-redux";
 import {Link} from "react-router-dom";
 import {Container, Nav, Navbar, Table,} from "react-bootstrap";
 import TourItem from "../tour/tourItem";
-import TourAdmin from "../tour/TourAdmin";
+import Admin from "../admin/Admin";
+import BookingAdmin from "../booking/BookingAdmin";
+import TicketAdmin from "../ticket/TicketAdmin";
+import Users from "../users/Users";
 
 
 const styleAddTour = {
@@ -21,6 +24,41 @@ const SideBarMenu = () => {
 
 
     const tours = useSelector((state) => state.tour.tours);
+    
+    const [tourFlag, setTourFlag] = useState(false);
+    const [bookingFlag, setBookingFlag] = useState(false);
+    const [ticketFlag, setTicketFlag] = useState(false);
+    const [userFlag, setUserFlag] = useState(false);
+ 
+    function setTour() {
+        setTourFlag(true);    
+        setBookingFlag(false);
+        setTicketFlag(false);
+        setUserFlag(false);    
+    }
+   
+    function setBookIng() {
+        setTourFlag(false);    
+        setBookingFlag(true);
+        setTicketFlag(false);
+        setUserFlag(false);    
+    }
+   
+    function setTicket() {
+        setTourFlag(false);    
+        setBookingFlag(false);
+        setTicketFlag(true);
+        setUserFlag(false);    
+    }
+
+    function setUsers() {
+        setTourFlag(false);    
+        setBookingFlag(false);
+        setTicketFlag(false);
+        setUserFlag(true);    
+    }
+
+    
 
 
 
@@ -40,41 +78,34 @@ const SideBarMenu = () => {
                                         <hr className="text-secondary d-none d-sm-block"/>
                                         <ul className="nav nav-pills flex-column mt-3 mt-sm-0">
     
-                                            <Link id="RouterNavLink" to='/tour-work' className='text-decoration-none'>
-                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">                    
+                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0" onClick={setTour}>                    
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-airplane-fill"></i>
                                                         <span className="ms-3 d-none d-sm-inline">Туры</span>
                                                     </a>
                                                 </li>
-                                            </Link>
-
-                                            <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
+                                          
+                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0" onClick={ setBookIng}>
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-clipboard2-data-fill"></i>
                                                         <span className="ms-3 d-none d-sm-inline">Брони</span>
                                                     </a>
                                                 </li>
-                                            </Link>
-
-                                            <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
+                                        
+                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0" onClick={setTicket}>
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-ticket-detailed-fill"></i>
                                                         <span className="ms-3 d-none d-sm-inline">Билеты</span>
                                                     </a>
                                                 </li>
-                                            </Link>
-
-                                            <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
-                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0">
+                                            
+                                                <li className="nav-item text-white fs-4 my-1 py-2 py-sm-0" onClick={setUsers}>
                                                     <a href="#" className="nav-link text-white fs-5" aria-current="page">
                                                         <i className="bi bi-people-fill"></i>
                                                         <span className="ms-3 d-none d-sm-inline">Пользователи</span>
                                                     </a>
                                                 </li>
-                                            </Link>
+                                            {/* </Link> */}
                                         </ul>
                                     </div>
                                 </Nav>
@@ -88,7 +119,7 @@ const SideBarMenu = () => {
                  {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
             </div> */}
 
-             <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
+             {/* <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -97,9 +128,27 @@ const SideBarMenu = () => {
                     </thead>
                     {tours.map((elem) => (<TourAdmin key={elem.id} tour={elem} index={elem.index}/>))}
                 </Table>
-            </div>
-        </div>
+            </div> */}
+        
+        
+        {tourFlag === true ? <Admin /> : ""}
+        {bookingFlag === true ? <BookingAdmin /> : ""}
+        {ticketFlag === true ? <TicketAdmin /> : ""}
+        {userFlag === true ? <Users /> : ""}
+            
+        
+        
+        
+        
 
+
+
+
+
+        
+        
+        
+        </div>
     </>)
 };
 
