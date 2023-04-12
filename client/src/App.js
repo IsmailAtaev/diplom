@@ -25,6 +25,7 @@ function App() {
   const [trigger, setTrigger] = useState(0);
   const [isAuth, setIsAuth] = useState(false);
   const [user, setUser] = useState({});
+  const [role, setRole] = useState("-");
 
   useEffect(() => {
     async function getToursAPI() {
@@ -36,13 +37,15 @@ function App() {
       setUser(userStore.user.user.user);
       if (user !== null && user !== undefined) {
         setIsAuth(true);
+        setRole(user.role);
+        console.log(user.role);
       }
     }
   }, [tour, userStore.user.user]);
 
   return (
     <div>
-      <NavBar setTrigger={setTrigger} isAuth={isAuth} />
+      <NavBar setTrigger={setTrigger} isAuth={isAuth} trigger={trigger} />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route
@@ -63,3 +66,25 @@ function App() {
 }
 
 export default App;
+
+
+/*
+
+:
+
+                            (<div className="dropdown open">
+                             <Link id="RouterNavLink" to='/account' className='text-decoration-none'> 
+                                <a className="bg-dark text-decoration-none text-white p-1" 
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-haspopup="true" 
+                                    aria-expanded="false"
+                                    id="triggerId">
+                                    <i className="bi bi-person-circle"></i> 
+                                        <span className="ms-2 d-none d-sm-inline">
+                                            Isma
+                                        </span>
+                                </a>
+                            </Link>  
+                            </div>)
+*/

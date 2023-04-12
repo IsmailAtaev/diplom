@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useDispatch, useStore} from "react-redux";
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useStore, useSelector} from "react-redux";
 import styled from "styled-components";
 import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar} from "react-bootstrap";
 import logo from "../assets/logo.jpg";
@@ -18,7 +18,7 @@ const Styles = styled.div`
 
 
 
-const NavBar = ({ setTrigger, isAuth }) => {
+const NavBar = ({ setTrigger, isAuth, trigger }) => {
 
     const dispatch = useDispatch();
     const store = useStore();
@@ -31,7 +31,7 @@ const NavBar = ({ setTrigger, isAuth }) => {
     const [role, setRole] = useState("USER");
     const [user, setUser] = useState({});
 
- 
+    const userStore = useSelector((state) => state);
 
 
     const loginRegistration = () => {
@@ -46,6 +46,8 @@ const NavBar = ({ setTrigger, isAuth }) => {
         setPassword("");
         setTrigger((trigger) => trigger + 1);
     }
+
+
 
 
     return (<>
@@ -67,17 +69,37 @@ const NavBar = ({ setTrigger, isAuth }) => {
                         </Nav>
                         <Nav>
                             {   isAuth === true ?
-                            (<div className="dropdown open">
-                                <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                            (
+                            <div className="dropdown open">
                                     <a className="bg-dark text-decoration-none text-white p-1" 
                                         type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-haspopup="true" 
+                                        aria-expanded="false"
                                         id="triggerId">
                                         <i className="bi bi-person-circle"></i> 
                                             <span className="ms-2 d-none d-sm-inline">
                                                 Isma
                                             </span>
                                     </a>
-                                </Link>
+                                    <div className="dropdown-menu" aria-labelledby="triggerId">
+                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                            <a className="dropdown-item text-dark" href="#"><i className="bi bi-person"></i>
+                                            <span className="ms-2 d-none d-sm-inline">Профиль</span></a>
+                                        </Link>
+                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                            <a className="dropdown-item text-dark" href="#"><i className="bi bi-clipboard2-data-fill"></i>
+                                            <span className="ms-2 d-none d-sm-inline">Бронь</span></a>
+                                        </Link>
+                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                            <a className="dropdown-item text-dark" href="#"><i className="bi bi-ticket-detailed-fill"></i>
+                                            <span className="ms-2">Билеты</span></a>
+                                        </Link>
+                                        <Link id="RouterNavLink" to='/account' className='text-decoration-none'>
+                                            <a className="dropdown-item text-dark" href="#"><i className="bi bi-box-arrow-right"></i>
+                                            <span className="ms-2 d-none d-sm-inline">Выйти</span></a>
+                                        </Link>
+                                    </div>
                             </div>) :
                             (<> <Button variant="primary"
                                     className="me-2"

@@ -5,14 +5,17 @@ import "bootstrap/js/dist/dropdown"
 import "./sidebar.css";
 import {useSelector } from "react-redux";
 import {Link} from "react-router-dom";
-import {Container, Nav, Navbar} from "react-bootstrap";
+import {Container, Nav, Navbar, Table,} from "react-bootstrap";
 import TourItem from "../tour/tourItem";
+import TourAdmin from "../tour/TourAdmin";
 
 
 const styleAddTour = {
     display: "flex",
     flexWrap: "wrap",
   };
+
+
 
 const SideBarMenu = () => {
 
@@ -24,7 +27,10 @@ const SideBarMenu = () => {
 
   return (<>
         <div className="d-flex">
-            <div className="container-fluid"> 
+            <div className="container-fluid" style={{width: "250px",  
+                                                     margin: "0px -10px", 
+                                                     float: "right"
+                                                     }}> 
                 <div className="row">
                     <div className="bg-dark col-auto col-md-1.5 min-vh-100 d-flex justify-content-between flex-column">
                         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -77,8 +83,20 @@ const SideBarMenu = () => {
                     </div> 
                 </div>            
             </div>
+{/* 
             <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
                  {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
+            </div> */}
+
+             <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                        <th>#</th><th>Название тура</th><th>Тип тура</th><th>Страна</th><th>Город</th><th>Дата</th><th>Длительность</th><th>Цена $</th><th></th><th></th>
+                        </tr>
+                    </thead>
+                    {tours.map((elem) => (<TourAdmin key={elem.id} tour={elem} index={elem.index}/>))}
+                </Table>
             </div>
         </div>
 
@@ -93,7 +111,29 @@ export default SideBarMenu;
                         </a> 
 */
 
+/*
 
+
+         <div className="dropdown open">
+                                            <a className="bg-dark text-decoration-none text-white dropdown-toggle p-3" 
+                                               type="button"
+                                               id="triggerId" 
+                                               data-bs-toggle="dropdown"
+                                               aria-haspopup="true" 
+                                               aria-expanded="false">
+                                                <i className="bi bi-person-circle"></i> <span className="ms-2 d-none d-sm-inline">Isma</span></a>
+                                          
+                                                <div className="dropdown-menu" aria-labelledby="triggerId">
+                                                <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
+                                                    <a className="dropdown-item" href="#">Profile</a>
+                                                </Link>
+                                                <Link id="RouterNavLink" to='/dashboard' className='text-decoration-none'>
+                                                <a className="dropdown-item" href="#">Setting</a>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                        
+*/
 /*<Navbar.Toggle aria-controls="responsive-navbar-nav"/>
 <Navbar.Collapse id="responsive-navbar-nav"> 
 */

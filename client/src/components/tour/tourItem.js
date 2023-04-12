@@ -5,9 +5,10 @@ import {removeTour} from "../../http/index"
 import {useDispatch} from "react-redux";
 import egyp from "../../assets/Egypt3.jpg";
 import {deleteTourItem, getTours} from "../../store/tourStore/tourSlice";
+
+
 const ADMIN = "ADMIN";
 const USER = "USER";
-
 const isAuth = USER;
 
 const TourItem = ({ tour }) => {
