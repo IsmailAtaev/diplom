@@ -37,7 +37,7 @@ const DetailsTour = ({isAuth, user}) => {
             <Nav variant="dark" className="me-auto gap-2">
               {(user.role === "USER" ) ?
                   (<>
-                      <Link id="RouterNavLink" to='/tour/details' className='text-decoration-none'>
+                      <Link id="RouterNavLink" to='/booking/user' className='text-decoration-none' state={{tour}}>
                         <Button variant="primary" className="m-1">Бронировать</Button>
                       </Link>
                   

@@ -4,19 +4,11 @@ import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap/js/dist/dropdown"
 import "./sidebar.css";
 import {useSelector } from "react-redux";
-import {Link} from "react-router-dom";
-import {Container, Nav, Navbar, Table,} from "react-bootstrap";
-import TourItem from "../tour/tourItem";
+import {Container, Nav, Navbar,} from "react-bootstrap";
 import Admin from "../admin/Admin";
 import BookingAdmin from "../booking/BookingAdmin";
 import TicketAdmin from "../ticket/TicketAdmin";
 import Users from "../users/Users";
-
-
-const styleAddTour = {
-    display: "flex",
-    flexWrap: "wrap",
-  };
 
 
 
@@ -24,7 +16,6 @@ const SideBarMenu = () => {
 
 
     const tours = useSelector((state) => state.tour.tours);
-    
     const [tourFlag, setTourFlag] = useState(false);
     const [bookingFlag, setBookingFlag] = useState(false);
     const [ticketFlag, setTicketFlag] = useState(false);
@@ -117,9 +108,9 @@ const SideBarMenu = () => {
 {/* 
             <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
                  {tours.map((elem) => (<TourItem key={elem.id} tour={elem} />))}
-            </div> */}
-
-             {/* <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
+                 import TourItem from "../tour/tourItem";
+            </div> 
+             <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
                 <Table striped bordered hover>
                     <thead>
                         <tr>

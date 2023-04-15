@@ -1,5 +1,5 @@
 import {React, useState} from 'react';
-import {Container, Nav, Navbar, Table, Button} from "react-bootstrap";
+import {Container, Nav, Navbar, Table, Button, Alert} from "react-bootstrap";
 import {useSelector } from "react-redux";
 import CreateTour from "../modals/CreateTour";
 //import Tours from "../tour/Tours";
@@ -12,10 +12,15 @@ const Admin = () => {
 
 
     return (
-        <div>
-            <Container className="d-flex align-items-center">
-                <Button variant="primary" className="mt-2" onClick={() => setTourVisible(true)}>Добвить тур</Button>
-                <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
+        <div className="mt-3">
+            <Container className="d-flex justify-content-md-center">
+                <Alert key="secondary" variant="secondary">
+                    <Button variant="primary" className="m-2" onClick={() => setTourVisible(true)}>Добвить тур</Button>
+                    <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
+
+                    <Button variant="primary" className="m-2" onClick={() => setTourVisible(true)}>Добвить отель</Button>
+                    <CreateTour show={tourVisible} onHide={() => setTourVisible(false)}/>
+                </Alert>
             </Container>
             {/* <Tours /> */}
             
@@ -28,7 +33,7 @@ const Admin = () => {
                         <th>#</th><th>Название тура</th><th>Тип тура</th><th>Страна</th><th>Город</th><th>Дата</th><th>Длительность</th><th>Цена $</th><th></th><th></th>
                         </tr>
                     </thead>
-                    {tours.map((elem) => (<TourAdmin key={elem.id} tour={elem} index={elem.index}/>))}
+                    {tours.map((elem) => (<TourAdmin key={elem.id} tour={elem} index={elem.index}/>)).reverse()}
                 </Table>
             </div> 
 

@@ -3,7 +3,7 @@ import {useDispatch, useStore, useSelector} from "react-redux";
 import styled from "styled-components";
 import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar} from "react-bootstrap";
 import logo from "../assets/logo.jpg";
-import {Link} from "react-router-dom";
+import {Link, useNavigate } from "react-router-dom";
 import {login, registration} from "../store/user/userStore";
 
 const Styles = styled.div`
@@ -18,8 +18,10 @@ const Styles = styled.div`
 
 
 
-const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
+const NavBar = ({ setTrigger, isAuth, trigger, eee, user, setIsAuth}) => {
 
+
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const store = useStore();
     const [nickName, setNickName] = useState("");
@@ -45,6 +47,12 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
         
     }
 
+    const handleClickLogout = () => {
+        setIsAuth(false);
+        navigate('/');
+    } 
+
+
     return (<>
         <Styles>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -63,7 +71,7 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
                             <Link id="RouterNavLink" to='/about' className='text-decoration-none'>О нас</Link>
                         </Nav>
                         <Nav>
-                            {   isAuth === true ?
+                            { isAuth === true ?
                             (
                             <div className="dropdown open">
                                     <a className="bg-dark text-decoration-none text-white p-1" 
@@ -82,7 +90,7 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-person"></i>
                                             <span className="ms-2 d-none d-sm-inline">Профиль</span></a>
                                         </Link>
-                                        {user.role !== "ADMIN" ?(<><Link id="RouterNavLink" to='/booking/user' className='text-decoration-none'>
+                                        {user.role !== "ADMIN" ?(<><Link id="RouterNavLink" to='/booking/basket' className='text-decoration-none'>
                                             <a className="dropdown-item text-dark" href="#"><i className="bi bi-clipboard2-data-fill"></i>
                                             <span className="ms-2 d-none d-sm-inline">Бронь</span></a>
                                         </Link>
@@ -91,10 +99,13 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user}) => {
                                             <span className="ms-2">Билеты</span></a>
                                         </Link></>
                                         ) : ("")}
-                                        <Link id="RouterNavLink" to='/' className='text-decoration-none'>
-                                            <a className="dropdown-item text-dark" href="#"><i className="bi bi-box-arrow-right"></i>
+
+                                        {/* <Link id="RouterNavLink" to='/' className='text-decoration-none'> */}
+                                            <a className="dropdown-item text-dark" href="#" 
+                                                onClick={handleClickLogout}
+                                            ><i className="bi bi-box-arrow-right"></i>
                                             <span className="ms-2 d-none d-sm-inline">Выйти</span></a>
-                                        </Link>
+                                        {/* </Link> */}
                                     </div>
                             </div>) :
                             (<> <Button variant="primary"

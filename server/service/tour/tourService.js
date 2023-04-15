@@ -4,6 +4,9 @@ const { onlineTicket } = require("../pdf/pdfTicket");
 const mailService = require("../mail/mailService");
 const { nanoid } = require("nanoid");
 const CardValidationId = require("../../models/validCardId/validateCardId");
+const BookingModel = require("../../models/booking/bookingModel");
+const UserModel = require("../../models/user/userModel");
+
 // const fs = require("fs");
 // const PDFDocument = require("pdfkit");
 
@@ -69,7 +72,7 @@ class TourService {
       paid: 0,
       invoice_nr: 1234,
     };
-    
+
     console.log("objInfoBuyTour: ", objInfoBuyTour);
 
     const { customers, mainClient, tour } = objInfoBuyTour;
@@ -89,6 +92,71 @@ class TourService {
     onlineTicket(invoice, pathName);
     mailService.sendTicket(pathName, mainClient.firstName, mainClient.email);
     return { elem: "vse super " };
+  }
+
+  async reservationTour(objInfoBuyTour) {
+    const { customers, mainClient, tour, card } = objInfoBuyTour;
+
+    const tourModel = await TourModel.findOne({
+      _id: tour._id,
+      country: tour.country,
+    });
+    if (!tourModel) {
+      return { elem: "нету такого тура" };
+    }
+
+    const userModel = await UserModel.findOne({
+      _id: mainClient.id,
+      email: mainClient.email,
+    });
+    if (!userModel) {
+      return { elem: "нету такого пользователя" };
+    }
+
+    const cardValidationModel = await CardValidationId.findOne({
+      email: mainClient.email,
+      validateCard: card.codeId,
+    });
+    if (!cardValidationModel) {
+      return { elem: "Неверный код подтверждение" };
+    }
+
+    const cost = tour.price * customers.length;
+    const pay = 30 * (cost / 100);
+    const needToPay = cost - pay;
+
+    const btm = await BookingModel.create({
+      user: userModel._id,
+      tour: tourModel._id,
+      pay,
+      needToPay,
+      price: cost,
+      customers,
+    });
+
+    const cardValidationRemove = await CardValidationId.deleteOne({
+      email: mainClient.email,
+      validateCard: card.codeId,
+    });
+
+    return { booking: "Тур успешно забронирован" };
+  }
+
+  async getReservationTour(user) {
+    const userModel = await UserModel.findOne({
+      _id: user.id,
+      email: user.email,
+    });
+    if (!userModel) {
+      return { elem: "Нету такого пользователя" };
+    }
+    if (user.role === "USER") {
+      const getBookingUser = await BookingModel.find({ user: userModel._id });
+      // console.log("getBookingUser ", getBookingUser);
+      return getBookingUser;
+    }
+    const getBooking = await BookingModel.find();
+    return getBooking;
   }
 }
 

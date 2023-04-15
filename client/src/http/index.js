@@ -24,6 +24,11 @@ export const getValidateCardId = async (email) => {
   return data;
 };
 
+export const reservationTour = async (objectBooking) => {
+  const { data } = await $host.post("/api/booking/tour", objectBooking);
+  return data;
+};
+
 /**
  * Aythorization user
  *
@@ -72,4 +77,15 @@ export const registrationApi = async (email, password, role, nickName) => {
 
 export const loginApi = async (email, password, nickName) => {
   return $authHost.post("/api/login", { email, password, nickName });
+};
+
+export const getReservationTour = async (user) => {
+  console.log("user $host", user);
+  const { data } = await $host.get(`/api/get/booking/tour/${user}`);
+  console.log("data $host", data);
+  return data;
+
+  // {
+  //   params: { user: user },
+  // }
 };

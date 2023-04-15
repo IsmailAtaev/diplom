@@ -25,7 +25,9 @@ class TourController {
         duration
       );
       res.json({ elem: "add db " });
-    } catch (e) {}
+    } catch (e) {
+      next();
+    }
   }
 
   async removeTour(req, res, next) {
@@ -42,7 +44,7 @@ class TourController {
   async validateCardId(req, res, next) {
     try {
       const { email } = req.body;
-     // console.log(email.email);
+      // console.log(email.email);
       const Id = await tourService.validateIdCard(email.email);
       if (!Id) {
         Id = "error";
@@ -68,6 +70,35 @@ class TourController {
       //   "C:/Users/admin/Desktop/diplom/server/pdf/" + fileNme + ".pdf";
       //mailService.sendTicket(dirName, fileName, email);
       res.json({ elem: buyTourData });
+    } catch (e) {
+      next();
+    }
+  }
+
+  async bookingTour(req, res, next) {
+    try {
+      const { objectBooking } = req.body;
+      const bookingTourData = await tourService.reservationTour(
+        JSON.parse(decrypted(objectBooking))
+      );
+
+      res.json(bookingTourData);
+    } catch (e) {
+      next();
+    }
+  }
+
+  async getBookingTour(req, res, next) {
+    try {
+      const user = JSON.parse(req.params.id);
+      console.log("94: ", user);
+      const getBookings = await tourService.getReservationTour(user);
+      console.log("96: ", getBookings);
+
+    //  console.log("98: ", getBookings[0].customers);
+
+      return res.json(getBookings);
+      //return res.json({ elem: "vse" });
     } catch (e) {
       next();
     }

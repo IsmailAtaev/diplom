@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { bookingTour, getValidateCardId } from "../../http";
+import {
+  bookingTour,
+  getReservationTour,
+  getValidateCardId,
+  reservationTour,
+} from "../../http";
 
 export const buyTour = createAsyncThunk(
   "customers/buyTour",
@@ -15,9 +20,26 @@ export const getValidateCard = createAsyncThunk(
   }
 );
 
+export const bookingTourSlice = createAsyncThunk(
+  "customers/bookingTourSlice",
+  async (objectBooking, { rejectWithValue, dispatch }) => {
+    const { data } = await reservationTour({ objectBooking: objectBooking });
+  }
+);
+
+export const getBookingUser = createAsyncThunk(
+  "customers/getBookingUser",
+  async (user, { rejectWithValue, dispatch }) => {
+    console.log("user slice ", user);
+    const data = await getReservationTour(JSON.stringify(user));
+    console.log(data);
+    dispatch(setBookingUser({ booking: data }));
+  }
+);
+
 const customerSlice = createSlice({
   name: "customers",
-  initialState: { customers: [], mainClient: {}, tour: {} },
+  initialState: { customers: [], mainClient: {}, tour: {}, booking: {} },
   reducers: {
     addCustomer(state, action) {
       state.customers.push({
@@ -39,6 +61,10 @@ const customerSlice = createSlice({
     addTour(state, action) {
       state.tour = action.payload.tour;
     },
+
+    setBookingUser(state, action) {
+      state.booking = action.payload.booking;
+    },
   },
   extraReducers: {
     [buyTour.fulfilled]: () => console.log(),
@@ -47,6 +73,7 @@ const customerSlice = createSlice({
   },
 });
 
-export const { addCustomer, addMainClient, addTour } = customerSlice.actions;
+export const { addCustomer, addMainClient, addTour, setBookingUser } =
+  customerSlice.actions;
 
 export default customerSlice.reducer;

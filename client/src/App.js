@@ -17,7 +17,7 @@ import Account from "./components/account/Account";
 import SearchBar from "./components/search/SearchBar";
 import BookingUser from "./components/booking/BookingUser";
 import TicketUser from "./components/ticket/TicketUser";
-
+import BookingUserBasket from "./components/booking/BookingUserBasket";
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div>
-      <NavBar setTrigger={setTrigger} isAuth={isAuth} trigger={trigger} eee={eee} user={user}/>
+      <NavBar setTrigger={setTrigger} isAuth={isAuth} trigger={trigger} eee={eee} user={user} setIsAuth={setIsAuth}/>
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route
@@ -67,6 +67,7 @@ function App() {
         <Route path="/tour/details/buy" element={<ClientInfo />} />
         <Route path="/buy/tour/validation" element={<CardInfo />} />
         <Route path="/booking/user" element={<BookingUser />} />
+        <Route path="/booking/basket" element={<BookingUserBasket />} />
         <Route path="/ticket/user" element={<TicketUser />} />
       </Routes>
       <Footer />

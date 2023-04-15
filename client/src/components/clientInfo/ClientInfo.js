@@ -83,6 +83,7 @@ const ClientInfo = () => {
       ...card,
     };
       dispatch(buyTour(encrypted(JSON.stringify(objectClient))));
+      setShow(false);
   };
 
   // useEffect(() => {
