@@ -93,9 +93,9 @@ class TourController {
       const user = JSON.parse(req.params.id);
       console.log("94: ", user);
       const getBookings = await tourService.getReservationTour(user);
-      console.log("96: ", getBookings);
+      //console.log("96: ", getBookings);
 
-    //  console.log("98: ", getBookings[0].customers);
+      //  console.log("98: ", getBookings[0].customers);
 
       return res.json(getBookings);
       //return res.json({ elem: "vse" });

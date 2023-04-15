@@ -17,7 +17,7 @@ const SideBarMenu = () => {
 
     const tours = useSelector((state) => state.tour.tours);
     const [tourFlag, setTourFlag] = useState(false);
-    const [bookingFlag, setBookingFlag] = useState(false);
+    const [bookingFlag, setBookingFlag] = useState(true);
     const [ticketFlag, setTicketFlag] = useState(false);
     const [userFlag, setUserFlag] = useState(false);
  
@@ -121,7 +121,7 @@ const SideBarMenu = () => {
                 </Table>
             </div> */}
         
-        
+       
         {tourFlag === true ? <Admin /> : ""}
         {bookingFlag === true ? <BookingAdmin /> : ""}
         {ticketFlag === true ? <TicketAdmin /> : ""}

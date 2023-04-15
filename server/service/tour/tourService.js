@@ -150,11 +150,93 @@ class TourService {
     if (!userModel) {
       return { elem: "Нету такого пользователя" };
     }
+
     if (user.role === "USER") {
-      const getBookingUser = await BookingModel.find({ user: userModel._id });
-      // console.log("getBookingUser ", getBookingUser);
-      return getBookingUser;
+      console.log(userModel);
+      const id = userModel._id;
+
+      const getBooking1 = await BookingModel.find({ user: id });
+      // const getBookingUser = await BookingModel.find({ user: userModel._id });
+      //console.log(getBooking[0].user);
+
+      console.log("getBookingUser ", getBooking1);
+      let arr = [];
+      for (let i = 0; i < getBooking1.length; i++) {
+        const tourInfo = await TourModel.findOne({ _id: getBooking1[i].tour });
+        const bookingInfo = getBooking1[i];
+        arr.push({ bookingInfo, tourInfo, userInfo: userModel });
+      }
+      console.log("arr: ", arr);
+
+      // const result1 = getBooking1.map((elem) => {
+      //   const tourBD = TourModel.findOne({ _id: elem.tour });
+      //   console.log("tourDB: ", tourBD);
+
+      //   return elem;
+      // });
+      // console.log("result1: ", result1);
+
+      return getBooking1;
     }
+    /*
+    console.log("== ", getBookingUser[0].user);
+    console.log("=+  ", typeof getBookingUser[0].user);
+
+       getBooking[1].user = {};
+         getBooking[1].user = { ...userBooking };
+
+    const result1 = getBookingUser.map(async (elem) => {
+      const tourInfo = await TourModel.findOne({ _id: elem.tour });
+      console.log("===========================================");
+      console.log("tour: ", tourInfo);
+      console.log("===========================================");
+
+      const userBooking = await UserModel.findOne({ _id: elem.user });
+      console.log("===========================================");
+      console.log("user: ", userBooking);
+      console.log("===========================================");
+
+      return { ...tourInfo, userInfo: { ...userBooking } };
+    });
+    console.log("result1: ", result1);
+
+    /
+
+    const userBooking = await UserModel.findOne({ _id:  });
+    console.log("userBooking: ", userBooking);
+
+    const result = getBookingUser.map((elem) => {
+      const tourId = JSON.stringify(elem.tour);
+      console.log("tourId: ", tourId);
+      console.log("tourId: ", typeof tourId);
+      console.log("tourId: ", JSON.stringify(tourId));
+      const tourInfo = await TourModel.findOne({ _id: elem.tour });
+      console.log("=DB=");
+      console.log("===========================================");
+      console.log("tour: ", tourInfo);
+      console.log("===========================================");
+
+      console.log("=DB=");
+      console.log("===========================================");
+      console.log("user: ", userBooking);
+      console.log("===========================================");
+      console.log("elem: ", elem);
+      console.log("elem: ", Object.assign(elem, userBooking));
+      let e = {}
+      let e = { elem, ...userBooking._doc };
+      return e;
+      { elem, ...userBooking._doc };
+      elem.user = { ...userBooking };
+      console.log(typeof elem.user);
+      console.log(elem.user);
+
+      elem = { elem, userInfo: { ...userBooking._doc } };
+      return elem;
+    });
+
+    console.log("result: ", result);
+*/
+
     const getBooking = await BookingModel.find();
     return getBooking;
   }

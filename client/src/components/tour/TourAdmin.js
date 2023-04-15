@@ -39,7 +39,6 @@ const TourAdmin = ({ tour, index }) => {
     //       </Card.Text>
     //     <Card.Text>{tour.price}</Card.Text>
     //     <div className="d-flex">
-
     //          {isAuth === ADMIN ?
     //          (<Button variant="primary" className="m-1"  >Редоктировать</Button>) :
     //          (<Navbar>
@@ -53,13 +52,11 @@ const TourAdmin = ({ tour, index }) => {
     //               </Navbar.Collapse>
     //             </Container>
     //           </Navbar>)}
-
     //         <Button variant="primary" className="m-2" onClick={() => {
     //                   dispatch(deleteTourItem({id: tour._id}));
     //                   dispatch(getTours());}}
     //         >Удалить</Button>
     //     </div>
-
     //   </Card.Body>
     // </Card>
 

@@ -18,6 +18,7 @@ import SearchBar from "./components/search/SearchBar";
 import BookingUser from "./components/booking/BookingUser";
 import TicketUser from "./components/ticket/TicketUser";
 import BookingUserBasket from "./components/booking/BookingUserBasket";
+import { getBookingUser } from "./store/customerStore/customerSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,12 +38,12 @@ function App() {
     getToursAPI();
 
     if (trigger) {
-      setUser(userStore.user.user.user);
+      const obj = {...userStore.user.user.user};
+      setUser(obj);
       if (user !== null && user !== undefined) {
         setIsAuth(true);
         setEee((eee) => eee + 1);
-        //setRole(user.role);
-        //console.log(user.role);
+        dispatch(getBookingUser(obj));
       }
     }
   }, [tour, userStore.user.user]);

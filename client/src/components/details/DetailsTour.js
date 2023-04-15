@@ -46,10 +46,11 @@ const DetailsTour = ({isAuth, user}) => {
                       </Link>
                     </>
                   ) : ("")}
-                {user === undefined ? 
+                {/* {user === undefined ?  */}
                   <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
                     <Button variant="success" className="m-1">Купить</Button>
-                  </Link> : ""}
+                  </Link>
+                  {/* } */}
             </Nav>
           </Navbar.Collapse>
         </Container>  
