@@ -11,34 +11,23 @@ import {
 
 function BookingUserBasket() {
   const [bookingUser, setBookingUser] = useState([]);
-  const [flagColorTable, setFlagColorTable] = useState(false);
-  const [show, setShow] = useState(false);
   const bookings = useSelector((state) => state.customer.booking);
-  console.log("bookings: ", bookings);
-
-  //setBookingUser(bookingUser)
 
   useEffect(() => {
-    setBookingUser([...bookingUser]);
+    setBookingUser(bookings);
   }, [bookings]);
-  console.log("bookingUser: ", bookingUser);
 
   return (
-    <div>
+    <div style={{ margin: "0% 2%" }}>
       <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
         <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
-              <th>Название тура</th>
-              <th>Тип тура</th>
+              <th>Тур</th>
+              <th>Кто едит</th>
               <th>Страна</th>
               <th>Город</th>
-              <th>Дата</th>
-              <th>Длительность</th>
-              <th>Цена $</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
 
@@ -48,9 +37,74 @@ function BookingUserBasket() {
                 <tr>
                   <td>1</td>
                   <td>
-                    
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Название тура:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.name}
+                      </div>
+                    </div>
+
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Страна:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.country}
+                      </div>
+                    </div>
+
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Город:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.city}
+                      </div>
+                    </div>
+
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Длительность:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.duration}
+                      </div>
+                    </div>
+
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Туп тура:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.type}
+                      </div>
+                    </div>
                   </td>
-                  <td>Otto</td>
+
+                  <td>
+                    <Table striped bordered hover>
+                      <thead>
+                        <tr>
+                          <th>Фамилия</th>
+                          <th>Имя</th>
+                          <th>Дата рождения</th>
+                          <th>Пол</th>
+                        </tr>
+                      </thead>
+                    </Table>
+                    <tbody>
+                      {elem.bookingInfo.customers.map((value) => {
+                        return (
+                          <tr>
+                            <div style={{ marginLeft: "10%" }}>
+                              {value.firstName}
+                            </div>
+                            <td style={{ marginLeft: "20%" }}>
+                              {value.lastName}
+                            </td>
+                            <td style={{ marginLeft: "30%" }}>
+                              {value.birthDate}
+                            </td>
+                            <td style={{ marginLeft: "40%" }}>
+                              {value.gender}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </td>
                   <td>@mdo</td>
                 </tr>
               );
@@ -59,7 +113,7 @@ function BookingUserBasket() {
         </Table>
       </div>
 
-      {bookings.map((elem) => {
+      {/* {bookings.map((elem) => {
         return (
           <div>
             {elem.customers.map((i) => {
@@ -67,7 +121,7 @@ function BookingUserBasket() {
             })}
           </div>
         );
-      })}
+      })} */}
     </div>
   );
 }

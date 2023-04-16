@@ -75,6 +75,7 @@ const BookingUser = () => {
     dispatch(bookingTourSlice(encrypted(JSON.stringify(objectClient))));
     // dispatch(getBookingUser(user));
     setShow(false);
+    dispatch(getBookingUser(user));
   };
 
   return (

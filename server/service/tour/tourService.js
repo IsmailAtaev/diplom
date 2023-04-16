@@ -157,26 +157,15 @@ class TourService {
 
       const getBooking1 = await BookingModel.find({ user: id });
       // const getBookingUser = await BookingModel.find({ user: userModel._id });
-      //console.log(getBooking[0].user);
-
-      console.log("getBookingUser ", getBooking1);
+      // //console.log(getBooking[0].user);
+      // console.log("getBookingUser ", getBooking1);
       let arr = [];
       for (let i = 0; i < getBooking1.length; i++) {
         const tourInfo = await TourModel.findOne({ _id: getBooking1[i].tour });
         const bookingInfo = getBooking1[i];
         arr.push({ bookingInfo, tourInfo, userInfo: userModel });
       }
-      console.log("arr: ", arr);
-
-      // const result1 = getBooking1.map((elem) => {
-      //   const tourBD = TourModel.findOne({ _id: elem.tour });
-      //   console.log("tourDB: ", tourBD);
-
-      //   return elem;
-      // });
-      // console.log("result1: ", result1);
-
-      return getBooking1;
+      return arr;
     }
     /*
     console.log("== ", getBookingUser[0].user);
@@ -238,7 +227,14 @@ class TourService {
 */
 
     const getBooking = await BookingModel.find();
-    return getBooking;
+    let arrAdmin = [];
+    for (let i = 0; i < getBooking.length; i++) {
+      const tourInfo = await TourModel.findOne({ _id: getBooking[i].tour });
+      const userInfo = await UserModel.findOne({ _id: getBooking[i].user });
+      const bookingInfo = getBooking[i];
+      arrAdmin.push({ bookingInfo, tourInfo, userInfo });
+    }
+    return arrAdmin;
   }
 }
 
