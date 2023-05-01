@@ -198,7 +198,7 @@ class TourService {
 
       const getBooking1 = await BookingModel.find({ user: id });
       // const getBookingUser = await BookingModel.find({ user: userModel._id });
-      console.log(getBooking1);
+      //console.log(getBooking1);
       // console.log("getBookingUser ", getBooking1);
       let arr = [];
       for (let i = 0; i < getBooking1.length; i++) {
@@ -206,7 +206,7 @@ class TourService {
         const bookingInfo = getBooking1[i];
         arr.push({ bookingInfo, tourInfo, userInfo: userModel });
       }
-      console.log(arr);
+      //console.log(arr);
       return arr;
     }
     /*
@@ -374,8 +374,13 @@ class TourService {
   }
 
   async cancelBookingTour(cancelTourObj) {
-    console.log("cancelTour: ", cancelTourObj);
-    return { elem: "cancel tour" };
+    const { userId, tourId, bookingId } = cancelTourObj;
+    const bookingModelDelete = await BookingModel.deleteOne({
+      _id: bookingId,
+      user: userId,
+      tour: tourId,
+    });
+    return { elem: "тур успешно отменен" };
   }
 
   /** Ticket Service */

@@ -51,8 +51,16 @@ function BookingUserBasket() {
     console.log("sentInfo ", sentInfo);
     dispatch(buyTourValidationUser(encrypted(JSON.stringify(sentInfo))));
     setShow(false);
-    const user = { ...buyBookingTour.userInfo };
-    //dispatch(getBookingUser(user));
+   // const user = { ...buyBookingTour.userInfo };
+    const user = {
+      email: buyBookingTour.userInfo.email,
+      id: buyBookingTour.userInfo._id,
+      isActivated: buyBookingTour.userInfo.isActivated,
+      nickName: buyBookingTour.userInfo.nickName,
+      role: buyBookingTour.userInfo.role,
+    };
+    console.log("ee ", user);
+    dispatch(getBookingUser(user));
     //const ee = encrypted(JSON.stringify(bookingInfoUser));
     //console.log("ee ", { bookingInfoUser: ee });
     //buyTourValidUser({ bookingInfoUser: ee });
@@ -73,10 +81,7 @@ function BookingUserBasket() {
       nickName: cancelTourObj.userInfo.nickName,
       role: cancelTourObj.userInfo.role,
     };
-    console.log("user: ", user);
     dispatch(getBookingUser(user));
-
-    // console.log("cancelBooking ", cancelBooking);
   };
 
   useEffect(() => {
