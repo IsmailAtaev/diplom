@@ -8,6 +8,7 @@ const TourSchema = new Schema({
   city : { type: String, required: true },
   price : { type: Number, required: true },
   duration: { type: Number, required: true },
+  flag: { type: Boolean, default: true },
 });
 
 module.exports = model("Tour", TourSchema);

@@ -10,5 +10,7 @@ router.post("/api/buy/tour", controller.buyTour);
 router.post("/api/buy/validate", controller.validateCardId);
 router.post("/api/booking/tour", controller.bookingTour);
 router.get("/api/get/booking/tour/:id", controller.getBookingTour);
+router.post("/api/pay/booking/tour/user", controller.buyTourValidationUser);
+router.post("/api/cancel/booking/tour/user", controller.cancelTour);
 
 module.exports = router;

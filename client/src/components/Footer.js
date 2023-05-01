@@ -1,7 +1,7 @@
 import React from 'react';
 
 const l = {
-    backgroundColor: '#00000033',
+    backgroundColor: '#214CFF',
     borderRadius: "0px 0px 25px 25px"
 }
 
@@ -51,9 +51,8 @@ const Footer = () => {
                     ><i className="fab fa-linkedin"></i></a>
                 </section>
             </div>
-            <div className="text-center text-dark p-3" style={l}>
-                © 2022 Copyright:
-                <a className="text-dark text-decoration-none" href="https://mdbootstrap.com/"> Travel company</a>
+            <div className="text-center text-white p-3" style={l}>
+                © 2023<a className="text-white text-decoration-none" href="https://mdbootstrap.com/"> Travel company</a>
             </div>
         </footer>
     </div>);

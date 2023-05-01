@@ -26,9 +26,9 @@ const DetailsTour = ({isAuth, user}) => {
         </Col>
       </Row>
       
-      <Row className="justify-content-md-center mt-3" style={{textAlign: "center"}}>
+      {/* <Row className="justify-content-md-center mt-3" style={{textAlign: "center"}}>
         <Col md="auto">Отели</Col>
-      </Row>
+      </Row> */}
 
 
       <Navbar>
@@ -46,11 +46,11 @@ const DetailsTour = ({isAuth, user}) => {
                       </Link>
                     </>
                   ) : ("")}
-                {/* {user === undefined ?  */}
+                 {user.role === undefined ?  
                   <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
                     <Button variant="success" className="m-1">Купить</Button>
-                  </Link>
-                  {/* } */}
+                  </Link> : ""
+                } 
             </Nav>
           </Navbar.Collapse>
         </Container>  

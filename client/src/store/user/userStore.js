@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { registrationApi, loginApi } from "../../http/index";
+import { registrationApi, loginApi, buyTourValidUser } from "../../http/index";
 
 export const registration = createAsyncThunk(
   "user/registration",
@@ -21,6 +21,24 @@ export const login = createAsyncThunk(
   }
 );
 
+export const buyTourValidationUser = createAsyncThunk(
+  "user/buyTourValidationUser",
+  async (bookingInfoUser, { rejectWithValue, dispatch }) => {
+    console.log("27", bookingInfoUser);
+    const { data } = await buyTourValidUser({ bookingInfoUser });
+  }
+);
+
+// export const buyTourValidationUser = createAsyncThunk(
+//   "user/buyTourValidationUser",
+//   async (bookingInfoUser, { rejectWithValue, dispatch }) => {
+//     console.log("27", bookingInfoUser);
+//     const { data } = await buyTourValidUser({
+//       bookingInfoUser: bookingInfoUser,
+//     });
+//   }
+// );
+
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -31,6 +49,7 @@ const userSlice = createSlice({
       role: "",
       nickName: "",
     },
+    ticket: [],
   },
 
   reducers: {

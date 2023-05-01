@@ -6,13 +6,15 @@ const { nanoid } = require("nanoid");
 const CardValidationId = require("../../models/validCardId/validateCardId");
 const BookingModel = require("../../models/booking/bookingModel");
 const UserModel = require("../../models/user/userModel");
+const TicketNoUserModel = require("../../models/ticketNoUser/ticketNoUser");
+const TicketModel = require("../../models/ticket/ticketModel");
 
 // const fs = require("fs");
 // const PDFDocument = require("pdfkit");
 
 class TourService {
   async getAllTours() {
-    const tours = await TourModel.find();
+    const tours = await TourModel.find({ flag: true }); //{flag: true}
     return tours;
   }
 
@@ -25,12 +27,18 @@ class TourService {
       city,
       price,
       duration,
+      flag: true,
     });
     return tour;
   }
 
   async delete(id) {
-    const removedTour = await TourModel.deleteOne({ _id: id });
+    //const removedTour = await TourModel.deleteOne({ _id: id });
+    const removedTour = await TourModel.updateOne(
+      { _id: id },
+      { $set: { flag: false } }
+    );
+    console.log("removedTour ", removedTour);
     return removedTour;
   }
 
@@ -73,11 +81,11 @@ class TourService {
       invoice_nr: 1234,
     };
 
+    console.log("============================================================");
     console.log("objInfoBuyTour: ", objInfoBuyTour);
+    console.log("============================================================");
 
     const { customers, mainClient, tour } = objInfoBuyTour;
-    const pathName = `C:/Users/admin/Desktop/diplom/server/pdf/${mainClient.firstName}.pdf`;
-    console.log("pathName: ", pathName);
 
     const cardValidation = await CardValidationId.findOne({
       email: mainClient.email,
@@ -88,12 +96,45 @@ class TourService {
       return { elem: "not found code or email" };
     }
 
-    //const tourDB = await TourModel.findOne({ _id: tour._id });
+    const pathName = `C:/Users/admin/Desktop/diplom/server/pdf/${mainClient.firstName}.pdf`;
+    console.log("pathName: ", pathName);
     onlineTicket(invoice, pathName);
+
+    const totalCost = customers.length * tour.price;
+    const reys = tour.country[0] + tour.city[0] + tour.duration;
+    const time = "03:00";
+
+    try {
+      const createTicketNoUser = await TicketNoUserModel.create({
+        tourId: tour._id,
+        firstName: mainClient.firstName,
+        lastName: mainClient.lastName,
+        email: mainClient.email,
+        phoneNumber: mainClient.phoneNumber,
+        cardNumber: mainClient.cardNumber,
+        cardId: mainClient.codeId,
+        paid: totalCost,
+        clock: time,
+        flight: reys,
+        pathName,
+        customers,
+        flag: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     mailService.sendTicket(pathName, mainClient.firstName, mainClient.email);
+
+    const cardValidationDelete = await CardValidationId.deleteOne({
+      email: mainClient.email,
+      validateCard: mainClient.codeId,
+    });
+
     return { elem: "vse super " };
   }
 
+  /** Booking Service */
   async reservationTour(objInfoBuyTour) {
     const { customers, mainClient, tour, card } = objInfoBuyTour;
 
@@ -157,7 +198,7 @@ class TourService {
 
       const getBooking1 = await BookingModel.find({ user: id });
       // const getBookingUser = await BookingModel.find({ user: userModel._id });
-      // //console.log(getBooking[0].user);
+      console.log(getBooking1);
       // console.log("getBookingUser ", getBooking1);
       let arr = [];
       for (let i = 0; i < getBooking1.length; i++) {
@@ -165,6 +206,7 @@ class TourService {
         const bookingInfo = getBooking1[i];
         arr.push({ bookingInfo, tourInfo, userInfo: userModel });
       }
+      console.log(arr);
       return arr;
     }
     /*
@@ -236,7 +278,114 @@ class TourService {
     }
     return arrAdmin;
   }
+
+  async buyTourValidUser(bookingInfoValidUser) {
+    const invoice = {
+      shipping: {
+        name: "John Doe",
+        address: "1234 Main Street",
+        city: "San Francisco",
+        state: "CA",
+        country: "US",
+        postal_code: 94111,
+      },
+      items: [
+        {
+          item: "TC 100",
+          description: "Toner Cartridge",
+          quantity: 2,
+          amount: 6000,
+        },
+        {
+          item: "USB_EXT",
+          description: "USB Cable Extender",
+          quantity: 1,
+          amount: 2000,
+        },
+      ],
+      subtotal: 8000,
+      paid: 0,
+      invoice_nr: 1234,
+    };
+
+    const { bookingInfo, tourInfo, userInfo, card } = bookingInfoValidUser;
+
+    const tourModel = await TourModel.findOne({ _id: tourInfo._id });
+    if (!tourModel) {
+      return { elem: "нету такого тура" };
+    }
+
+    const userModel = await UserModel.findOne({
+      _id: userInfo._id,
+      email: userInfo.email,
+    });
+    if (!userModel) {
+      return { elem: "нету такого пользователя" };
+    }
+
+    const bookingModelTicket = await BookingModel.findOne({
+      _id: bookingInfo._id,
+    });
+    if (!bookingModelTicket) {
+      return { elem: "нету такого забронированного тура" };
+    }
+
+    const cardValidId = await CardValidationId.findOne({
+      email: userInfo.email,
+      validateCard: card.codeId,
+    });
+    if (cardValidId !== null) {
+      const cardValidationDelete = await CardValidationId.deleteOne({
+        email: userInfo.email,
+        validateCard: card.codeId,
+      });
+      console.log("cardValidationDelete ", cardValidationDelete);
+    } else {
+      return {
+        elem: "неверный код валидация карты введеите то что отправили на почту",
+      };
+    }
+    const folder = userInfo.nickName + Date.now();
+    const reys = tourInfo.country[0] + tourInfo.city[0] + tourInfo.duration;
+    const directory = `C:/Users/admin/Desktop/diplom/server/pdf/${folder}.pdf`;
+
+    const createTicket = await TicketModel.create({
+      userId: userInfo._id,
+      tourId: tourInfo._id,
+      email: userInfo.email,
+      cardNumber: card.cardNumber,
+      cardId: card.codeId,
+      paid: tourInfo.price,
+      clock: "04:00",
+      flight: reys,
+      pathName: directory,
+      customers: bookingInfo.customers,
+      flag: true,
+    });
+
+    onlineTicket(invoice, directory);
+    mailService.sendTicket(directory, userInfo.nickName, userInfo.email);
+
+    const bookingModelDelete = await BookingModel.deleteOne({
+      _id: bookingInfo._id,
+    });
+
+    return "тур куплен";
+  }
+
+  async cancelBookingTour(cancelTourObj) {
+    console.log("cancelTour: ", cancelTourObj);
+    return { elem: "cancel tour" };
+  }
+
+  /** Ticket Service */
+
+  async getValidUserTicket(objUserTicket) {
+    return "qwerty";
+  }
 }
+
+module.exports = new TourService();
 
 /*
 const rrr = async (file) => {
@@ -253,5 +402,3 @@ const rrr = async (file) => {
   doc.end();
   doc.pipe(fs.createWriteStream(file));
 };*/
-
-module.exports = new TourService();

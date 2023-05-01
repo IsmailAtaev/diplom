@@ -47,6 +47,48 @@ const BookingUser = () => {
 
   const countCustomer = [1];
 
+  /** */
+  const [info, setInfo] = useState([
+    {
+      firstName: "",
+      lastName: "",
+      sex: "",
+      citizenship: "",
+      birthDate: "",
+      passportSeriesAndNumber: "",
+      dateOfPassport: "",
+      validityPeriod: "",
+      number: Date.now(),
+    },
+  ]);
+
+  const addInfo = () => {
+    setInfo([
+      ...info,
+      {
+        firstName: "",
+        lastName: "",
+        sex: "",
+        citizenship: "",
+        birthDate: "",
+        passportSeriesAndNumber: "",
+        dateOfPassport: "",
+        validityPeriod: "",
+        number: Date.now(),
+      },
+    ]);
+  };
+  const removeInfo = (number) => {
+    setInfo(info.filter((i) => i.number !== number));
+  };
+  const changeInfo = (key, value, number) => {
+    setInfo(
+      info.map((i) => (i.number === number ? { ...i, [key]: value } : i))
+    );
+  };
+
+  // console.log("info: ", info);
+
   const handleSubmit = (e) => {
     dispatch(getValidateCard({ email: user.email }));
     dispatch(
@@ -64,7 +106,7 @@ const BookingUser = () => {
       })
     );
     dispatch(addTour({ tour: tour }));
-    setTrigger((trigger) => trigger + 1);
+    //setTrigger((trigger) => trigger + 1);
     setShow(true);
   };
 
@@ -72,20 +114,181 @@ const BookingUser = () => {
     const card = { cardNumber, cardHolder, mm, gg, cvvCvc, codeId };
     const obj = store.getState();
     let objectClient = { ...obj.customer, card: card };
+    objectClient.customers = [...info];
+    console.log("info: ", info);
+    console.log("card: ", card);
+    console.log("objectClient: ", objectClient);
     dispatch(bookingTourSlice(encrypted(JSON.stringify(objectClient))));
     // dispatch(getBookingUser(user));
     setShow(false);
+    console.log("user sikim ", user);
     dispatch(getBookingUser(user));
+    dispatch(addTour({}));
   };
 
   return (
     <div>
+      <Button variant="outline-dark" onClick={addInfo}>
+        Кто поедит
+      </Button>
+
       <Container>
-        <div>
+        {info.map((i, index) => (
+          <Row className="border rounded justify-content-md-center mt-5 ml-5 p-3 mb-2 bg-light text-dark ">
+            <Col xs={12} md={8}>
+              <Form>
+                <h4>Клиент {index + 1}</h4>
+                <hr className="text-secondary d-none d-sm-block" />
+
+                <Row className="mb-3 mt-3" key={i.number}>
+                  <Form.Group
+                    as={Col}
+                    controlId="formGridFirstName"
+                    value={i.firstName}
+                    onChange={(e) =>
+                      changeInfo("firstName", e.target.value, i.number)
+                    }
+                  >
+                    <Form.Label>Имя латиницей</Form.Label>
+                    <Form.Control type="text" placeholder="Ведите имя" />
+                  </Form.Group>
+                  <Form.Group
+                    as={Col}
+                    controlId="formGridLastName"
+                    value={i.lastName}
+                    onChange={(e) =>
+                      changeInfo("lastName", e.target.value, i.number)
+                    }
+                  >
+                    <Form.Label>Фамилия латиницей</Form.Label>
+                    <Form.Control type="text" placeholder="Ведите фамилию" />
+                  </Form.Group>
+                  <Form.Group as={Col} controlId="formGridRadioButton">
+                    <Form.Label>Пол</Form.Label>
+                    <br />
+                    <Form.Check
+                      inline
+                      type="radio"
+                      value="Женский"
+                      aria-label="radio 1"
+                      label="Женский"
+                      id="inline-radio-1"
+                      onChange={(e) => changeInfo("sex", "Женский", i.number)}
+                      checked={i.sex === "Женский"}
+                    />
+
+                    <Form.Check
+                      inline
+                      type="radio"
+                      value="Мужской"
+                      label="Мужской"
+                      id="inline-radio-2"
+                      onChange={(e) => changeInfo("sex", "Мужской", i.number)}
+                      checked={i.sex === "Мужской"}
+                    />
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3 mt-3">
+                  <div className="col-md-3 row">
+                    <Form.Group className="mb-3" controlId="duedate">
+                      <Form.Label>Дата рождения</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="duedate"
+                        placeholder="Due date"
+                        onChange={(e) =>
+                          changeInfo("birthDate", e.target.value, i.number)
+                        }
+                      />
+                    </Form.Group>
+                  </div>
+
+                  <Form.Group as={Col} controlId={i.number}>
+                    <Form.Label>Гражданство</Form.Label>
+                    <Form.Select
+                      onChange={(e) =>
+                        changeInfo("citizenship", e.target.value, i.number)
+                      }
+                    >
+                      {arrCountries.map((country) => (
+                        <option
+                          className="p-3 mb-2 bg-secondary text-white"
+                          value={country}
+                          key={country._id}
+                        >
+                          {country}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Row>
+
+                <Row className="mb-3">
+                  <Form.Group
+                    as={Col}
+                    controlId="formGridPasportNumber"
+                    value={i.passportSeriesAndNumber}
+                    onChange={(e) =>
+                      changeInfo(
+                        "passportSeriesAndNumber",
+                        e.target.value,
+                        i.number
+                      )
+                    }
+                  >
+                    <Form.Label>Серия и Номер паспорта</Form.Label>
+                    <Form.Control type="text" placeholder="Ведите паспорт" />
+                  </Form.Group>
+
+                  <div className="col-md-3 row">
+                    <Form.Group className="mb-3" controlId="duedate">
+                      <Form.Label>Дата выдачи</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="duedate"
+                        placeholder="Due date"
+                        onChange={(e) =>
+                          changeInfo("dateOfPassport", e.target.value, i.number)
+                        }
+                      />
+                    </Form.Group>
+                  </div>
+
+                  <div className="col-md-3 row">
+                    <Form.Group className="mb-3" controlId="duedate">
+                      <Form.Label>Срок действия</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="duedate"
+                        placeholder="Due date"
+                        onChange={(e) =>
+                          changeInfo("validityPeriod", e.target.value, i.number)
+                        }
+                      />
+                    </Form.Group>
+                  </div>
+                </Row>
+                <Col>
+                  <br />
+                  <Button
+                    // className="justify-content-end"
+                    variant={"outline-danger"}
+                    onClick={() => removeInfo(i.number)}
+                  >
+                    Удалить
+                  </Button>
+                </Col>
+              </Form>
+            </Col>
+          </Row>
+        ))}
+
+        {/* <div>
           {countCustomer.map((elem) => (
             <CustomerBooking key={elem.id} trigger={trigger} />
           ))}
-        </div>
+        </div> */}
 
         <Row className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark">
           <Col xs={12} md={8}>
@@ -138,7 +341,7 @@ const BookingUser = () => {
         </Button>
       </Container>
 
-      <Button
+      {/* <Button
         className="m-1"
         variant="primary"
         type="submit"
@@ -148,7 +351,7 @@ const BookingUser = () => {
         }}
       >
         get Bookins
-      </Button>
+      </Button> */}
 
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>

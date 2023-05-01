@@ -17,6 +17,7 @@ export const removeTour = async (tourId) => {
 export const bookingTour = async (customerInfo) => {
   console.log("customerInfo: ", customerInfo);
   const { data } = await $host.post("/api/buy/tour", customerInfo);
+  return data;
 };
 
 export const getValidateCardId = async (email) => {
@@ -28,6 +29,18 @@ export const reservationTour = async (objectBooking) => {
   const { data } = await $host.post("/api/booking/tour", objectBooking);
   return data;
 };
+
+export const buyTourValidUser = async (bookingInfoUser) => {
+  const { data } = await $host.post("/api/pay/booking/tour/user", bookingInfoUser);
+  return data;
+};
+
+
+export const cancelBookingTourApi = async (cancelBookingTourObj) => {
+  const { data } = await $host.post("/api/cancel/booking/tour/user", cancelBookingTourObj);
+  return data;
+};
+
 
 /**
  * Aythorization user

@@ -4,6 +4,7 @@ import {
   getReservationTour,
   getValidateCardId,
   reservationTour,
+  cancelBookingTourApi,
 } from "../../http";
 
 export const buyTour = createAsyncThunk(
@@ -32,8 +33,15 @@ export const getBookingUser = createAsyncThunk(
   async (user, { rejectWithValue, dispatch }) => {
     console.log("user slice ", user);
     const data = await getReservationTour(JSON.stringify(user));
-    console.log(data);
+    console.log("getBookingUser1 ", data);
     dispatch(setBookingUser({ booking: data }));
+  }
+);
+
+export const cancelBookingTour = createAsyncThunk(
+  "customers/cancelBookingTour",
+  async (obj, { rejectWithValue, dispatch }) => {
+    const { data } = await cancelBookingTourApi({ cancelTourObj: obj });
   }
 );
 

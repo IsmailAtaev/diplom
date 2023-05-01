@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Container,
   Nav,
@@ -7,11 +7,77 @@ import {
   Table,
   Button,
   Dropdown,
+  Form,
+  Modal,
+  ModalTitle,
 } from "react-bootstrap";
+import { buyTourValidationUser } from "../../store/user/userStore";
+import { decrypted, encrypted } from "../../cryptoInfo/encrypt";
+import { buyTourValidUser } from "../../http/index";
+import {
+  getValidateCard,
+  cancelBookingTour,
+  getBookingUser,
+} from "../../store/customerStore/customerSlice";
 
 function BookingUserBasket() {
   const [bookingUser, setBookingUser] = useState([]);
+  const [show, setShow] = useState(false);
+  const [buyBookingTour, setBuyBookingTour] = useState({});
+
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardHolder, setCardHolder] = useState("");
+  const [mm, setMm] = useState("");
+  const [gg, setGg] = useState("");
+  const [cvvCvc, setCvvCvc] = useState("");
+  const [codeId, setCodeId] = useState("");
+
   const bookings = useSelector((state) => state.customer.booking);
+  const dispatch = useDispatch();
+
+  const handleSubmitCard = async (bookingInfoUser) => {
+    setBuyBookingTour(bookingInfoUser);
+    dispatch(getValidateCard({ email: bookingInfoUser.userInfo.email }));
+    setShow(true);
+  };
+
+  const buyTourUser = async () => {
+    console.log("bookingInfoUser: ", buyBookingTour);
+    const card = { cardNumber, cardHolder, mm, gg, cvvCvc, codeId };
+    const sentInfo = {
+      ...buyBookingTour,
+      card: { ...card },
+    };
+    console.log("sentInfo ", sentInfo);
+    dispatch(buyTourValidationUser(encrypted(JSON.stringify(sentInfo))));
+    setShow(false);
+    const user = { ...buyBookingTour.userInfo };
+    //dispatch(getBookingUser(user));
+    //const ee = encrypted(JSON.stringify(bookingInfoUser));
+    //console.log("ee ", { bookingInfoUser: ee });
+    //buyTourValidUser({ bookingInfoUser: ee });
+  };
+
+  const cancelSubmit = async (cancelTourObj) => {
+    console.log("cancelTourObj ", cancelTourObj);
+    const cancelBooking = {
+      userId: cancelTourObj.userInfo._id,
+      tourId: cancelTourObj.tourInfo._id,
+      bookingId: cancelTourObj.bookingInfo._id,
+    };
+    dispatch(cancelBookingTour(cancelBooking));
+    const user = {
+      email: cancelTourObj.userInfo.email,
+      id: cancelTourObj.userInfo._id,
+      isActivated: cancelTourObj.userInfo.isActivated,
+      nickName: cancelTourObj.userInfo.nickName,
+      role: cancelTourObj.userInfo.role,
+    };
+    console.log("user: ", user);
+    dispatch(getBookingUser(user));
+
+    // console.log("cancelBooking ", cancelBooking);
+  };
 
   useEffect(() => {
     setBookingUser(bookings);
@@ -26,16 +92,15 @@ function BookingUserBasket() {
               <th>#</th>
               <th>Тур</th>
               <th>Кто едит</th>
-              <th>Страна</th>
-              <th>Город</th>
+              <th>Цена</th>
             </tr>
           </thead>
 
           <tbody>
-            {bookings.map((elem) => {
+            {bookings.map((elem, index) => {
               return (
                 <tr>
-                  <td>1</td>
+                  <td>{index + 1}</td>
                   <td>
                     <div className="d-flex" style={{ marginBottom: "3%" }}>
                       <h6>Название тура:</h6>
@@ -69,6 +134,13 @@ function BookingUserBasket() {
                       <h6>Туп тура:</h6>
                       <div style={{ marginLeft: "5%" }}>
                         {elem.tourInfo.type}
+                      </div>
+                    </div>
+
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Цена одного тура:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.tourInfo.price}
                       </div>
                     </div>
                   </td>
@@ -105,7 +177,46 @@ function BookingUserBasket() {
                       })}
                     </tbody>
                   </td>
-                  <td>@mdo</td>
+                  <td>
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Общая стоимость:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.bookingInfo.price}
+                      </div>
+                    </div>
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Оплачено:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.bookingInfo.pay}
+                      </div>
+                    </div>
+                    <div className="d-flex" style={{ marginBottom: "3%" }}>
+                      <h6>Нужно оплатить:</h6>
+                      <div style={{ marginLeft: "5%" }}>
+                        {elem.bookingInfo.needToPay}
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <br />
+                    <Button
+                      variant="primary"
+                      className="mt-2"
+                      onClick={(e) => handleSubmitCard(elem)}
+                    >
+                      Оплатить
+                    </Button>
+
+                    <br />
+                    <br />
+                    <Button
+                      variant="danger"
+                      className="mt-2"
+                      onClick={(e) => cancelSubmit(elem)}
+                    >
+                      Отменить
+                    </Button>
+                  </td>
                 </tr>
               );
             })}
@@ -113,6 +224,77 @@ function BookingUserBasket() {
         </Table>
       </div>
 
+      <Modal show={show} onHide={() => setShow(false)}>
+        <Modal.Header closeButton>
+          <ModalTitle>Оплата тура</ModalTitle>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formBasicCardNumber">
+              <Form.Control
+                type="text"
+                value={cardNumber}
+                onChange={(e) => setCardNumber(e.target.value)}
+                placeholder="Номер карты"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardHolder">
+              <Form.Control
+                type="text"
+                value={cardHolder}
+                onChange={(e) => setCardHolder(e.target.value)}
+                placeholder="Держатель карты"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicMM">
+              <Form.Control
+                type="text"
+                value={mm}
+                onChange={(e) => setMm(e.target.value)}
+                placeholder="mm"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardGG">
+              <Form.Control
+                type="text"
+                value={gg}
+                onChange={(e) => setGg(e.target.value)}
+                placeholder="gg"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group controlId="formBasicCardCVV">
+              <Form.Control
+                type="text"
+                value={cvvCvc}
+                onChange={(e) => setCvvCvc(e.target.value)}
+                placeholder="CVV/CVC2"
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicCardCVV">
+              <Form.Label>Код потверждения отправлен на почту</Form.Label>
+              <Form.Control
+                type="text"
+                value={codeId}
+                onChange={(e) => setCodeId(e.target.value)}
+                placeholder="4 символа"
+              />
+            </Form.Group>
+
+            <Button
+              className="mt-2 ml-5"
+              variant="primary"
+              onClick={buyTourUser}
+            >
+              Оплатить
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
       {/* {bookings.map((elem) => {
         return (
           <div>

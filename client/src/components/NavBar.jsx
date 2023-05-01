@@ -5,6 +5,8 @@ import {Button, Container, Form, ModalTitle, Modal, Nav, Navbar} from "react-boo
 import logo from "../assets/logo.jpg";
 import {Link, useNavigate } from "react-router-dom";
 import {login, registration} from "../store/user/userStore";
+import {setUser} from "../store/user/userStore";
+import {setBookingUser} from "../store/customerStore/customerSlice";
 
 const Styles = styled.div`
   a, .navbar-brand, .navbar-nav .nav-link {
@@ -49,7 +51,9 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user, setIsAuth}) => {
 
     const handleClickLogout = () => {
         setIsAuth(false);
-        navigate('/');
+        dispatch(setUser({}));
+        dispatch(setBookingUser({}));
+        //navigate('/');
     } 
 
 
@@ -66,7 +70,7 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user, setIsAuth}) => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav variant="dark" className="me-auto gap-2">
-                            <Link id="RouterNavLink" to='/' className='text-decoration-none'>Home</Link>
+                            <Link id="RouterNavLink" to='/' className='text-decoration-none'>Главная</Link>
                             <Link id="RouterNavLink" to='/tours' className='text-decoration-none'>Туры</Link>
                             <Link id="RouterNavLink" to='/about' className='text-decoration-none'>О нас</Link>
                         </Nav>
@@ -100,12 +104,12 @@ const NavBar = ({ setTrigger, isAuth, trigger, eee, user, setIsAuth}) => {
                                         </Link></>
                                         ) : ("")}
 
-                                        {/* <Link id="RouterNavLink" to='/' className='text-decoration-none'> */}
+                                        <Link id="RouterNavLink" to='/' className='text-decoration-none'>
                                             <a className="dropdown-item text-dark" href="#" 
                                                 onClick={handleClickLogout}
                                             ><i className="bi bi-box-arrow-right"></i>
                                             <span className="ms-2 d-none d-sm-inline">Выйти</span></a>
-                                        {/* </Link> */}
+                                        </Link>
                                     </div>
                             </div>) :
                             (<> <Button variant="primary"

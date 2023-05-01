@@ -50,7 +50,8 @@ class TourController {
         Id = "error";
       }
 
-      res.json({ Code: Id });
+      res.json({ Code: "код потверждения отправлен на почту" });
+      //res.json({ Code: Id });
     } catch (e) {
       next();
     }
@@ -100,6 +101,42 @@ class TourController {
       return res.json(getBookings);
       //return res.json({ elem: "vse" });
     } catch (e) {
+      next();
+    }
+  }
+
+  async buyTourValidationUser(req, res, next) {
+    try {
+      const { bookingInfoUser } = req.body;
+      const payTour = await tourService.buyTourValidUser(
+        JSON.parse(decrypted(bookingInfoUser))
+      );
+      res.json(payTour);
+    } catch (e) {
+      res.json({ elem: "не получилось купить забронированный тур" });
+      next();
+    }
+  }
+
+  async cancelTour(req, res, next) {
+    try {
+      const { cancelTourObj } = req.body;
+      const cancel = await tourService.cancelBookingTour(cancelTourObj);
+      console.log("cancel ", cancel);
+      res.json(cancel);
+    } catch (e) {
+      res.json({ elem: "не получилось отменить тур" });
+      next();
+    }
+  }
+
+  async getTicketValidUser(req, res, next) {
+    try {
+      const { ticketInfoUser } = req.body;
+      const ticket = await tourService.getValidUserTicket(bookingInfoUser);
+      res.json(ticket);
+    } catch (e) {
+      res.json({ elem: "не получилось взять билеты" });
       next();
     }
   }

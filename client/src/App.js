@@ -31,6 +31,10 @@ function App() {
   const [user, setUser] = useState({});
   const [eee, setEee] = useState(0);
 
+  function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+  }
+
   useEffect(() => {
     async function getToursAPI() {
       dispatch(getTours());
@@ -38,13 +42,18 @@ function App() {
     getToursAPI();
 
     if (trigger) {
+      console.log("trigger");
       const obj = {...userStore.user.user.user};
+      console.log(obj);
       setUser(obj);
-      if (user !== null && user !== undefined) {
+      console.log(user);
+      // if (obj !== null && obj !== undefined || isEmpty(obj)) {
+      if (!isEmpty(obj)) {
+        console.log("trigger");
         setIsAuth(true);
         setEee((eee) => eee + 1);
         dispatch(getBookingUser(obj));
-      }
+      } 
     }
   }, [tour, userStore.user.user]);
 
