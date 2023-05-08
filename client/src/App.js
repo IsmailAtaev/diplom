@@ -10,7 +10,7 @@ import DetailsTour from "./components/details/DetailsTour";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SideBarMenu from "./components/sidebar/SideBarMenu";
 import Admin from "./components/admin/Admin";
-import { getTours } from "../src/store/tourStore/tourSlice";
+import { getTours, getUsers } from "../src/store/tourStore/tourSlice";
 import ClientInfo from "./components/clientInfo/ClientInfo";
 import CardInfo from "./components/clientInfo/cardInfo/CardInfo";
 import Account from "./components/account/Account";
@@ -23,6 +23,7 @@ import { getBookingUser } from "./store/customerStore/customerSlice";
 function App() {
   const dispatch = useDispatch();
   const store = useStore();
+  const [lang, setLang] = useState(true);
 
   const userStore = useSelector((state) => state);
   const [tour, setTour] = useState([]);
@@ -38,6 +39,7 @@ function App() {
   useEffect(() => {
     async function getToursAPI() {
       dispatch(getTours());
+      dispatch(getUsers())
     }
     getToursAPI();
 

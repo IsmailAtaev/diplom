@@ -9,6 +9,14 @@ export const getTours = createAsyncThunk(
   }
 );
 
+export const getUsers = createAsyncThunk(
+  "tours/getUsers",
+  async (_, { rejectWithValue, dispatch }) => {
+    const { data } = await $host.get("/api/get/users");
+    dispatch(setUsers(data));
+  }
+);
+
 export const sentCreateTour = createAsyncThunk(
   "tours/sentCreateTour",
   async (tour, { rejectWithValue, dispatch }) => {
@@ -21,13 +29,13 @@ export const deleteTourItem = createAsyncThunk(
   "tours/deleteTourItem",
   async (tourId, { rejectWithValue, dispatch }) => {
     const { id } = tourId;
-    const {deletedTour} = await removeTour(id);
+    const { deletedTour } = await removeTour(id);
   }
 );
 
 const tourSlice = createSlice({
   name: "tours",
-  initialState: { tours: [] },
+  initialState: { tours: [], users: [], reservations: [] },
   reducers: {
     setTours: (state, action) => {
       state.tours = action.payload;
@@ -45,7 +53,12 @@ const tourSlice = createSlice({
         city: action.payload.city,
         price: action.payload.price,
         duration: action.payload.duration,
+        linkPhoto: action.payload.duration,
       });
+    },
+
+    setUsers(state, action) {
+      state.users = action.payload;
     },
   },
   extraReducers: {
@@ -55,6 +68,6 @@ const tourSlice = createSlice({
   },
 });
 
-export const { addTour, setTours } = tourSlice.actions;
+export const { addTour, setTours, setUsers } = tourSlice.actions;
 
 export default tourSlice.reducer;

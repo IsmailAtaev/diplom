@@ -36,11 +36,12 @@ const CreateTour = ({ show, onHide }) => {
   const [city, setCity] = useState("");
   const [price, setPrice] = useState();
   const [duration, setDuration] = useState();
+  const [linkPhoto, setLinkPhoto] = useState("");
 
   const addBrand = () => {
     onHide();
     //createTour({ name, type, date, country, city, price, duration});
-    dispatch(sentCreateTour({ name, type, date, country, city, price, duration}));
+    dispatch(sentCreateTour({ name, type, date, country, city, price, duration, linkPhoto}));
     setName("");
     setType("");
     setDate("");
@@ -48,6 +49,7 @@ const CreateTour = ({ show, onHide }) => {
     setCity("");
     setPrice("");
     setDuration("");
+    setLinkPhoto("");
     dispatch(getTours());
   };
 
@@ -65,6 +67,7 @@ const CreateTour = ({ show, onHide }) => {
           <Form.Control className="mb-2" value={city} onChange={(e) => setCity(e.target.value)} placeholder={"Города"} />
           <Form.Control className="mb-2" value={price} onChange={(e) => setPrice(e.target.value)} placeholder={"Цена"} />
           <Form.Control className="mb-2" value={duration} onChange={(e) => setDuration(e.target.value)} placeholder={"Длительность"} />
+          <Form.Control className="mb-2" value={linkPhoto} onChange={(e) => setLinkPhoto(e.target.value)} placeholder={"Сылка на фото"} />
           
 
 

@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import { React, useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap/js/dist/dropdown"
 import "./sidebar.css";
-import {useSelector } from "react-redux";
 import {Container, Nav, Navbar,} from "react-bootstrap";
 import Admin from "../admin/Admin";
 import BookingAdmin from "../booking/BookingAdmin";
 import TicketAdmin from "../ticket/TicketAdmin";
 import Users from "../users/Users";
-
+import { useDispatch, useSelector } from "react-redux";
+import { getTours, getUsers } from "../../store/tourStore/tourSlice";
 
 
 const SideBarMenu = () => {
-
+    const dispatch = useDispatch();
 
     const tours = useSelector((state) => state.tour.tours);
+
     const [tourFlag, setTourFlag] = useState(false);
     const [bookingFlag, setBookingFlag] = useState(true);
     const [ticketFlag, setTicketFlag] = useState(false);
@@ -51,7 +52,7 @@ const SideBarMenu = () => {
 
     
 
-
+    
 
 
   return (<>

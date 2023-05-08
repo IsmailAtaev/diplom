@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { registrationApi, loginApi, buyTourValidUser } from "../../http/index";
+import {
+  registrationApi,
+  loginApi,
+  buyTourValidUser,
+  getTicketValidUser,
+} from "../../http/index";
 
 export const registration = createAsyncThunk(
   "user/registration",
@@ -24,20 +29,20 @@ export const login = createAsyncThunk(
 export const buyTourValidationUser = createAsyncThunk(
   "user/buyTourValidationUser",
   async (bookingInfoUser, { rejectWithValue, dispatch }) => {
-    console.log("27", bookingInfoUser);
+    // console.log("27", bookingInfoUser);
     const { data } = await buyTourValidUser({ bookingInfoUser });
   }
 );
 
-// export const buyTourValidationUser = createAsyncThunk(
-//   "user/buyTourValidationUser",
-//   async (bookingInfoUser, { rejectWithValue, dispatch }) => {
-//     console.log("27", bookingInfoUser);
-//     const { data } = await buyTourValidUser({
-//       bookingInfoUser: bookingInfoUser,
-//     });
-//   }
-// );
+export const getTicketUser = createAsyncThunk(
+  "user/getTicketUser",
+  async (ticketObj, { rejectWithValue, dispatch }) => {
+    const data = await getTicketValidUser(JSON.stringify(ticketObj));
+    console.log("ticket: ", data);
+    dispatch(setTicketValidUser(data));
+    //return data;
+  }
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -56,6 +61,10 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
     },
+
+    setTicketValidUser(state, action) {
+      state.ticket = action.payload;
+    },
   },
 
   extraReducers: {
@@ -65,6 +74,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, setTicketValidUser } = userSlice.actions;
 
 export default userSlice.reducer;

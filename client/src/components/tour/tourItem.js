@@ -12,28 +12,22 @@ const USER = "USER";
 const isAuth = USER;
 
 const TourItem = ({ tour }) => {
-
-
   const dispatch = useDispatch();
-
-
+ 
   return (
-    <Card className="mt-4" style={{ width: "18rem", height: "27rem", alignContent: "center" }}>
-      <Card.Img variant="top" src={egyp} />
-      <Card.Body>
-        <Card.Title>{tour.country + " - " + tour.type}</Card.Title>
+    <Card className="mt-4" style={{ width: "18rem", height: "30rem", alignContent: "center" }}>
+      <Card.Img variant="top" src={tour.linkPhoto} style={{ width: "100%", height: "190px" }}/>
+      <Card.Body> 
+        <Card.Title style={{textAlign: "center"}}>{tour.name}</Card.Title>
           <Card.Text>
-            {tour._id}
-            <br/>
-            {tour.name}
-            <br/>
-            {tour.city}
-            <br/>
-            {tour.duration}
+            <div className="d-flex" style={{gap: "5%", marginBottom: "2%"}}><h6>Страна:</h6>{tour.country}</div>
+            <div className="d-flex" style={{gap: "5%", marginBottom: "2%"}}><h6>город:</h6>{tour.city}</div>
+            <div className="d-flex" style={{gap: "5%", marginBottom: "2%"}}><h6>Длительность:</h6>{tour.duration}</div>
+            <div className="d-flex" style={{gap: "5%", marginBottom: "2%"}}><h6>Тип:</h6>{tour.type}</div>
+            <div className="d-flex" style={{gap: "5%", marginBottom: "2%"}}><h6>Цена:</h6>{tour.price}</div>
           </Card.Text>
-        <Card.Text>{tour.price}</Card.Text>
+        
         <div className="d-flex">  
-         
              {isAuth === ADMIN ? 
              (<Button variant="primary" className="m-1"  >Редоктировать</Button>) :
              (<Navbar>
@@ -49,7 +43,7 @@ const TourItem = ({ tour }) => {
               </Navbar>)}
 
           {isAuth === ADMIN ? 
-            <Button variant="primary" className="m-2" onClick={() => { 
+            <Button variant="primary" className="m-4" onClick={() => { 
                       dispatch(deleteTourItem({id: tour._id}));
                       dispatch(getTours());}}
             >Удалить</Button> : ""}

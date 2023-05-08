@@ -41,6 +41,21 @@ export const cancelBookingTourApi = async (cancelBookingTourObj) => {
   return data;
 };
 
+export const getTicketValidUser = async (ticketObj) => {
+  const { data } = await $host.get(`/api/get/ticket/valid/user/${ticketObj}`);
+  return data;
+}
+
+export const getReservations = async () => {
+  const { data } = await $host.get("/api/get/reservations");
+  return data;
+}
+
+export const getTicket = async () => {
+  const { data } = await $host.get("/api/get/tickets");
+  console.log(data)
+  return data;
+}
 
 /**
  * Aythorization user
@@ -93,12 +108,6 @@ export const loginApi = async (email, password, nickName) => {
 };
 
 export const getReservationTour = async (user) => {
-  console.log("user $host", user);
   const { data } = await $host.get(`/api/get/booking/tour/${user}`);
-  console.log("data $host", data);
   return data;
-
-  // {
-  //   params: { user: user },
-  // }
 };

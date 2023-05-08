@@ -26,7 +26,9 @@ const Admin = () => {
                         <th>#</th><th>Название тура</th><th>Тип тура</th><th>Страна</th><th>Город</th><th>Дата</th><th>Длительность</th><th>Цена $</th><th></th><th></th>
                         </tr>
                     </thead>
-                    {tours.map((elem, index) => (<TourAdmin key={elem.id} tour={elem} index={index + 1}/>)).reverse()}
+                    <tbody> 
+                        {tours.map((elem, index) => (<TourAdmin key={elem.id} tour={elem} index={index + 1}/>)).reverse()}
+                    </tbody>
                 </Table>
             </div> 
 

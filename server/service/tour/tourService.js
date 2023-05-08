@@ -8,6 +8,7 @@ const BookingModel = require("../../models/booking/bookingModel");
 const UserModel = require("../../models/user/userModel");
 const TicketNoUserModel = require("../../models/ticketNoUser/ticketNoUser");
 const TicketModel = require("../../models/ticket/ticketModel");
+const bookingModel = require("../../models/booking/bookingModel");
 
 // const fs = require("fs");
 // const PDFDocument = require("pdfkit");
@@ -18,7 +19,7 @@ class TourService {
     return tours;
   }
 
-  async createTour(name, type, date, country, city, price, duration) {
+  async createTour(name, type, date, country, city, price, duration, linkPhoto) {
     const tour = await TourModel.create({
       name,
       type,
@@ -28,6 +29,7 @@ class TourService {
       price,
       duration,
       flag: true,
+      linkPhoto
     });
     return tour;
   }
@@ -81,9 +83,9 @@ class TourService {
       invoice_nr: 1234,
     };
 
-    console.log("============================================================");
-    console.log("objInfoBuyTour: ", objInfoBuyTour);
-    console.log("============================================================");
+    // console.log("============================================================");
+    // console.log("objInfoBuyTour: ", objInfoBuyTour);
+    // console.log("============================================================");
 
     const { customers, mainClient, tour } = objInfoBuyTour;
 
@@ -345,6 +347,14 @@ class TourService {
         elem: "неверный код валидация карты введеите то что отправили на почту",
       };
     }
+    const bookingModelDelete = await BookingModel.deleteOne({
+      _id: bookingInfo._id,
+    });
+
+    // console.log("*******************************************************");
+    // console.log("bookingModelDelete ", bookingModelDelete);
+    // console.log("*******************************************************");
+
     const folder = userInfo.nickName + Date.now();
     const reys = tourInfo.country[0] + tourInfo.city[0] + tourInfo.duration;
     const directory = `C:/Users/admin/Desktop/diplom/server/pdf/${folder}.pdf`;
@@ -366,10 +376,6 @@ class TourService {
     onlineTicket(invoice, directory);
     mailService.sendTicket(directory, userInfo.nickName, userInfo.email);
 
-    const bookingModelDelete = await BookingModel.deleteOne({
-      _id: bookingInfo._id,
-    });
-
     return "тур куплен";
   }
 
@@ -386,7 +392,68 @@ class TourService {
   /** Ticket Service */
 
   async getValidUserTicket(objUserTicket) {
-    return "qwerty";
+    //console.log("objUserTicket: ", objUserTicket);
+    const tickets = await TicketModel.find({
+      userId: objUserTicket.userId,
+      email: objUserTicket.email,
+    });
+
+    const toursId = tickets.map((elem) => elem.tourId);
+    const tours = await TourModel.find({ _id: { $in: toursId } });
+
+    const resultTickets = [];
+
+    for (let i = 0; i < tickets.length; i++) {
+      for (let j = 0; j < tours.length; j++) {
+        if (
+          JSON.stringify(tickets[i].tourId) === JSON.stringify(tours[j]._id)
+        ) {
+          tickets[i].tourId = tours[j];
+          resultTickets.push(tickets[i]);
+          break;
+        }
+      }
+    }
+    return resultTickets;
+  }
+
+  async getTickets() {
+    let arrTicket = [];
+    const ticketValidUser = await TicketModel.find()
+      .populate("userId")
+      .populate("tourId")
+      .then((objArr) => (arrTicket = { ...objArr }))
+      .catch((err) => console.log(err));
+
+    let arrNoUserTicket = [];
+    const ticketNoUser = await TicketNoUserModel.find()
+      .populate("tourId")
+      .then((objArrNoUser) => (arrNoUserTicket = { ...objArrNoUser }))
+      .catch((err) => console.log(err));
+
+    if (arrTicket.length !== 0 && arrNoUserTicket.length !== 0) {
+      return { arrTicket, arrNoUserTicket };
+    } else {
+      return "нету билетов";
+    }
+  }
+
+  async getReservations() {
+    let arr = [];
+    const bookings = await BookingModel.find()
+      .populate("tour")
+      .populate("user")
+      .then((p) => (arr = { ...p }))
+      .catch((error) => console.log(error));
+    if (arr.length === 0) {
+      return "Нету забронированных туров";
+    }
+    return arr;
+  }
+
+  async getUsers() {
+    const users = await UserModel.find();
+    return users;
   }
 }
 

@@ -33,7 +33,9 @@ function BookingUserBasket() {
   const [codeId, setCodeId] = useState("");
 
   const bookings = useSelector((state) => state.customer.booking);
+  const user = useSelector((state) => state.user.user.user);
   const dispatch = useDispatch();
+  const [trigger, setTrigger] = useState(true);
 
   const handleSubmitCard = async (bookingInfoUser) => {
     setBuyBookingTour(bookingInfoUser);
@@ -42,51 +44,40 @@ function BookingUserBasket() {
   };
 
   const buyTourUser = async () => {
-    console.log("bookingInfoUser: ", buyBookingTour);
     const card = { cardNumber, cardHolder, mm, gg, cvvCvc, codeId };
     const sentInfo = {
       ...buyBookingTour,
       card: { ...card },
     };
-    console.log("sentInfo ", sentInfo);
     dispatch(buyTourValidationUser(encrypted(JSON.stringify(sentInfo))));
     setShow(false);
-   // const user = { ...buyBookingTour.userInfo };
-    const user = {
-      email: buyBookingTour.userInfo.email,
-      id: buyBookingTour.userInfo._id,
-      isActivated: buyBookingTour.userInfo.isActivated,
-      nickName: buyBookingTour.userInfo.nickName,
-      role: buyBookingTour.userInfo.role,
-    };
-    console.log("ee ", user);
-    dispatch(getBookingUser(user));
-    //const ee = encrypted(JSON.stringify(bookingInfoUser));
-    //console.log("ee ", { bookingInfoUser: ee });
-    //buyTourValidUser({ bookingInfoUser: ee });
+    setTimeout(setTrigger, 100, true);
   };
 
   const cancelSubmit = async (cancelTourObj) => {
-    console.log("cancelTourObj ", cancelTourObj);
     const cancelBooking = {
       userId: cancelTourObj.userInfo._id,
       tourId: cancelTourObj.tourInfo._id,
       bookingId: cancelTourObj.bookingInfo._id,
     };
     dispatch(cancelBookingTour(cancelBooking));
-    const user = {
-      email: cancelTourObj.userInfo.email,
-      id: cancelTourObj.userInfo._id,
-      isActivated: cancelTourObj.userInfo.isActivated,
-      nickName: cancelTourObj.userInfo.nickName,
-      role: cancelTourObj.userInfo.role,
-    };
     dispatch(getBookingUser(user));
+    // const user = {
+    //   email: cancelTourObj.userInfo.email,
+    //   id: cancelTourObj.userInfo._id,
+    //   isActivated: cancelTourObj.userInfo.isActivated,
+    //   nickName: cancelTourObj.userInfo.nickName,
+    //   role: cancelTourObj.userInfo.role,
+    // };
   };
 
   useEffect(() => {
     setBookingUser(bookings);
-  }, [bookings]);
+    if (trigger) {
+      dispatch(getBookingUser(user));
+      setTrigger(false);
+    }
+  }, [bookings, trigger]);
 
   return (
     <div style={{ margin: "0% 2%" }}>

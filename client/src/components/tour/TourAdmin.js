@@ -59,8 +59,6 @@ const TourAdmin = ({ tour, index }) => {
     //     </div>
     //   </Card.Body>
     // </Card>
-
-    <tbody>
       <tr>
         <td>{index}</td>
         <td>{tour.name}</td>
@@ -88,7 +86,6 @@ const TourAdmin = ({ tour, index }) => {
           </Button>
         </td>
       </tr>
-    </tbody>
   );
 };
 

@@ -1,20 +1,23 @@
 const tourService = require("../../service/tour/tourService");
 const decrypted = require("../../crypto/cryptography");
 const mailService = require("../../service/mail/mailService");
+const { json } = require("body-parser");
 
 class TourController {
-  async getTours(req, res) {
+  async getTours(req, res, next) {
     try {
       const arrTours = await tourService.getAllTours();
       res.json(arrTours);
     } catch (e) {
       console.log(e);
+      next();
     }
   }
 
   async createTour(req, res, next) {
     try {
-      const { name, type, date, country, city, price, duration } = req.body;
+      const { name, type, date, country, city, price, duration, linkPhoto } = req.body;
+      //nsole.log(name, type, date, country, city, price, duration, linkPhoto);
       const ss = await tourService.createTour(
         name,
         type,
@@ -22,7 +25,8 @@ class TourController {
         country,
         city,
         price,
-        duration
+        duration,
+        linkPhoto
       );
       res.json({ elem: "add db " });
     } catch (e) {
@@ -132,11 +136,37 @@ class TourController {
 
   async getTicketValidUser(req, res, next) {
     try {
-      const { ticketInfoUser } = req.body;
-      const ticket = await tourService.getValidUserTicket(bookingInfoUser);
+      const ticketInfoUser = JSON.parse(req.params.id);
+      const ticket = await tourService.getValidUserTicket(ticketInfoUser);
       res.json(ticket);
     } catch (e) {
       res.json({ elem: "не получилось взять билеты" });
+      next();
+    }
+  }
+
+  async getTickets(req, res, next) {
+    try {
+      const tickets = await tourService.getTickets();
+      res.json(tickets);
+    } catch (e) {
+      next();
+    }
+  }
+
+  async getReservations(req, res, next) {
+    try {
+      const reservations = await tourService.getReservations();
+      res.json(reservations);
+    } catch (e) {
+      next();
+    }
+  }
+  async getUsers(req, res, next) {
+    try {
+      const users = await tourService.getUsers();
+      res.json(users);
+    } catch (e) {
       next();
     }
   }

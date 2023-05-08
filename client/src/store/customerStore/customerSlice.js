@@ -31,9 +31,9 @@ export const bookingTourSlice = createAsyncThunk(
 export const getBookingUser = createAsyncThunk(
   "customers/getBookingUser",
   async (user, { rejectWithValue, dispatch }) => {
-    console.log("user slice ", user);
+    //console.log("user slice ", user);
     const data = await getReservationTour(JSON.stringify(user));
-    console.log("getBookingUser1 ", data);
+    //console.log("getBookingUser1 ", data);
     dispatch(setBookingUser({ booking: data }));
   }
 );
@@ -47,7 +47,12 @@ export const cancelBookingTour = createAsyncThunk(
 
 const customerSlice = createSlice({
   name: "customers",
-  initialState: { customers: [], mainClient: {}, tour: {}, booking: {} },
+  initialState: {
+    customers: [],
+    mainClient: {},
+    tour: {},
+    booking: {},
+  },
   reducers: {
     addCustomer(state, action) {
       state.customers.push({
