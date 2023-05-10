@@ -13,14 +13,6 @@ const device = [
     id: 2,
     name: "Круиз",
   },
-  {
-    id: 3,
-    name: "asdf",
-  },
-  {
-    id: 4,
-    name: "zxcxvb",
-  },
 ];
 
 

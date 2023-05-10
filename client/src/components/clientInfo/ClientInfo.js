@@ -187,10 +187,6 @@ const ClientInfo = () => {
       setFlagInputCvC({ border: "2px solid  #DADADA" });
       setFlagInputCardValid({ border: "2px solid  #DADADA" });
       handleSubmitCard();
-      
-
-
-
     }
   };
 
