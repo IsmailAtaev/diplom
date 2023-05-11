@@ -125,16 +125,28 @@ const BookingUser = () => {
     dispatch(getBookingUser(user));
     dispatch(addTour({}));
   };
-
+  //style={{boxShadow: '10px 10px 40px #E2E0EE'}}
   return (
     <div>
-      <Button variant="outline-dark" onClick={addInfo}>
-        Кто поедит
+      <Button
+        style={{
+          marginLeft: "70%",
+          marginRight: "auto",
+          boxShadow: "10px 10px 40px #E2E0EE",
+        }}
+        className="mt-4"
+        variant="primary"
+        onClick={addInfo}
+      >
+        Кто поедет
       </Button>
 
       <Container>
         {info.map((i, index) => (
-          <Row className="border rounded justify-content-md-center mt-5 ml-5 p-3 mb-2 bg-light text-dark ">
+          <Row
+            className="border rounded justify-content-md-center mt-3 ml-5 p-3 mb-2 bg-light text-dark "
+            style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
+          >
             <Col xs={12} md={8}>
               <Form>
                 <h4>Клиент {index + 1}</h4>
@@ -270,27 +282,26 @@ const BookingUser = () => {
                   </div>
                 </Row>
                 <Col>
-                  <br />
-                  <Button
-                    // className="justify-content-end"
-                    variant={"outline-danger"}
-                    onClick={() => removeInfo(i.number)}
-                  >
-                    Удалить
-                  </Button>
+                  {index === 0 ? (
+                    ""
+                  ) : (
+                    <Button
+                      variant={"outline-danger"}
+                      onClick={() => removeInfo(i.number)}
+                    >
+                      Удалить
+                    </Button>
+                  )}
                 </Col>
               </Form>
             </Col>
           </Row>
         ))}
 
-        {/* <div>
-          {countCustomer.map((elem) => (
-            <CustomerBooking key={elem.id} trigger={trigger} />
-          ))}
-        </div> */}
-
-        <Row className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark">
+        <Row
+          className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark"
+          style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
+        >
           <Col xs={12} md={8}>
             <Form>
               <h4>Контактные данные</h4>
@@ -331,28 +342,19 @@ const BookingUser = () => {
             </Form>
           </Col>
         </Row>
+      </Container>
+      <div style={{ marginLeft: "44%" }}>
         <Button
-          className="m-1"
+          style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
+          className="mt-4 mb-2"
           variant="primary"
           type="submit"
+          size="lg"
           onClick={handleSubmit}
         >
           Бронировать тур
         </Button>
-      </Container>
-
-      {/* <Button
-        className="m-1"
-        variant="primary"
-        type="submit"
-        onClick={(e) => {
-          console.log("get book: ", user);
-          dispatch(getBookingUser(user));
-        }}
-      >
-        get Bookins
-      </Button> */}
-
+      </div>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <ModalTitle>Оплата тура</ModalTitle>

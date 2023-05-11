@@ -41,11 +41,11 @@ const DetailsTour = ({isAuth, user}) => {
               {(user.role === "USER" ) ?
                   (<>
                       <Link id="RouterNavLink" to='/booking/user' className='text-decoration-none' state={{tour}}>
-                        <Button variant="primary" className="m-1">Бронировать</Button>
+                        <Button variant="primary" className="mt-5">Бронировать</Button>
                       </Link>
                   
                       <Link id="RouterNavLink" to='/tour/details/buy' className='text-decoration-none' state={{tour}}>
-                        <Button variant="success" className="m-1">Купить</Button>
+                        <Button variant="success" className="mt-5">Купить</Button>
                       </Link>
                     </>
                   ) : ("")}

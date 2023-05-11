@@ -13,9 +13,9 @@ const isAuth = USER;
 
 const TourItem = ({ tour }) => {
   const dispatch = useDispatch();
- 
+ //style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
   return (
-    <Card className="mt-4" style={{ width: "18rem", height: "30rem", alignContent: "center" }}>
+    <Card className="mt-4" style={{ width: "18rem", height: "30rem", alignContent: "center", boxShadow: "10px 10px 40px #E2E0EE" }}>
       <Card.Img variant="top" src={tour.linkPhoto} style={{ width: "100%", height: "190px" }}/>
       <Card.Body> 
         <Card.Title style={{textAlign: "center"}}>{tour.name}</Card.Title>

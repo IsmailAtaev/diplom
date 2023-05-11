@@ -249,7 +249,7 @@ const ClientInfo = () => {
     <div>
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <Button variant="outline-dark" onClick={addInfo}>
-          Кто поедит
+          Кто поедет
         </Button>
       </div>
       <Container>
