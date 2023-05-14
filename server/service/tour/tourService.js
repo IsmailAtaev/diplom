@@ -19,7 +19,16 @@ class TourService {
     return tours;
   }
 
-  async createTour(name, type, date, country, city, price, duration, linkPhoto) {
+  async createTour(
+    name,
+    type,
+    date,
+    country,
+    city,
+    price,
+    duration,
+    linkPhoto
+  ) {
     const tour = await TourModel.create({
       name,
       type,
@@ -29,7 +38,7 @@ class TourService {
       price,
       duration,
       flag: true,
-      linkPhoto
+      linkPhoto,
     });
     return tour;
   }
@@ -55,34 +64,6 @@ class TourService {
   }
 
   async buyTour(objInfoBuyTour) {
-    const invoice = {
-      shipping: {
-        name: "John Doe",
-        address: "1234 Main Street",
-        city: "San Francisco",
-        state: "CA",
-        country: "US",
-        postal_code: 94111,
-      },
-      items: [
-        {
-          item: "TC 100",
-          description: "Toner Cartridge",
-          quantity: 2,
-          amount: 6000,
-        },
-        {
-          item: "USB_EXT",
-          description: "USB Cable Extender",
-          quantity: 1,
-          amount: 2000,
-        },
-      ],
-      subtotal: 8000,
-      paid: 0,
-      invoice_nr: 1234,
-    };
-
     // console.log("============================================================");
     // console.log("objInfoBuyTour: ", objInfoBuyTour);
     // console.log("============================================================");
@@ -98,13 +79,54 @@ class TourService {
       return { elem: "not found code or email" };
     }
 
-    const pathName = `C:/Users/admin/Desktop/diplom/server/pdf/${mainClient.firstName}.pdf`;
-    console.log("pathName: ", pathName);
-    onlineTicket(invoice, pathName);
-
     const totalCost = customers.length * tour.price;
     const reys = tour.country[0] + tour.city[0] + tour.duration;
     const time = "03:00";
+
+    const pathName = `C:/Users/admin/Desktop/diplom/server/pdf/${mainClient.firstName}.pdf`;
+    console.log("pathName: ", pathName);
+
+    let items = [];
+    for (let i = 0; i < customers.length; i++) {
+      items.push({
+        item: customers[i].firstName + " " + customers[i].lastName,
+        description: customers[i].passportSeriesAndNumber,
+        quantity: time,
+        amount: reys,
+        // cost: tour.price,
+      });
+    }
+
+    const invoice = {
+      shipping: {
+        name: tour.name,
+        address: tour.duration + " " + tour.type + " " + tour.date,
+        city: tour.city,
+        state: tour.country,
+        country: " ",
+        postal_code: "94111",
+      },
+      items,
+      // items: [
+      //   {
+      //     item: "TC 100",
+      //     description: "Toner Cartridge",
+      //     quantity: 2,
+      //     amount: 6000,
+      //   },
+      //   {
+      //     item: "USB_EXT",
+      //     description: "USB Cable Extender",
+      //     quantity: 1,
+      //     amount: 2000,
+      //   },
+      // ],
+      subtotal: "8000",
+      paid: totalCost,
+      invoice_nr: totalCost,
+    };
+
+    onlineTicket(invoice, pathName);
 
     try {
       const createTicketNoUser = await TicketNoUserModel.create({
@@ -311,6 +333,7 @@ class TourService {
     };
 
     const { bookingInfo, tourInfo, userInfo, card } = bookingInfoValidUser;
+    console.log("bookingInfo: ", bookingInfo);
 
     const tourModel = await TourModel.findOne({ _id: tourInfo._id });
     if (!tourModel) {
@@ -365,7 +388,7 @@ class TourService {
       email: userInfo.email,
       cardNumber: card.cardNumber,
       cardId: card.codeId,
-      paid: tourInfo.price,
+      paid: bookingInfo.price,
       clock: "04:00",
       flight: reys,
       pathName: directory,

@@ -18,7 +18,6 @@ const BookingAdmin = () => {
       }
     }
     getAllBooking();
-    //console.log("1");
   }, [bookings]);
   console.log("1", bookings);
   return (
@@ -32,10 +31,7 @@ const BookingAdmin = () => {
                 <th>Тур</th>
                 <th>Кто едит</th>
                 <th>Кем забронировано</th>
-                <th>Стоимость</th>
-                {/* <th>Общая стоимость тура</th>
-                <th>Оплачено</th>
-                <th>Нужно оплатить</th> */}
+                <th>Стоимость</th>  
                 <th>Действия</th>
               </tr>
             </thead>

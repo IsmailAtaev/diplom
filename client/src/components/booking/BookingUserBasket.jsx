@@ -81,6 +81,9 @@ function BookingUserBasket() {
 
   return (
     <div style={{ margin: "0% 2%" }}>
+      <h4 style={{ marginLeft: "40%", marginTop: "1%" }}>
+        Забронированные туры
+      </h4>
       <div className="d-flex justify-content-center row gy-3 m-lg-2 gap-2 m-4">
         <Table striped bordered hover>
           <thead>
@@ -151,27 +154,28 @@ function BookingUserBasket() {
                           <th>Пол</th>
                         </tr>
                       </thead>
+
+                      <tbody>
+                        {elem.bookingInfo.customers.map((value) => {
+                          return (
+                            <tr>
+                              <td style={{ marginLeft: "10%" }}>
+                                {value.firstName}
+                              </td>
+                              <td style={{ marginLeft: "20%" }}>
+                                {value.lastName}
+                              </td>
+                              <td style={{ marginLeft: "30%" }}>
+                                {value.birthDate}
+                              </td>
+                              <td style={{ marginLeft: "40%" }}>
+                                {value.gender}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
                     </Table>
-                    <tbody>
-                      {elem.bookingInfo.customers.map((value) => {
-                        return (
-                          <tr>
-                            <div style={{ marginLeft: "10%" }}>
-                              {value.firstName}
-                            </div>
-                            <td style={{ marginLeft: "20%" }}>
-                              {value.lastName}
-                            </td>
-                            <td style={{ marginLeft: "30%" }}>
-                              {value.birthDate}
-                            </td>
-                            <td style={{ marginLeft: "40%" }}>
-                              {value.gender}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
                   </td>
                   <td>
                     <div className="d-flex" style={{ marginBottom: "3%" }}>

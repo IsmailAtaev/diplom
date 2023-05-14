@@ -248,13 +248,25 @@ const ClientInfo = () => {
   return (
     <div>
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
-        <Button variant="outline-dark" onClick={addInfo}>
+        <Button
+          style={{
+            marginLeft: "70%",
+            marginRight: "auto",
+            boxShadow: "10px 10px 40px #E2E0EE",
+          }}
+          className="mt-4"
+          variant="primary"
+          onClick={addInfo}
+        >
           Кто поедет
         </Button>
       </div>
       <Container>
         {info.map((i, index) => (
-          <Row className="border rounded justify-content-md-center mt-5 ml-5 p-3 mb-2 bg-light text-dark ">
+          <Row
+            className="border rounded justify-content-md-center mt-5 ml-5 p-3 mb-2 bg-light text-dark"
+            style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
+          >
             <Col xs={12} md={8}>
               <Form>
                 <h4>Клиент {index + 1}</h4>
@@ -408,7 +420,10 @@ const ClientInfo = () => {
           </Row>
         ))}
 
-        <Row className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark">
+        <Row
+          style={{ boxShadow: "10px 10px 40px #E2E0EE" }}
+          className="border rounded justify-content-md-center mt-4 ml-5 p-3 mb-2 bg-light text-dark"
+        >
           <Col xs={12} md={7}>
             <Form>
               <h4>Контактные данные</h4>
@@ -465,12 +480,13 @@ const ClientInfo = () => {
           </Col>
         </Row>
         <Button
-          className="m-1"
+          style={{ boxShadow: "10px 10px 40px #E2E0EE", marginLeft: "44%" }}
+          className="mt-4 mb-2"
           variant="primary"
           type="submit"
+          size="lg"
           // onClick={handleSubmit}
           onClick={checkClientInfo}
-          style={{ marginLeft: "auto", marginRight: "auto" }}
         >
           Далее
         </Button>

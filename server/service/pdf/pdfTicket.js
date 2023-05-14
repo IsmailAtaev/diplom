@@ -229,7 +229,7 @@ const generateHeader = async (doc) => {
 };
 
 const generateCustomerInformation = async (doc, invoice) => {
-  doc.fillColor("#444444").fontSize(20).text("Invoice", 50, 160);
+  doc.fillColor("#444444").fontSize(20).text("Tour", 50, 160);
 
   generateHr(doc, 185);
 
@@ -237,13 +237,13 @@ const generateCustomerInformation = async (doc, invoice) => {
 
   doc
     .fontSize(10)
-    .text("Invoice Number:", 50, customerInformationTop)
+    .text("Tour name:", 50, customerInformationTop)
     .font("Helvetica-Bold")
     .text(invoice.invoice_nr, 150, customerInformationTop)
     .font("Helvetica")
-    .text("Invoice Date:", 50, customerInformationTop + 15)
+    .text("Tour Date:", 50, customerInformationTop + 15)
     .text(formatDate(new Date()), 150, customerInformationTop + 15)
-    .text("Balance Due:", 50, customerInformationTop + 30)
+    .text("Where:", 50, customerInformationTop + 30)
     .text(
       formatCurrency(invoice.subtotal - invoice.paid),
       150,
@@ -276,11 +276,11 @@ const generateInvoiceTable = async (doc, invoice) => {
   generateTableRow(
     doc,
     invoiceTableTop,
-    "Item",
-    "Description",
-    "Unit Cost",
-    "Quantity",
-    "Line Total"
+    "FI",
+    "Passport",
+    "Clock",
+    "Flight",
+    "Unit Cost"
   );
   generateHr(doc, invoiceTableTop + 20);
   doc.font("Helvetica");
@@ -293,46 +293,45 @@ const generateInvoiceTable = async (doc, invoice) => {
       position,
       item.item,
       item.description,
-      formatCurrency(item.amount / item.quantity),
       item.quantity,
-      formatCurrency(item.amount)
+      item.amount
     );
 
     generateHr(doc, position + 20);
   }
 
   const subtotalPosition = invoiceTableTop + (i + 1) * 30;
-  generateTableRow(
-    doc,
-    subtotalPosition,
-    "",
-    "",
-    "Subtotal",
-    "",
-    formatCurrency(invoice.subtotal)
-  );
+  // generateTableRow(
+  //   doc,
+  //   subtotalPosition,
+  //   "",
+  //   "",
+  //   "Subtotal",
+  //   "",
+  //   formatCurrency(invoice.subtotal)
+  // );
 
   const paidToDatePosition = subtotalPosition + 20;
-  generateTableRow(
-    doc,
-    paidToDatePosition,
-    "",
-    "",
-    "Paid To Date",
-    "",
-    formatCurrency(invoice.paid)
-  );
+  // generateTableRow(
+  //   doc,
+  //   paidToDatePosition,
+  //   "",
+  //   "",
+  //   "Paid To Date",
+  //   "",
+  //   formatCurrency(invoice.paid)
+  // );
 
   const duePosition = paidToDatePosition + 25;
   doc.font("Helvetica-Bold");
   generateTableRow(
     doc,
-    duePosition,
+    subtotalPosition,
     "",
     "",
-    "Balance Due",
+    "Price",
     "",
-    formatCurrency(invoice.subtotal - invoice.paid)
+    invoice.paid
   );
   doc.font("Helvetica");
 };
@@ -341,7 +340,7 @@ const generateFooter = async (doc) => {
   doc
     .fontSize(10)
     .text(
-      "Payment is due within 15 days. Thank you for your business.",
+      "+375-(25)-702-12-47",
       50,
       780,
       { align: "center", width: 500 }
